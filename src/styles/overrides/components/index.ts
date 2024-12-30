@@ -1,5 +1,5 @@
-import { inputOverride } from "./input";
-import { paperOverride } from "./paper";
+import { inputOverride } from "./Input";
+import { paperOverride } from "./Paper";
 import { selectOverride } from "./Select";
 import { typographyOverride } from "./Typography";
 
