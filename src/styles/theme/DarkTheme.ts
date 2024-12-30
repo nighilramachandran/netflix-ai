@@ -12,6 +12,7 @@ const darkThemeOptions: ThemeOptions = {
     background: {
       default: "#101010",
       paper: "rgb(0 0 0 / 0.6)",
+      header: "transparent",
     },
     primary: {
       main: "#d6357e",
