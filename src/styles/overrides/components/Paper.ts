@@ -6,6 +6,7 @@ export const paperOverride: Components<Theme> = {
       root: ({ theme }) => ({
         backgroundImage: "none",
         padding: theme.spacing(2),
+        background: "background.paper",
 
         [theme.breakpoints.down("md")]: {
           padding: theme.spacing(1),

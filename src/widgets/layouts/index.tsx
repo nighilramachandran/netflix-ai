@@ -8,7 +8,6 @@ const Layout: React.FC = () => {
     <>
       <Container>
         <Header />
-        {/* <Container sx={{ padding: "20px 0px" }}> */}
         <Outlet />
       </Container>
     </>
