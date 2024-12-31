@@ -7,7 +7,7 @@ import { firebaseAuth } from "../utils/firebase/auth";
 const inputs: CustomInputFormProps[] = [
   {
     type: "text",
-    name: "username",
+    name: "displayName",
     label: "Full Name",
     placeholder: "Full Name",
     validate: { required: true },
@@ -32,7 +32,7 @@ const inputs: CustomInputFormProps[] = [
 ];
 
 interface FormikValProps {
-  username: string;
+  displayName: string;
   email: string;
   password: string;
 }
