@@ -2,8 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "../../interfaces";
 
 import { AppDispatch } from "../Store";
-import { User } from "firebase/auth";
 
+interface User {
+  uid: string | null;
+  email: string | null;
+  displayName?: string | null;
+}
 interface InitialState {
   status: RequestStatus;
   isAuthenticated: boolean;
@@ -38,7 +42,13 @@ const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
 export const AddUserFunc = (user: User) => (dispatch: AppDispatch) => {
   dispatch(setStatus("loading"));
-  dispatch(addUser(user));
+
+  const userData = {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName,
+  };
+  dispatch(addUser(userData));
   dispatch(authenticate(true));
   dispatch(setStatus("data"));
 };
