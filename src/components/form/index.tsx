@@ -170,7 +170,7 @@ export const CustomForm: React.FC<props> = (props) => {
         {inputs.map(
           ({ colProps, name, hide, ...props }) =>
             !hide && (
-              <Grid2 component={"div"} item {...colProps} key={name}>
+              <Grid2 component={"div"} item={true} {...colProps} key={name}>
                 <FormInput key={name} name={name} formik={formik} {...props} />
               </Grid2>
             )
@@ -178,7 +178,7 @@ export const CustomForm: React.FC<props> = (props) => {
 
         {/*  Cancel */}
         {onCancel && (
-          <Grid2 component="div" item {...actionCol}>
+          <Grid2 component="div" item={true} {...actionCol}>
             <Button variant="contained" onClick={onCancel}>
               {cancelText}
             </Button>
