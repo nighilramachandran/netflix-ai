@@ -7,6 +7,9 @@ export const typographyOverride: Components<Theme> = {
         fontWeight: "400px",
         fontSize: "12px",
       }),
+      h3: {
+        fontSize: 20,
+      },
     },
     variants: [],
   },

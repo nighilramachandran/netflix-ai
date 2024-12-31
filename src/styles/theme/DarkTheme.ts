@@ -15,7 +15,7 @@ const darkThemeOptions: ThemeOptions = {
       header: "transparent",
     },
     primary: {
-      main: "#d6357e",
+      main: "#e50a15",
     },
   },
   typography: { ...typographyStylesOverrides, ...typographyOverride },

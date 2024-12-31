@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useMemo } from "react";
 import { FormikProps, useFormik } from "formik";
 
-import Grid, { GridProps } from "@mui/material/Grid";
+import Grid2, { Grid2Props } from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import { FormInput } from "./FormInput";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -21,7 +21,7 @@ type ComponentReturnType = ReactNode | ReactNode[];
 export type CustomInputFormProps = CustomInputProps & {
   validate?: InputValidation;
   component?: (formik: FormikProps<any>) => ComponentReturnType;
-  colProps?: GridProps;
+  colProps?: Grid2Props;
   showPrecision?: number;
   hide?: boolean;
 };
@@ -36,8 +36,7 @@ interface props {
   resetFrom?: boolean;
   fromJustify?: "center" | "start" | "end" | "between";
   fromAlignItems?: "center" | "start" | "end" | "between";
-  formName?: string;
-  actionCol?: GridProps;
+  actionCol?: Grid2Props;
   setFormik?: (formik: FormikProps<any>) => void;
   cancelText?: string;
 }
@@ -51,8 +50,7 @@ export const CustomForm: React.FC<props> = (props) => {
     initialInputValues,
     resetFrom,
     fromJustify = "start",
-    formName = "empty",
-    actionCol = { xs: 12 },
+    actionCol = { size: { xs: 12 } },
     onCancel,
     cancelText = "cancel",
     fromAlignItems = "center",
@@ -66,11 +64,7 @@ export const CustomForm: React.FC<props> = (props) => {
     //for each input in form set : initial Value
     inputs.forEach((input) => {
       if (!input.ignore) {
-        if (input.type === "checkbox") {
-          initValues[input.name] = false;
-        } else if (input.type === "select") {
-          initValues[input.name] = input.options?.[0] ?? "";
-        } else initValues[input.name] = "";
+        initValues[input.name] = "";
       }
     });
     if (initialInputValues) {
@@ -101,7 +95,7 @@ export const CustomForm: React.FC<props> = (props) => {
               if (data[input.name] === "" || data[input.name] === false) {
                 errors[input.name] =
                   input.validate.required_message ??
-                  `${fieldName} is required"`;
+                  `${fieldName} is required}`;
               } else if (
                 input.validate.rule &&
                 !input?.validate?.rule?.test(data[input.name])
@@ -140,7 +134,7 @@ export const CustomForm: React.FC<props> = (props) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    isInitialValid: false,
+    validateOnMount: true,
     validateOnChange: true,
     validate: formValidate,
     onSubmit: async (data: any) => {
@@ -155,7 +149,7 @@ export const CustomForm: React.FC<props> = (props) => {
     if (formik && setFormik) {
       setFormik(formik);
     }
-  }, [formik.values]);
+  }, [formik.values, formik, setFormik]);
 
   return (
     <form
@@ -164,48 +158,44 @@ export const CustomForm: React.FC<props> = (props) => {
       {...restProps}
       style={{ position: "relative" }}
     >
-      <Grid
+      <Grid2
         container
         spacing={2}
         justifyContent={fromJustify}
         alignItems={fromAlignItems}
-        sx={{ justifyContent: { xs: "space-between", md: "end" } }}
+        sx={{
+          justifyContent: { xs: "space-between", md: "end" },
+        }}
       >
         {inputs.map(
           ({ colProps, name, hide, ...props }) =>
             !hide && (
-              <Grid item key={name} {...colProps}>
-                <FormInput
-                  formName={formName}
-                  key={name}
-                  name={name}
-                  formik={formik}
-                  {...props}
-                />
-              </Grid>
+              <Grid2 component={"div"} item {...colProps} key={name}>
+                <FormInput key={name} name={name} formik={formik} {...props} />
+              </Grid2>
             )
         )}
 
         {/*  Cancel */}
         {onCancel && (
-          <Grid item {...actionCol}>
+          <Grid2 component="div" item {...actionCol}>
             <Button variant="contained" onClick={onCancel}>
               {cancelText}
             </Button>
-          </Grid>
+          </Grid2>
         )}
         {/*  submit */}
-        <Grid item {...actionCol}>
+        <Grid2 component="div" item {...actionCol}>
           <LoadingButton
-            variant="outlined"
+            variant="contained"
             type="submit"
             loading={status === "loading"}
             sx={{ width: "100%" }}
           >
             {submitLable}
           </LoadingButton>
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
     </form>
   );
 };

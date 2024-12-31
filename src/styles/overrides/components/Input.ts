@@ -4,9 +4,12 @@ export const inputOverride: Components<Theme> = {
   MuiInputBase: {
     styleOverrides: {
       root: ({ theme }) => ({
-        backgroundColor: "transparent",
         color: theme.palette.text.primary,
         borderRadius: "6px",
+        height: 45,
+        // "&:hover": {
+
+        // },
       }),
       multiline: ({ theme }) => ({
         backgroundColor: theme.palette.background.default,

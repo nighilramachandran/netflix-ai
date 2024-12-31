@@ -5,12 +5,12 @@ export const paperOverride: Components<Theme> = {
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundImage: "none",
-        padding: theme.spacing(2),
+        padding: 25,
         background: "background.paper",
 
-        [theme.breakpoints.down("md")]: {
-          padding: theme.spacing(1),
-        },
+        // [theme.breakpoints.down("md")]: {
+        //   padding: theme.spacing(1),
+        // },
 
         borderRadius: theme.shape.borderRadius * 4,
       }),

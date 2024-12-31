@@ -22,7 +22,6 @@ interface CustomInputAttributes {
   ignore?: boolean;
   errorMessage?: any;
   accessor?: string | ((row: any) => any);
-  formName?: string;
   options?: (string | number)[] | any[];
   optionsRender?: string[];
   getOptionLabel?: (option: any) => any;

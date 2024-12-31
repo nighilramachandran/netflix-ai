@@ -1,6 +1,5 @@
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/material";
-import { CSSProperties } from "react";
 import { HeaderStylesProps } from "../../../interfaces";
 import { HEADER_SPACINGS } from "../../../utils/constants/Config";
 

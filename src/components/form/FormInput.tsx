@@ -22,7 +22,6 @@ type props = CustomInputFormProps & { formik: FormikProps<any> };
 export const FormInput: React.FC<props> = ({
   name,
   component,
-  formName,
   label,
   type = "text",
   options,
@@ -31,7 +30,6 @@ export const FormInput: React.FC<props> = ({
   getOptionLabel,
   ...restInputProps
 }) => {
-  // const { palette } = useTheme();
   //functions
   const [initType] = React.useState<string>(type);
   const [currentType, setCurrentType] = React.useState<string>(
@@ -73,6 +71,7 @@ export const FormInput: React.FC<props> = ({
       borderRadius: "10px",
       fontSize: "11px",
       height: "100%",
+      boxShadow: "none",
     }),
     [type]
   );
@@ -114,113 +113,67 @@ export const FormInput: React.FC<props> = ({
     </Typography>
   );
 
-  //Input component
-  const getCheckBox = () => (
-    <FormControlLabel
-      control={<Checkbox />}
-      key={name}
-      name={name}
-      label={label}
-      value={formik.values[name]}
-      onChange={formik.handleChange}
-    />
-  );
-
   const getTextField = () => (
     <Stack>
       <TextField
         key={name}
         name={name}
         type={currentType}
-        // onKeyDown={handleLocalOnkeyDown}
         onPaste={initType === "number" ? (e) => e.preventDefault() : undefined}
         onChange={handleLocalOnChange}
         {...restInputProps}
-        // variant="outlined"
         className="outlined-gradient"
         multiline={type === "textarea"}
         value={formik.values[name]}
         error={!!getFormErrorMessage(name)}
         sx={{
           width: "100%",
-          bgcolor: "background.popup",
           outline: "none",
           [`.Mui-focused`]: { border: "none" },
         }}
-        InputProps={{
-          ...(inputButton && {
-            // Input button on the end of the input
-            endAdornment: (
-              <Button
-                sx={{
-                  position: "absolute",
-                  right: "0",
-                  height: 41,
-                  width: 135,
-                }}
-                {...inputButton(formik)}
-              >
-                {inputButton(formik).content}
-              </Button>
-            ),
-            sx: {
-              bgcolor: "background.default",
-              ".MuiInputBase-input": {
-                borderTopRightRadius: "0px !important",
-                borderBottomRightRadius: "0px !important",
+        slotProps={{
+          input: {
+            ...(inputButton && {
+              endAdornment: (
+                <Button
+                  sx={{
+                    position: "absolute",
+                    right: "0",
+                    height: 41,
+                    width: 135,
+                  }}
+                  {...inputButton(formik)}
+                >
+                  {inputButton(formik).content}
+                </Button>
+              ),
+              sx: {
+                bgcolor: "background.default",
+                ".MuiInputBase-input": {
+                  borderTopRightRadius: "0px !important",
+                  borderBottomRightRadius: "0px !important",
+                },
               },
+            }),
+            ...(restInputProps.slotProps && { ...restInputProps.slotProps }),
+            inputProps: {
+              style: textFieldInputStyle,
+              min: 0,
+              step: "any",
+              onWheel: (e) => e.currentTarget.blur(),
+              ...restInputProps.slotProps?.input,
             },
-          }),
-
-          ...(restInputProps.InputProps && { ...restInputProps.InputProps }),
-          inputProps: {
-            style: textFieldInputStyle,
-            min: 0,
-            step: "any",
-            //To prevent numbers changed during wheel event
-            onWheel: (e) => e.currentTarget.blur(),
-            ...restInputProps.InputProps?.inputProps,
           },
         }}
       />
     </Stack>
   );
 
-  const getSelectInput = () => {
-    return (
-      <Autocomplete
-        fullWidth
-        size="small"
-        value={formik.values[name]}
-        onChange={(_, value) => formik.setFieldValue(name, value, true)}
-        options={options ?? []}
-        // getOptionLabel={(option) => option}
-        getOptionLabel={getOptionLabel}
-        renderInput={(input) => (
-          <TextField
-            variant="outlined"
-            placeholder={restInputProps.placeholder}
-            style={{
-              boxShadow: `${
-                mode === "dark" ? "rgb(16 16 16)" : "rgb(255 255 255)"
-              } 0px 0px 0px 50px inset`,
-            }}
-            error={!!getFormErrorMessage(name)}
-            {...(input as TextFieldProps)}
-          />
-        )}
-      />
-    );
-  };
-
   return !component ? (
     <>
       {/* label */}
       {type !== "checkbox" && label && getLabel()}
 
-      {/* input */}
-      {type === "checkbox" && getCheckBox()}
-      {type === "select" && getSelectInput()}
       {!["checkbox", "select"].includes(type) && getTextField()}
 
       {/* error */}
