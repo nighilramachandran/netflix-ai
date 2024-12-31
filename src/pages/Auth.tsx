@@ -1,4 +1,4 @@
-import { Grid2, Paper, Typography, Box } from "@mui/material";
+import { Grid2, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Login from "../sections/Login";
 import Register from "../sections/Register";

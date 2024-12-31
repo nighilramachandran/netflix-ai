@@ -2,16 +2,13 @@ import React, { useMemo } from "react";
 import { FormikProps } from "formik";
 //mui
 import Button from "@mui/material/Button";
-import Autocomplete from "@mui/material/Autocomplete";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import InputLabel from "@mui/material/InputLabel";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { CustomInputFormProps } from ".";
 
 //utility
-import { Stack, styled, SvgIcon, useTheme } from "@mui/material";
+import { Stack, styled, SvgIcon } from "@mui/material";
 
 //material
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -60,10 +57,6 @@ export const FormInput: React.FC<props> = ({
 
     formik.handleChange(e);
   };
-
-  const {
-    palette: { mode },
-  } = useTheme();
 
   const textFieldInputStyle: React.CSSProperties = useMemo(
     () => ({
