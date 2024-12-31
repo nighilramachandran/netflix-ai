@@ -6,28 +6,28 @@ import { useAppDispatch } from "../../redux/hooks";
 import { onAuthStateChanged } from "firebase/auth";
 import { AddUserFunc, RemoveUserFunc } from "../../redux/auth";
 import { firebaseAuth } from "../../utils/firebase/auth";
+import { ROUTES } from "../../utils/constants/Routes";
 
 const Layout: React.FC = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
+  const { ROOT, HOME } = ROUTES;
+
   useEffect(() => {
     // Event Listern for login,sigup and signout
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
-        const { uid, email, displayName } = user;
         dispatch(AddUserFunc(user));
-        navigate("/home");
-
-        console.log("uid, email, displayName ", uid, email, displayName);
+        navigate(`${ROOT}${HOME}`);
       } else {
         dispatch(RemoveUserFunc());
-        navigate("/");
+        navigate(ROOT);
       }
     });
     return () => unsubscribe();
-  }, [dispatch, navigate]);
+  }, [HOME, ROOT, dispatch, navigate]);
   return (
     <>
       <Container>

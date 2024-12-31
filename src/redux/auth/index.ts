@@ -40,6 +40,7 @@ export const AddUserFunc = (user: User) => (dispatch: AppDispatch) => {
   dispatch(setStatus("loading"));
   dispatch(addUser(user));
   dispatch(authenticate(true));
+  dispatch(setStatus("data"));
 };
 
 export const RemoveUserFunc = () => (dispatch: AppDispatch) => {
