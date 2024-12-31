@@ -1,11 +1,10 @@
 import React from "react";
 import { CustomForm, CustomInputFormProps } from "../components/form";
 
-//inputs
 const inputs: CustomInputFormProps[] = [
   {
     type: "text",
-    name: "username",
+    name: "email",
     label: "User Name",
     placeholder: "Email",
     validate: { required: true },
