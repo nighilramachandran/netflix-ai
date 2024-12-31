@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "../../interfaces";
-import { User } from "../../interfaces/Auth";
+
+import { AppDispatch } from "../Store";
+import { User } from "firebase/auth";
 
 interface InitialState {
   status: RequestStatus;
   isAuthenticated: boolean;
-  user?: User[];
+  user?: User;
 }
 
 let initialState: InitialState = {
   status: "nothing",
   isAuthenticated: false,
-  user: [],
 };
 
 const AuthSlice = createSlice({
@@ -22,27 +23,26 @@ const AuthSlice = createSlice({
       state.status = payload;
     },
     addUser: (state, { payload }: PayloadAction<User>) => {
-      state.user?.push(payload);
+      state.user = payload;
     },
     authenticate: (state, { payload }: PayloadAction<boolean>) => {
       state.isAuthenticated = payload;
     },
     removeUser: (state) => {
-      state.user = [];
+      state.user = undefined;
     },
   },
 });
 
-export const { setStatus, addUser, authenticate, removeUser } =
-  AuthSlice.actions;
+const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
-export const AddUserFunc = (user: User) => (dispatch: any) => {
+export const AddUserFunc = (user: User) => (dispatch: AppDispatch) => {
   dispatch(setStatus("loading"));
   dispatch(addUser(user));
   dispatch(authenticate(true));
 };
 
-export const RemoveUserFunc = () => (dispatch: any) => {
+export const RemoveUserFunc = () => (dispatch: AppDispatch) => {
   dispatch(removeUser());
   dispatch(authenticate(false));
 };
