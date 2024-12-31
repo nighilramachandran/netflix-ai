@@ -1,11 +1,13 @@
 import React from "react";
 import { CustomForm, CustomInputFormProps } from "../components/form";
+import { FormikProps } from "formik";
 
+// inputs
 const inputs: CustomInputFormProps[] = [
   {
     type: "text",
     name: "email",
-    label: "User Name",
+    label: "Email",
     placeholder: "Email",
     validate: { required: true },
     colProps: { size: { xs: 12 } },
@@ -20,13 +22,17 @@ const inputs: CustomInputFormProps[] = [
   },
 ];
 
+// functions
+
+const handleLogin = (vals: FormikProps<any>) => {};
+
 const Login: React.FC = () => {
   return (
     <CustomForm
       inputs={inputs}
       resetFrom
-      onSubmit={() => null}
-      submitLable={"Login"}
+      onSubmit={(vals) => handleLogin(vals)}
+      submitLable={"Sign Up"}
     ></CustomForm>
   );
 };
