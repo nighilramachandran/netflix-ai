@@ -4,7 +4,7 @@ interface VideoPlayerProps {
   param: string | number;
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ param }) => {
+const VedioPlayer: React.FC<VideoPlayerProps> = ({ param }) => {
   return (
     <iframe
       width="100%"
@@ -18,4 +18,4 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ param }) => {
   );
 };
 
-export default VideoPlayer;
+export default VedioPlayer;
