@@ -31,11 +31,9 @@ const { setStatus, setMovies } = MovieSlice.actions;
 
 export const FetchMovieAsync = (): AppThunk => async (dispatch) => {
   dispatch(setStatus("loading"));
+  const url = "now_playing?language=en-US&page=1";
   try {
-    const { data } = await api.get<ApiResponse<Movies>>(
-      `/3/movie/now_playing?language=en-US&page=1`
-    );
-    console.log("data", data);
+    const { data } = await api.get<ApiResponse<Movies>>(url);
     if (data) {
       dispatch(setMovies(data?.results));
       dispatch(setStatus("data"));
@@ -46,5 +44,23 @@ export const FetchMovieAsync = (): AppThunk => async (dispatch) => {
     dispatch(setStatus("error"));
   }
 };
+
+export const FetchMovieTrailersAsync =
+  (movieId: number): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const url = `${movieId}/videos?language=en-US`;
+    try {
+      const { data } = await api.get<any>(url);
+      if (data) {
+        dispatch(setMovies(data?.results));
+        dispatch(setStatus("data"));
+      } else {
+        dispatch(setStatus("error"));
+      }
+    } catch {
+      dispatch(setStatus("error"));
+    }
+  };
 
 export default MovieSlice.reducer;

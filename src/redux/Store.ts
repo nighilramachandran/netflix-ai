@@ -1,9 +1,11 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import userReducer from "./auth/index";
+import movieReducer from "./movies/index";
 
 const store = configureStore({
   reducer: {
-    [userReducer.name]: userReducer,
+    Auth: userReducer,
+    Movies: movieReducer,
   },
 });
 

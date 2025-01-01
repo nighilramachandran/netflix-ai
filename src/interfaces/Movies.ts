@@ -27,10 +27,3 @@ interface Dates {
   maximum: string;
   minimum: string;
 }
-
-// export interface ArticleApiResponse {
-//     status: string;
-//     copyright: string;
-//     num_results: number;
-//     results: ArticleResult[];
-//   }

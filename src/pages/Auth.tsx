@@ -1,9 +1,10 @@
 import { Paper, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
 import React, { useState } from "react";
-import Login from "../sections/Login";
-import Register from "../sections/Register";
+
 import { m } from "framer-motion";
+import Login from "../sections/auth/Login";
+import Register from "../sections/auth/Register";
 
 const Auth: React.FC = () => {
   const [login, setLogin] = useState<boolean>(false);

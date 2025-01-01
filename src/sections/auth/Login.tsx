@@ -1,7 +1,7 @@
 import React from "react";
-import { CustomForm, CustomInputFormProps } from "../components/form";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from "../utils/firebase/auth";
+import { CustomForm, CustomInputFormProps } from "../../components/form";
+import { firebaseAuth } from "../../utils/firebase/auth";
 
 // inputs
 const inputs: CustomInputFormProps[] = [
