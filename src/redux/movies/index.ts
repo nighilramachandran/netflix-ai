@@ -40,21 +40,23 @@ const MovieSlice = createSlice({
 
 const { setStatus, setNowPlayingMovies, setMovieTrailer } = MovieSlice.actions;
 
-export const FetchNowPlayingMovieAsync = (): AppThunk => async (dispatch) => {
-  dispatch(setStatus("loading"));
-  const url = "now_playing?language=en-US&page=1";
-  try {
-    const { data } = await api.get<ApiMovieResponse<Movies>>(url);
-    if (data) {
-      dispatch(setNowPlayingMovies(data?.results));
-      dispatch(setStatus("data"));
-    } else {
+export const FetchMovieCategoriesAsync =
+  ({ endPoint, page }: { endPoint: string; page: string }): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const url = `${endPoint}?language=en-US&page=${page}`;
+    try {
+      const { data } = await api.get<ApiMovieResponse<Movies>>(url);
+      if (data) {
+        dispatch(setNowPlayingMovies(data?.results));
+        dispatch(setStatus("data"));
+      } else {
+        dispatch(setStatus("error"));
+      }
+    } catch {
       dispatch(setStatus("error"));
     }
-  } catch {
-    dispatch(setStatus("error"));
-  }
-};
+  };
 
 export const FetchMovieTrailersAsync =
   (movieId: number): AppThunk =>
@@ -78,21 +80,5 @@ export const FetchMovieTrailersAsync =
       dispatch(setStatus("error"));
     }
   };
-
-export const FetchTopRatedMoviesAsync = (): AppThunk => async (dispatch) => {
-  dispatch(setStatus("loading"));
-  const url = "top_rated?language=en-US&page=2";
-  try {
-    const { data } = await api.get<any>(url);
-    if (data) {
-      // dispatch(setMovies(data?.results));
-      dispatch(setStatus("data"));
-    } else {
-      dispatch(setStatus("error"));
-    }
-  } catch {
-    dispatch(setStatus("error"));
-  }
-};
 
 export default MovieSlice.reducer;

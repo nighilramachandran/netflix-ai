@@ -1,23 +1,31 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 
 interface MovieCategoryList {
   name: string;
   endPoint: string;
+  page: string;
 }
+
+const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
+
 const movieCategory: MovieCategoryList[] = [
-  { name: "Trending", endPoint: "top_rated" },
+  { name: "Trending", endPoint: TOP_RATED, page: "2" },
   {
     name: "Popular",
-    endPoint: "popular",
+    endPoint: POPULAR,
+    page: "2",
   },
   {
     name: "Now Playing",
-    endPoint: "now_playing",
+    endPoint: NOW_PLAYING,
+    page: "1",
   },
   {
     name: "Up Coming",
-    endPoint: "upcoming",
+    endPoint: UP_COMING,
+    page: "2",
   },
 ];
 

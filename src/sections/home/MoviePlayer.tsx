@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import {
-  FetchNowPlayingMovieAsync,
+  FetchMovieCategoriesAsync,
   FetchMovieTrailersAsync,
 } from "../../redux/movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -19,7 +19,7 @@ const MoviePlayer: React.FC = () => {
   const movieTrailerKey = movieTrailer[0]?.key;
 
   useEffect(() => {
-    dispatch(FetchNowPlayingMovieAsync());
+    dispatch(FetchMovieCategoriesAsync({ endPoint: "now_playing", page: "1" }));
   }, [dispatch]);
 
   useEffect(() => {
