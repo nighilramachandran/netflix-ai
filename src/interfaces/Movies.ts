@@ -15,7 +15,7 @@ export interface Movies {
   vote_count: number;
 }
 
-export interface ApiResponse<T> {
+export interface ApiMovieResponse<T> {
   dates: Dates;
   page: number;
   results: T[];
@@ -26,4 +26,22 @@ export interface ApiResponse<T> {
 interface Dates {
   maximum: string;
   minimum: string;
+}
+
+export interface MovieTrailer {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
+export interface ApiMovieTrailerResponse<T> {
+  id: number;
+  results: T[];
 }
