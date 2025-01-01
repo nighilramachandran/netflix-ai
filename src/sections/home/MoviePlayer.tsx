@@ -1,19 +1,25 @@
 import { Box, styled } from "@mui/material";
 import React, { useEffect } from "react";
-import { FetchMovieAsync, FetchMovieTrailersAsync } from "../../redux/movies";
+import {
+  FetchNowPlayingMovieAsync,
+  FetchMovieTrailersAsync,
+} from "../../redux/movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
+import { HEADER_SPACINGS } from "../../utils/constants/Config";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { movies, movieTrailer } = useAppSelector((state) => state.Movies);
+  const { nowPlayingMovies, movieTrailer } = useAppSelector(
+    (state) => state.Movies
+  );
 
-  const movieId = movies[0]?.id;
+  const movieId = nowPlayingMovies[0]?.id;
   const movieTrailerKey = movieTrailer[0]?.key;
 
   useEffect(() => {
-    dispatch(FetchMovieAsync());
+    dispatch(FetchNowPlayingMovieAsync());
   }, [dispatch]);
 
   useEffect(() => {
@@ -23,29 +29,41 @@ const MoviePlayer: React.FC = () => {
   }, [dispatch, movieId]);
   return (
     <MoviePlayerWrapper>
-      {movieTrailer && <VedioPlayer param={movieTrailerKey} />}
+      <StyledBox>
+        {movieTrailer && <VedioPlayer param={movieTrailerKey} />}
+      </StyledBox>
     </MoviePlayerWrapper>
   );
 };
 
-export const MoviePlayerWrapper = styled(Box)(() => ({
-  height: "80vh",
-  width: "100%",
+const StyledBox = styled(Box)(() => ({
   position: "absolute",
+  left: 0,
+  top: 0,
+  height: `calc(65vh + ${HEADER_SPACINGS.H_MAIN_DESKTOP}px + 65px)`,
+  width: "100%",
+  background: "red",
+  overflow: "hidden",
+  zIndex: -1,
+}));
+
+const MoviePlayerWrapper = styled(Box)(() => ({
+  height: "65vh",
+  width: "100%",
   top: 0,
   left: 0,
-  minHeight: "650px",
+  minHeight: "542px",
   overflow: "hidden",
-  background: "white",
-  "::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "10%",
-    zIndex: 1,
-    background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent)",
-  },
+  // background: "white",
+  // "::before": {
+  //   content: '""',
+  //   position: "absolute",
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   height: "10%",
+  //   zIndex: 1,
+  //   background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent)",
+  // },
 }));
 export default MoviePlayer;

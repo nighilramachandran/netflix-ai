@@ -12,13 +12,13 @@ import { api } from "../../utils/api";
 
 interface InitialState {
   status: RequestStatus;
-  movies: Movies[];
+  nowPlayingMovies: Movies[];
   movieTrailer: MovieTrailer[];
 }
 
 let initialState: InitialState = {
   status: "nothing",
-  movies: [],
+  nowPlayingMovies: [],
   movieTrailer: [],
 };
 
@@ -29,8 +29,8 @@ const MovieSlice = createSlice({
     setStatus: (state, { payload }: PayloadAction<RequestStatus>) => {
       state.status = payload;
     },
-    setMovies: (state, { payload }: PayloadAction<Movies[]>) => {
-      state.movies = payload;
+    setNowPlayingMovies: (state, { payload }: PayloadAction<Movies[]>) => {
+      state.nowPlayingMovies = payload;
     },
     setMovieTrailer: (state, { payload }: PayloadAction<MovieTrailer[]>) => {
       state.movieTrailer = payload;
@@ -38,15 +38,15 @@ const MovieSlice = createSlice({
   },
 });
 
-const { setStatus, setMovies, setMovieTrailer } = MovieSlice.actions;
+const { setStatus, setNowPlayingMovies, setMovieTrailer } = MovieSlice.actions;
 
-export const FetchMovieAsync = (): AppThunk => async (dispatch) => {
+export const FetchNowPlayingMovieAsync = (): AppThunk => async (dispatch) => {
   dispatch(setStatus("loading"));
   const url = "now_playing?language=en-US&page=1";
   try {
     const { data } = await api.get<ApiMovieResponse<Movies>>(url);
     if (data) {
-      dispatch(setMovies(data?.results));
+      dispatch(setNowPlayingMovies(data?.results));
       dispatch(setStatus("data"));
     } else {
       dispatch(setStatus("error"));
@@ -78,5 +78,21 @@ export const FetchMovieTrailersAsync =
       dispatch(setStatus("error"));
     }
   };
+
+export const FetchTopRatedMoviesAsync = (): AppThunk => async (dispatch) => {
+  dispatch(setStatus("loading"));
+  const url = "top_rated?language=en-US&page=2";
+  try {
+    const { data } = await api.get<any>(url);
+    if (data) {
+      // dispatch(setMovies(data?.results));
+      dispatch(setStatus("data"));
+    } else {
+      dispatch(setStatus("error"));
+    }
+  } catch {
+    dispatch(setStatus("error"));
+  }
+};
 
 export default MovieSlice.reducer;
