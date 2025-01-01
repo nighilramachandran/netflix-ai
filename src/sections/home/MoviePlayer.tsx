@@ -42,7 +42,6 @@ const StyledBox = styled(Box)(() => ({
   top: 0,
   height: `calc(65vh + ${HEADER_SPACINGS.H_MAIN_DESKTOP}px + 65px)`,
   width: "100%",
-  background: "red",
   overflow: "hidden",
   zIndex: -1,
 }));
