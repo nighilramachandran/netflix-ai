@@ -1,9 +1,9 @@
 import { Stack, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMovieCategoriesAsync } from "../../redux/movies";
-import { MovieCategories, MovieCategoryListItem } from "../../interfaces";
+import { MovieCategories } from "../../interfaces";
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
@@ -14,11 +14,10 @@ const MovieList: React.FC = () => {
     useAppSelector((state) => state.Movies);
 
   // Now Playing category already in store
-  const moviecategoryToFetch: MovieCategoryListItem[] = [
-    POPULAR,
-    TOP_RATED,
-    UP_COMING,
-  ];
+  const moviecategoryToFetch = useMemo(
+    () => [POPULAR, TOP_RATED, UP_COMING],
+    []
+  );
 
   const movieCategories: MovieCategories[] = [
     { category: NOW_PLAYING.name, movies: nowPlayingMovies },
@@ -38,7 +37,7 @@ const MovieList: React.FC = () => {
       const { endPoint, page } = category;
       dispatch(FetchMovieCategoriesAsync(endPoint, page));
     });
-  }, []);
+  }, [dispatch, moviecategoryToFetch]);
 
   return (
     <Stack>

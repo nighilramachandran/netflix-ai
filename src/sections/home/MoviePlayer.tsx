@@ -23,7 +23,7 @@ const MoviePlayer: React.FC = () => {
 
   useEffect(() => {
     dispatch(FetchMovieCategoriesAsync(NOW_PLAYING.endPoint, NOW_PLAYING.page));
-  }, [dispatch]);
+  }, [dispatch, NOW_PLAYING.endPoint, NOW_PLAYING.page]);
 
   useEffect(() => {
     if (movieId) {
