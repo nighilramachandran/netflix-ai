@@ -9,16 +9,23 @@ import {
 
 import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
+import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 
 interface InitialState {
   status: RequestStatus;
   nowPlayingMovies: Movies[];
+  popularMovies: Movies[];
+  topRatedMovies: Movies[];
+  upCommingMovies: Movies[];
   movieTrailer: MovieTrailer[];
 }
 
 let initialState: InitialState = {
   status: "nothing",
   nowPlayingMovies: [],
+  popularMovies: [],
+  topRatedMovies: [],
+  upCommingMovies: [],
   movieTrailer: [],
 };
 
@@ -32,23 +39,63 @@ const MovieSlice = createSlice({
     setNowPlayingMovies: (state, { payload }: PayloadAction<Movies[]>) => {
       state.nowPlayingMovies = payload;
     },
+
+    setPopularMovies: (state, { payload }: PayloadAction<Movies[]>) => {
+      state.popularMovies = payload;
+    },
+    setTopRatedMovies: (state, { payload }: PayloadAction<Movies[]>) => {
+      state.topRatedMovies = payload;
+    },
+    setUpComingMovies: (state, { payload }: PayloadAction<Movies[]>) => {
+      state.upCommingMovies = payload;
+    },
     setMovieTrailer: (state, { payload }: PayloadAction<MovieTrailer[]>) => {
       state.movieTrailer = payload;
     },
   },
 });
 
-const { setStatus, setNowPlayingMovies, setMovieTrailer } = MovieSlice.actions;
+const {
+  setStatus,
+  setNowPlayingMovies,
+  setPopularMovies,
+  setTopRatedMovies,
+  setUpComingMovies,
+  setMovieTrailer,
+} = MovieSlice.actions;
+
+const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
+
+const dispatchDistributor = (
+  dispatch: any,
+  endPoint: string,
+  data: ApiMovieResponse<Movies>
+) => {
+  switch (endPoint) {
+    case NOW_PLAYING.endPoint:
+      dispatch(setNowPlayingMovies(data?.results));
+      break;
+    case POPULAR.endPoint:
+      dispatch(setPopularMovies(data?.results));
+      break;
+    case TOP_RATED.endPoint:
+      dispatch(setTopRatedMovies(data?.results));
+      break;
+    case UP_COMING.endPoint:
+      dispatch(setUpComingMovies(data?.results));
+      break;
+  }
+};
 
 export const FetchMovieCategoriesAsync =
-  ({ endPoint, page }: { endPoint: string; page: string }): AppThunk =>
+  (endPoint: string, page: string): AppThunk =>
   async (dispatch) => {
     dispatch(setStatus("loading"));
     const url = `${endPoint}?language=en-US&page=${page}`;
     try {
       const { data } = await api.get<ApiMovieResponse<Movies>>(url);
       if (data) {
-        dispatch(setNowPlayingMovies(data?.results));
+        dispatchDistributor(dispatch, endPoint, data);
         dispatch(setStatus("data"));
       } else {
         dispatch(setStatus("error"));

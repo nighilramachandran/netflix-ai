@@ -45,3 +45,16 @@ export interface ApiMovieTrailerResponse<T> {
   id: number;
   results: T[];
 }
+
+export interface MovieCategory {
+  TOP_RATED: MovieCategoryList;
+  POPULAR: MovieCategoryList;
+  NOW_PLAYING: MovieCategoryList;
+  UP_COMING: MovieCategoryList;
+}
+
+export interface MovieCategoryList {
+  name: string;
+  endPoint: string;
+  page: string;
+}

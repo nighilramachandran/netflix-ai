@@ -7,6 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
 import { HEADER_SPACINGS } from "../../utils/constants/Config";
+import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,8 +19,10 @@ const MoviePlayer: React.FC = () => {
   const movieId = nowPlayingMovies[0]?.id;
   const movieTrailerKey = movieTrailer[0]?.key;
 
+  const { NOW_PLAYING } = MOVIE_CATERGORY;
+
   useEffect(() => {
-    dispatch(FetchMovieCategoriesAsync({ endPoint: "now_playing", page: "1" }));
+    dispatch(FetchMovieCategoriesAsync(NOW_PLAYING.endPoint, NOW_PLAYING.page));
   }, [dispatch]);
 
   useEffect(() => {
