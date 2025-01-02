@@ -4,16 +4,17 @@ import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMovieCategoriesAsync } from "../../redux/movies";
 import { MovieCategories } from "../../interfaces";
+import MoviesList from "../../components/movies/MoviesList";
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
-const MovieList: React.FC = () => {
+const MovieCategoryList: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { nowPlayingMovies, popularMovies, topRatedMovies, upCommingMovies } =
     useAppSelector((state) => state.Movies);
 
-  // Now Playing category already in store
+  // "Now Playing" category already in store
   const moviecategoryToFetch = useMemo(
     () => [POPULAR, TOP_RATED, UP_COMING],
     []
@@ -30,8 +31,6 @@ const MovieList: React.FC = () => {
     (movieCategory) => movieCategory.movies.length > 0
   );
 
-  console.log(allMoviesHaveLength);
-
   useEffect(() => {
     moviecategoryToFetch.forEach((category) => {
       const { endPoint, page } = category;
@@ -40,12 +39,14 @@ const MovieList: React.FC = () => {
   }, [dispatch, moviecategoryToFetch]);
 
   return (
-    <Stack>
+    <Stack spacing={3}>
       {allMoviesHaveLength &&
-        movieCategories.map((movies) => {
+        movieCategories.map((categoryList) => {
+          const { category, movies } = categoryList;
           return (
-            <Stack key={movies.category}>
-              <Typography>{movies.category}</Typography>
+            <Stack spacing={2} key={category}>
+              <Typography variant="h2">{category}</Typography>
+              <MoviesList list={movies} />
             </Stack>
           );
         })}
@@ -53,4 +54,4 @@ const MovieList: React.FC = () => {
   );
 };
 
-export default MovieList;
+export default MovieCategoryList;

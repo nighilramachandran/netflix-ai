@@ -1,12 +1,12 @@
 import React from "react";
 import MoviePlayer from "../sections/home/MoviePlayer";
-import MovieList from "../sections/home/MovieList";
+import MovieCategoryList from "../sections/home/MovieCategoryList";
 
 const Home: React.FC = () => {
   return (
     <>
       <MoviePlayer />
-      <MovieList />
+      <MovieCategoryList />
     </>
   );
 };
