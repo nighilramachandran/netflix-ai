@@ -17,7 +17,8 @@ const PrivateRoutes: React.FC = () => {
             <Route index element={<Auth />}></Route>
           </Route>
           <Route path={HOME} element={<Home />}></Route>
-          {/* <Route path=":id" element={<DynamicPage />}></Route>
+          {/* <Route path=":id" element={<DynamicPage />}></Route> */}
+          {/*
           <Route path="*" element={<PageNotFound />}></Route> */}
         </Route>
       </Routes>
