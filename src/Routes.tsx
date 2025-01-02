@@ -5,6 +5,8 @@ import { ROUTES } from "./utils/constants/Routes";
 import AuthLayout from "./widgets/layouts/auth";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
+import WatchMovie from "./pages/[id]";
+import PageNotFound from "./pages/PageNotFound";
 
 const PrivateRoutes: React.FC = () => {
   const { ROOT, HOME } = ROUTES;
@@ -17,9 +19,8 @@ const PrivateRoutes: React.FC = () => {
             <Route index element={<Auth />}></Route>
           </Route>
           <Route path={HOME} element={<Home />}></Route>
-          {/* <Route path=":id" element={<DynamicPage />}></Route> */}
-          {/*
-          <Route path="*" element={<PageNotFound />}></Route> */}
+          <Route path=":id" element={<WatchMovie />}></Route>
+          <Route path="*" element={<PageNotFound />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
