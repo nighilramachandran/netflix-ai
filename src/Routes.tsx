@@ -18,7 +18,8 @@ const PrivateRoutes: React.FC = () => {
           <Route element={<AuthLayout />}>
             <Route index element={<Auth />}></Route>
           </Route>
-          <Route path={HOME} element={<Home />}>
+          <Route path={HOME}>
+            <Route index element={<Home />}></Route>
             <Route path=":id" element={<MovieDetailPage />}></Route>
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>

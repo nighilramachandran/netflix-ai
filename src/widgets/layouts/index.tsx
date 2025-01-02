@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import Header from "./header/Header";
 import { useAppDispatch } from "../../redux/hooks";
@@ -11,20 +11,21 @@ import { ROUTES } from "../../utils/constants/Routes";
 const Layout: React.FC = () => {
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const dispatch = useAppDispatch();
 
   const { ROOT, HOME } = ROUTES;
 
   useEffect(() => {
     // Event Listern for login,sigup and signout
-
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-      // console.log("location", location);
-
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(AddUserFunc({ uid, email, displayName }));
-        navigate(`${ROOT}${HOME}`);
+        if (location.pathname === ROOT) {
+          navigate(`${ROOT}${HOME}`);
+        }
       } else {
         dispatch(RemoveUserFunc());
         navigate(ROOT);
@@ -34,11 +35,7 @@ const Layout: React.FC = () => {
   }, [HOME, ROOT, dispatch, navigate]);
   return (
     <>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ padding: "0 35px" }} //
-      >
+      <Container maxWidth={false} disableGutters sx={{ padding: "0 35px" }}>
         <Header />
         <Outlet />
       </Container>

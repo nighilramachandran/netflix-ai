@@ -13,7 +13,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, posterPath }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id: number) => {
-    navigate(`/movie/${id}`); // Make sure to navigate correctly
+    navigate(`/movies/${id}`);
   };
 
   return (
