@@ -5,6 +5,7 @@ import {
   Movies,
   MovieTrailer,
   RequestStatus,
+  SelectedMovieList,
 } from "../../interfaces";
 
 import { AppThunk } from "../Store";
@@ -18,6 +19,7 @@ interface InitialState {
   topRatedMovies: Movies[];
   upCommingMovies: Movies[];
   movieTrailer: MovieTrailer[];
+  selectedMovie: SelectedMovieList | {};
 }
 
 let initialState: InitialState = {
@@ -27,6 +29,7 @@ let initialState: InitialState = {
   topRatedMovies: [],
   upCommingMovies: [],
   movieTrailer: [],
+  selectedMovie: {},
 };
 
 const MovieSlice = createSlice({
@@ -52,6 +55,12 @@ const MovieSlice = createSlice({
     setMovieTrailer: (state, { payload }: PayloadAction<MovieTrailer[]>) => {
       state.movieTrailer = payload;
     },
+    setSelectedMovie: (
+      state,
+      { payload }: PayloadAction<SelectedMovieList>
+    ) => {
+      state.selectedMovie = payload;
+    },
   },
 });
 
@@ -62,6 +71,7 @@ const {
   setTopRatedMovies,
   setUpComingMovies,
   setMovieTrailer,
+  setSelectedMovie,
 } = MovieSlice.actions;
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
@@ -95,6 +105,8 @@ export const FetchMovieCategoriesAsync =
     try {
       const { data } = await api.get<ApiMovieResponse<Movies>>(url);
       if (data) {
+        console.log("anoter data", data);
+
         dispatchDistributor(dispatch, endPoint, data);
         dispatch(setStatus("data"));
       } else {
@@ -119,6 +131,25 @@ export const FetchMovieTrailersAsync =
           (trailer) => trailer.type === "Trailer"
         );
         dispatch(setMovieTrailer(trailers));
+        dispatch(setStatus("data"));
+      } else {
+        dispatch(setStatus("error"));
+      }
+    } catch {
+      dispatch(setStatus("error"));
+    }
+  };
+
+export const FetchSelectedMovieAsync =
+  (movieId: number): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const url = `${movieId}?language=en-US`;
+    try {
+      const { data } = await api.get<SelectedMovieList>(url);
+      if (data) {
+        console.log("data", data);
+        dispatch(setSelectedMovie(data));
         dispatch(setStatus("data"));
       } else {
         dispatch(setStatus("error"));
