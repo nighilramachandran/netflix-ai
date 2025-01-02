@@ -2,7 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
-import { m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 interface MovieListProps {
   list: Movies[];
@@ -10,11 +10,15 @@ interface MovieListProps {
 
 const MoviesList: React.FC<MovieListProps> = ({ list }) => {
   return (
-    <StyledStack>
-      {list.map((el) => {
-        return <MovieCard key={el.id} id={el.id} posterPath={el.poster_path} />;
-      })}
-    </StyledStack>
+    <AnimatePresence>
+      <StyledStack>
+        {list.map((el) => {
+          return (
+            <MovieCard key={el.id} id={el.id} posterPath={el.poster_path} />
+          );
+        })}
+      </StyledStack>
+    </AnimatePresence>
   );
 };
 
