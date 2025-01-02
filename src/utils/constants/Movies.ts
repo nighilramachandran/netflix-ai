@@ -1,6 +1,6 @@
-import { MovieCategory } from "../../interfaces";
+import { MovieCategoryList } from "../../interfaces";
 
-export const MOVIE_CATERGORY: MovieCategory = {
+export const MOVIE_CATERGORY: MovieCategoryList = {
   NOW_PLAYING: { name: "Now Playing", endPoint: "now_playing", page: "1" },
   TOP_RATED: { name: "Trending", endPoint: "top_rated", page: "2" },
   POPULAR: { name: "Popular", endPoint: "popular", page: "2" },
