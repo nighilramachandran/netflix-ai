@@ -31,7 +31,11 @@ const Layout: React.FC = () => {
   }, [HOME, ROOT, dispatch, navigate]);
   return (
     <>
-      <Container>
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={{ padding: "0 35px" }} //
+      >
         <Header />
         <Outlet />
       </Container>
