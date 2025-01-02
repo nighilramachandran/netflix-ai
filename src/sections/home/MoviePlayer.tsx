@@ -33,7 +33,7 @@ const MoviePlayer: React.FC = () => {
   return (
     <MoviePlayerWrapper>
       <StyledBox>
-        {movieTrailer && <VedioPlayer param={movieTrailerKey} />}
+        {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
       </StyledBox>
     </MoviePlayerWrapper>
   );

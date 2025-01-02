@@ -2,6 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
+import { m } from "framer-motion";
 
 interface MovieListProps {
   list: Movies[];

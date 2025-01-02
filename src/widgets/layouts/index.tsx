@@ -17,7 +17,10 @@ const Layout: React.FC = () => {
 
   useEffect(() => {
     // Event Listern for login,sigup and signout
+
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+      // console.log("location", location);
+
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(AddUserFunc({ uid, email, displayName }));

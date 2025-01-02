@@ -1,7 +1,7 @@
 import React from "react";
 
-const WatchMovie: React.FC = () => {
+const MovieDetailPage: React.FC = () => {
   return <div>WatchMovie</div>;
 };
 
-export default WatchMovie;
+export default MovieDetailPage;
