@@ -5,36 +5,20 @@ import { useAppDispatch } from "../../redux/hooks";
 import { FetchMovieCategoriesAsync } from "../../redux/movies";
 import { MovieCategoryList } from "../../interfaces";
 
-const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
-
-// const movieCategory: MovieCategoryList[] = [
-//   { name: "Trending", endPoint: TOP_RATED, page: "2" },
-//   {
-//     name: "Popular",
-//     endPoint: POPULAR,
-//     page: "2",
-//   },
-//   {
-//     name: "Now Playing",
-//     endPoint: NOW_PLAYING,
-//     page: "1",
-//   },
-//   {
-//     name: "Up Coming",
-//     endPoint: UP_COMING,
-//     page: "2",
-//   },
-// ];
+const { POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
 const MovieList: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   movieCategory.forEach((category) => {
-  //     console.log("cat", category);
-  //     // dispatch(FetchMovieCategoriesAsync(cat.endPoint, cat.page));
-  //   });
-  // }, []);
+  // Now Playing category already in store
+  const categoryToLoad: MovieCategoryList[] = [POPULAR, TOP_RATED, UP_COMING];
+
+  useEffect(() => {
+    categoryToLoad.forEach((category) => {
+      const { endPoint, page } = category;
+      dispatch(FetchMovieCategoriesAsync(endPoint, page));
+    });
+  }, []);
   return <Typography>MovieList</Typography>;
 };
 
