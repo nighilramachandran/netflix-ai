@@ -16,12 +16,7 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(({ id, posterPath }) => {
   const navigate = useNavigate();
 
   const handleNavigate = async (id: number) => {
-    try {
-      await preloadImage(IMG_URL + posterPath);
-      navigate(`/${HOME}/${id}`, { state: { posterPath } });
-    } catch (error) {
-      console.log("error", error);
-    }
+    navigate(`/${HOME}/${id}`, { state: { posterPath } });
   };
 
   return (
@@ -41,14 +36,6 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(({ id, posterPath }) => {
     </StyledCardBox>
   );
 });
-
-const preloadImage = (src: string): Promise<void> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => resolve();
-  });
-};
 
 const StyledCardBox = styled(m(Box))(() => ({
   width: 160,

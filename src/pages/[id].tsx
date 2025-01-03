@@ -6,6 +6,7 @@ import Grid2 from "@mui/material/Grid2";
 import { IMG_URL } from "../utils/constants/Global";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FetchSelectedMovieAsync } from "../redux/movies";
+import { imageCache } from "../utils/helpers/CacheImage";
 
 interface ImageContainerProps {
   id: number;
@@ -22,6 +23,8 @@ const MovieDetailPage: React.FC = () => {
   const { selectedMovie } = useAppSelector((state) => state.Movies);
 
   console.log("selectedMovie", selectedMovie);
+
+  console.log("imageCache", imageCache);
 
   useEffect(() => {
     if (id) dispatch(FetchSelectedMovieAsync(parseInt(id)));

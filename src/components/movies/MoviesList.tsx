@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Grid2, Stack, styled } from "@mui/material";
 import { AnimatePresence, m } from "framer-motion";
+import { imageCache } from "../../utils/helpers/CacheImage";
+import { ClearCachedImage } from "../../utils/helpers/ClearCachedImage";
 
 interface MovieListProps {
   list: Movies[];
 }
 
 const MoviesList: React.FC<MovieListProps> = ({ list }) => {
+  console.log("imageCache", imageCache);
+
+  // useEffect(() => {
+  //   return () => {
+  //     list.forEach((el) => {
+  //       ClearCachedImage(el.id);
+  //     });
+  //   };
+  // }, [list]);
+
   return (
     <AnimatePresence>
       <StyledStack>

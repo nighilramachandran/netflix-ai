@@ -6,4 +6,4 @@ export const BG_URL =
 
 export const IMG_URL = "https://image.tmdb.org/t/p/w500/";
 
-const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+export const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
