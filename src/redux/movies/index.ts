@@ -162,7 +162,7 @@ export const FetchMovieTrailersAsync =
   };
 
 export const FetchSelectedMovieAsync =
-  (movieId: number): AppThunk =>
+  (movieId: string): AppThunk =>
   async (dispatch) => {
     dispatch(setStatus("loading"));
     const url = `${movieId}?language=en-US`;

@@ -33,7 +33,9 @@ const MoviesList: React.FC<MovieListProps> = ({ list }) => {
               layoutId={`grid-container-${el.id}`}
             >
               <StyledGrid2 layoutId={`grid-item-left-${el.id}`}>
-                <MovieCard id={el.id} posterPath={el.poster_path} />
+                {imageCache.has(el.id) && (
+                  <MovieCard id={el.id} cachedImage={imageCache.get(el.id)} />
+                )}
               </StyledGrid2>
               <StyledGrid2 layoutId={`grid-item-right-${el.id}`}></StyledGrid2>
             </StyledGrid2>

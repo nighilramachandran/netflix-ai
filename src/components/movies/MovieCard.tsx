@@ -7,35 +7,37 @@ import { ROUTES } from "../../utils/constants/Routes";
 
 interface MovieCardProps {
   id: number;
-  posterPath: string;
+  cachedImage: string | undefined;
 }
 
 const { HOME } = ROUTES;
 
-const MovieCard: React.FC<MovieCardProps> = React.memo(({ id, posterPath }) => {
-  const navigate = useNavigate();
+const MovieCard: React.FC<MovieCardProps> = React.memo(
+  ({ id, cachedImage }) => {
+    const navigate = useNavigate();
 
-  const handleNavigate = async (id: number) => {
-    navigate(`/${HOME}/${id}`, { state: { posterPath } });
-  };
+    const handleNavigate = async (id: number) => {
+      navigate(`/${HOME}/${id}`);
+    };
 
-  return (
-    <StyledCardBox
-      onClick={() => handleNavigate(id)}
-      layoutId={`card-container-${id}`}
-    >
-      <AnimatedInnerBox
-        whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
+    return (
+      <StyledCardBox
+        onClick={() => handleNavigate(id)}
+        layoutId={`card-container-${id}`}
       >
-        <m.img
-          src={IMG_URL + posterPath}
-          alt="Movie Card"
-          layoutId={`card-image-${id}`}
-        />
-      </AnimatedInnerBox>
-    </StyledCardBox>
-  );
-});
+        <AnimatedInnerBox
+          whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
+        >
+          <m.img
+            src={cachedImage}
+            alt="Movie Card"
+            layoutId={`card-image-${id}`}
+          />
+        </AnimatedInnerBox>
+      </StyledCardBox>
+    );
+  }
+);
 
 const StyledCardBox = styled(m(Box))(() => ({
   width: 160,

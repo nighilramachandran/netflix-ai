@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { m } from "framer-motion";
 import { Box, styled, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
-import { IMG_URL } from "../utils/constants/Global";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FetchSelectedMovieAsync } from "../redux/movies";
 import { imageCache } from "../utils/helpers/CacheImage";
+import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 
 interface ImageContainerProps {
-  id: number;
-  posterPath: string;
+  id: string;
+  blobUrlProp: string;
 }
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const posterPath = location.state?.posterPath;
+
+  const [blobUrl, setBlobUrl] = useState<string>();
 
   const dispatch = useAppDispatch();
 
@@ -27,15 +27,34 @@ const MovieDetailPage: React.FC = () => {
   console.log("imageCache", imageCache);
 
   useEffect(() => {
-    if (id) dispatch(FetchSelectedMovieAsync(parseInt(id)));
+    if (id) {
+      dispatch(FetchSelectedMovieAsync(id));
+      setBlobUrl(imageCache.get(parseInt(id)));
+    }
   }, [id, dispatch]);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (selectedMovie?.poster_path && id && !imageCache.has(parseInt(id))) {
+        try {
+          const blobUrl = await FetchAndCacheImage(
+            parseInt(id),
+            selectedMovie?.poster_path!
+          );
+          setBlobUrl(blobUrl);
+        } catch (error) {
+          console.error("Error caching image:", error);
+        }
+      }
+    };
+
+    fetchImage();
+  }, [selectedMovie, id]);
 
   return (
     <StyledGrid2 layoutId={`grid-container-${id}`}>
       <StyledGrid2 layoutId={`grid-item-left-${id}`} size={{ xs: 12, lg: 6 }}>
-        {posterPath && id && (
-          <ImageContainer id={parseInt(id)} posterPath={posterPath} />
-        )}
+        {id && blobUrl && <CardContainer id={id} blobUrlProp={blobUrl} />}
       </StyledGrid2>
       <StyledGrid2 layoutId={`grid-item-right-${id}`} size={{ xs: 12, lg: 6 }}>
         <Typography></Typography>
@@ -45,20 +64,20 @@ const MovieDetailPage: React.FC = () => {
 };
 
 // components
-const ImageContainer: React.FC<ImageContainerProps> = ({ id, posterPath }) => {
+const CardContainer: React.FC<ImageContainerProps> = ({ id, blobUrlProp }) => {
   return (
-    <StyledCardBox layoutId={`card-image-${id}`}>
-      {posterPath ? (
-        <m.img src={IMG_URL + posterPath} alt="Movie Card" />
+    <StyledCardContainerBox layoutId={`card-image-${id}`}>
+      {imageCache.has(parseInt(id)) ? (
+        <m.img src={blobUrlProp} alt="Movie Card" />
       ) : (
         <Placeholder>Image not available</Placeholder>
       )}
-    </StyledCardBox>
+    </StyledCardContainerBox>
   );
 };
 
 // styles
-const StyledCardBox = styled(m(Box))(() => ({
+const StyledCardContainerBox = styled(m(Box))(() => ({
   width: "100%",
   maxWidth: 500,
   height: "100%",
@@ -66,7 +85,6 @@ const StyledCardBox = styled(m(Box))(() => ({
   maxHeight: 750,
   borderRadius: "8px",
   overflow: "hidden",
-  position: "relative",
   flexShrink: 0,
   background: "red",
   "&>img": {
