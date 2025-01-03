@@ -20,7 +20,7 @@ const MoviePlayer: React.FC = () => {
 
   const { id: movieId, original_title, overview } = nowPlayingMovies[0] || {};
 
-  const isTitle = original_title && overview;
+  const isTitleAndOverview = original_title && overview;
 
   const movieTrailerKey = movieTrailer[0]?.key;
 
@@ -37,7 +37,9 @@ const MoviePlayer: React.FC = () => {
   }, [dispatch, movieId]);
   return (
     <MoviePlayerWrapper>
-      {isTitle && <MovieTitle title={original_title} overview={overview} />}
+      {isTitleAndOverview && (
+        <MovieTitle title={original_title} overview={overview} />
+      )}
       <StyledBox>
         <Overlay>
           {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
