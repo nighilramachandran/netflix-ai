@@ -32,7 +32,7 @@ const Layout: React.FC = () => {
       }
     });
     return () => unsubscribe();
-  }, [HOME, ROOT, dispatch, navigate]);
+  }, [HOME, ROOT, dispatch, location.pathname, navigate]);
   return (
     <>
       <Container maxWidth={false} disableGutters sx={{ padding: "0 35px" }}>

@@ -1,5 +1,4 @@
 import React from "react";
-import { IMG_URL } from "../../utils/constants/Global";
 import { Box, styled } from "@mui/material";
 import { m } from "framer-motion";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { AnimatePresence, LazyMotion, domMax } from "framer-motion";
+import { LazyMotion, domMax } from "framer-motion";
 
 type Props = {
   children: ReactNode;

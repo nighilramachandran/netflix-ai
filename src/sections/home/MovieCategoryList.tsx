@@ -28,7 +28,7 @@ const MovieCategoryList: React.FC = () => {
   ];
 
   const allMoviesHaveLength = movieCategories.every(
-    (movieCategory) => movieCategory.movies.length > 0
+    (cat) => cat.movies.length > 0
   );
 
   useEffect(() => {

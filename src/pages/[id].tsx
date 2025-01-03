@@ -22,10 +22,6 @@ const MovieDetailPage: React.FC = () => {
 
   const { selectedMovie } = useAppSelector((state) => state.Movies);
 
-  console.log("selectedMovie", selectedMovie);
-
-  console.log("imageCache", imageCache);
-
   useEffect(() => {
     if (id) {
       dispatch(FetchSelectedMovieAsync(id));
