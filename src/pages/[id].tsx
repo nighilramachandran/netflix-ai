@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { m } from "framer-motion";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
 import { IMG_CDN_URL } from "../utils/constants/Global";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FetchSelectedMovieAsync } from "../redux/movies";
 
 interface ImageContainerProps {
@@ -19,45 +19,34 @@ const MovieDetailPage: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const { selectedMovie } = useAppSelector((state) => state.Movies);
+
+  console.log("selectedMovie", selectedMovie);
+
   useEffect(() => {
     if (id) dispatch(FetchSelectedMovieAsync(parseInt(id)));
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
-    <>
-      {/* <m.div layoutId={`card-container-${id}`}> */}
-      {/* <Grid2 container>
-        <Grid2 size={{ xs: 12, lg: 6 }}> */}
-      {/* <ImageContainer id={posterPath} posterPath={posterPath} /> */}
-      <StyledCardBox layoutId={`card-container-${id}`}>
-        {posterPath ? (
-          <m.img
-            src={IMG_CDN_URL + posterPath}
-            alt="Movie Card"
-            layoutId={`card-image-${id}`}
-          />
-        ) : (
-          <Placeholder>Image not available</Placeholder>
+    <StyledGrid2 layoutId={`grid-container-${id}`}>
+      <StyledGrid2 layoutId={`grid-item-left-${id}`} size={{ xs: 12, lg: 6 }}>
+        {posterPath && id && (
+          <ImageContainer id={parseInt(id)} posterPath={posterPath} />
         )}
-      </StyledCardBox>
-      {/* </Grid2>
-      </Grid2> */}
-      {/* </m.div> */}
-    </>
+      </StyledGrid2>
+      <StyledGrid2 layoutId={`grid-item-right-${id}`} size={{ xs: 12, lg: 6 }}>
+        <Typography></Typography>
+      </StyledGrid2>
+    </StyledGrid2>
   );
 };
 
 // components
 const ImageContainer: React.FC<ImageContainerProps> = ({ id, posterPath }) => {
   return (
-    // <StyledCardBox>
-    <StyledCardBox layoutId={`card-container-${id}`}>
+    <StyledCardBox layoutId={`card-image-${id}`}>
       {posterPath ? (
-        <m.img
-          src={IMG_CDN_URL + posterPath}
-          alt="Movie Card"
-          layoutId={`card-image-${id}`}
-        />
+        <m.img src={IMG_CDN_URL + posterPath} alt="Movie Card" />
       ) : (
         <Placeholder>Image not available</Placeholder>
       )}
@@ -92,5 +81,7 @@ const Placeholder = styled(Box)(() => ({
   backgroundColor: "#f0f0f0",
   color: "#999",
 }));
+
+const StyledGrid2 = styled(m(Grid2))(() => ({}));
 
 export default MovieDetailPage;

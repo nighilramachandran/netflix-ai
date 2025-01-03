@@ -105,8 +105,6 @@ export const FetchMovieCategoriesAsync =
     try {
       const { data } = await api.get<ApiMovieResponse<Movies>>(url);
       if (data) {
-        console.log("anoter data", data);
-
         dispatchDistributor(dispatch, endPoint, data);
         dispatch(setStatus("data"));
       } else {
@@ -148,7 +146,6 @@ export const FetchSelectedMovieAsync =
     try {
       const { data } = await api.get<SelectedMovieList>(url);
       if (data) {
-        console.log("data", data);
         dispatch(setSelectedMovie(data));
         dispatch(setStatus("data"));
       } else {

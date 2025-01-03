@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
-import { Stack, styled } from "@mui/material";
+import { Grid2, Stack, styled } from "@mui/material";
 import { AnimatePresence, m } from "framer-motion";
 
 interface MovieListProps {
@@ -14,7 +14,17 @@ const MoviesList: React.FC<MovieListProps> = ({ list }) => {
       <StyledStack>
         {list.map((el) => {
           return (
-            <MovieCard key={el.id} id={el.id} posterPath={el.poster_path} />
+            <StyledGrid2
+              container
+              flexShrink={0}
+              key={el.id}
+              layoutId={`grid-container-${el.id}`}
+            >
+              <StyledGrid2 layoutId={`grid-item-left-${el.id}`}>
+                <MovieCard id={el.id} posterPath={el.poster_path} />
+              </StyledGrid2>
+              <StyledGrid2 layoutId={`grid-item-right-${el.id}`}></StyledGrid2>
+            </StyledGrid2>
           );
         })}
       </StyledStack>
@@ -32,4 +42,6 @@ const StyledStack = styled(Stack)(() => ({
   msOverflowStyle: "none",
   scrollbarWidth: "none",
 }));
+
+const StyledGrid2 = styled(m(Grid2))(() => ({}));
 export default MoviesList;

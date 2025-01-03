@@ -41,10 +41,11 @@ const MovieCategoryList: React.FC = () => {
   return (
     <Stack spacing={3} marginTop={2}>
       {allMoviesHaveLength &&
-        movieCategories.map((categoryList) => {
+        movieCategories.map((categoryList, index) => {
           const { category, movies } = categoryList;
+
           return (
-            <Stack spacing={2} key={category}>
+            <Stack spacing={2} key={`${category}-${index}`}>
               <Typography variant="h2">{category}</Typography>
               <MoviesList list={movies} />
             </Stack>
