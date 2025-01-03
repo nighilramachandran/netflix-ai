@@ -19,7 +19,7 @@ interface InitialState {
   topRatedMovies: Movies[];
   upCommingMovies: Movies[];
   movieTrailer: MovieTrailer[];
-  selectedMovie: SelectedMovieList | {};
+  selectedMovie: SelectedMovieList;
 }
 
 let initialState: InitialState = {
