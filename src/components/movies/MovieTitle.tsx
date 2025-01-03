@@ -1,9 +1,9 @@
 import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import MotionViewport from "../animate/MotionViewPort";
 import { m } from "framer-motion";
 import { varFade } from "../animate/variant";
+import WatchNowButton from "../button/WatchNow";
 
 interface MovieTitleProps {
   title: string;
@@ -25,13 +25,7 @@ const MovieTitle: React.FC<MovieTitleProps> = ({ title, overview }) => {
         </Typography>
       </m.div>
       <m.div variants={varFade().inUp}>
-        <Button
-          variant="contained"
-          startIcon={<PlayArrowIcon />}
-          sx={{ width: "100px" }}
-        >
-          Play
-        </Button>
+        <WatchNowButton />
       </m.div>
     </Stack>
   );

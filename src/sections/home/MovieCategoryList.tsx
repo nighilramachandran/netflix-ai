@@ -39,7 +39,7 @@ const MovieCategoryList: React.FC = () => {
   }, [dispatch, moviecategoryToFetch]);
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} marginTop={2}>
       {allMoviesHaveLength &&
         movieCategories.map((categoryList) => {
           const { category, movies } = categoryList;
