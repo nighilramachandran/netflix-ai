@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
 import { HEADER_SPACINGS } from "../../utils/constants/Config";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
+import { Overlay } from "../../widgets/styles/Overlay";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +34,9 @@ const MoviePlayer: React.FC = () => {
   return (
     <MoviePlayerWrapper>
       <StyledBox>
-        {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
+        <Overlay>
+          {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
+        </Overlay>
       </StyledBox>
     </MoviePlayerWrapper>
   );
@@ -56,16 +59,6 @@ const MoviePlayerWrapper = styled(Box)(() => ({
   left: 0,
   minHeight: "542px",
   overflow: "hidden",
-  // background: "white",
-  // "::before": {
-  //   content: '""',
-  //   position: "absolute",
-  //   top: 0,
-  //   left: 0,
-  //   right: 0,
-  //   height: "10%",
-  //   zIndex: 1,
-  //   background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent)",
-  // },
 }));
+
 export default MoviePlayer;
