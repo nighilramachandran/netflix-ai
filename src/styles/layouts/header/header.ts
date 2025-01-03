@@ -5,7 +5,7 @@ import { HEADER_SPACINGS } from "../../../utils/constants/Config";
 
 // AppBar
 export const appBarStyles: SxProps<Theme> = {
-  position: "sticky",
+  position: "relative",
   bgcolor: "background.header",
   boxShadow: "none",
 };

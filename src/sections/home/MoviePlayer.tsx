@@ -9,6 +9,7 @@ import VedioPlayer from "../../components/player/VideoPlayer";
 import { HEADER_SPACINGS } from "../../utils/constants/Config";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { Overlay } from "../../widgets/styles/Overlay";
+import MovieTitle from "../../components/movies/MovieTitle";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,10 @@ const MoviePlayer: React.FC = () => {
     (state) => state.Movies
   );
 
-  const movieId = nowPlayingMovies[0]?.id;
+  const { id: movieId, original_title, overview } = nowPlayingMovies[0] || {};
+
+  const isTitle = original_title && overview;
+
   const movieTrailerKey = movieTrailer[0]?.key;
 
   const { NOW_PLAYING } = MOVIE_CATERGORY;
@@ -33,6 +37,7 @@ const MoviePlayer: React.FC = () => {
   }, [dispatch, movieId]);
   return (
     <MoviePlayerWrapper>
+      {isTitle && <MovieTitle title={original_title} overview={overview} />}
       <StyledBox>
         <Overlay>
           {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
@@ -47,6 +52,7 @@ const StyledBox = styled(Box)(() => ({
   left: 0,
   top: 0,
   height: `calc(65vh + ${HEADER_SPACINGS.H_MAIN_DESKTOP}px + 65px)`,
+  minHeight: "656px",
   width: "100%",
   overflow: "hidden",
   zIndex: -1,

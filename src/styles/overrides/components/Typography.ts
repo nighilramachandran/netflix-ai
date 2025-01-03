@@ -14,6 +14,14 @@ export const typographyOverride: Components<Theme> = {
       h3: {
         fontSize: 20,
       },
+      body1: {
+        fontSize: 35,
+        fontWeight: 700,
+      },
+      body2: {
+        fontSize: 22,
+        fontWeight: 600,
+      },
     },
     variants: [],
   },
