@@ -1,5 +1,5 @@
 import React from "react";
-import { IMG_CDN_URL } from "../../utils/constants/Global";
+import { IMG_URL } from "../../utils/constants/Global";
 import { Box, styled } from "@mui/material";
 import { m } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(({ id, posterPath }) => {
 
   const handleNavigate = async (id: number) => {
     try {
-      await preloadImage(IMG_CDN_URL + posterPath);
+      await preloadImage(IMG_URL + posterPath);
       navigate(`/${HOME}/${id}`, { state: { posterPath } });
     } catch (error) {
       console.log("error", error);
@@ -33,7 +33,7 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(({ id, posterPath }) => {
         whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
       >
         <m.img
-          src={IMG_CDN_URL + posterPath}
+          src={IMG_URL + posterPath}
           alt="Movie Card"
           layoutId={`card-image-${id}`}
         />

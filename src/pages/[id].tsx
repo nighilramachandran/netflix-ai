@@ -3,7 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { m } from "framer-motion";
 import { Box, styled, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
-import { IMG_CDN_URL } from "../utils/constants/Global";
+import { IMG_URL } from "../utils/constants/Global";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FetchSelectedMovieAsync } from "../redux/movies";
 
@@ -46,7 +46,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ id, posterPath }) => {
   return (
     <StyledCardBox layoutId={`card-image-${id}`}>
       {posterPath ? (
-        <m.img src={IMG_CDN_URL + posterPath} alt="Movie Card" />
+        <m.img src={IMG_URL + posterPath} alt="Movie Card" />
       ) : (
         <Placeholder>Image not available</Placeholder>
       )}
