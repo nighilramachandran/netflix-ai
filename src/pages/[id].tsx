@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { m } from "framer-motion";
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FetchSelectedMovieAsync } from "../redux/movies";
 import { imageCache } from "../utils/helpers/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
-
-interface ImageContainerProps {
-  id: string;
-  blobUrlProp: string;
-}
+import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
 
-  const [blobUrl, setBlobUrl] = useState<string>();
+  const [cachedBlobUrl, setCachedBlobUrl] = useState<string>();
 
   const dispatch = useAppDispatch();
 
   const { selectedMovie } = useAppSelector((state) => state.Movies);
 
+  console.log("selectedMovie", selectedMovie);
+
+  // const { title, vote_average, runtime, spoken_languages, overview, tagline } =
+  //   selectedMovie;
+
+  // console.log("title", title);
+
   useEffect(() => {
     if (id) {
       dispatch(FetchSelectedMovieAsync(id));
-      setBlobUrl(imageCache.get(parseInt(id)));
+      setCachedBlobUrl(imageCache.get(parseInt(id)));
     }
   }, [id, dispatch]);
 
@@ -37,7 +40,7 @@ const MovieDetailPage: React.FC = () => {
             parseInt(id),
             selectedMovie?.poster_path!
           );
-          setBlobUrl(blobUrl);
+          setCachedBlobUrl(blobUrl);
         } catch (error) {
           console.error("Error caching image:", error);
         }
@@ -50,25 +53,27 @@ const MovieDetailPage: React.FC = () => {
   return (
     <Grid2 container>
       <Grid2 size={{ xs: 12, lg: 6 }}>
-        <StyledCardContainerBox layoutId={`card-container-${id}`}>
-          <InnerBox layoutId={`card-inner-${id}`}>
-            {id && blobUrl && (
+        <StyledCardBox layoutId={`card-container-${id}`}>
+          <StyledInnerBox layoutId={`card-inner-${id}`}>
+            {id && cachedBlobUrl && (
               <m.img
-                src={blobUrl}
+                src={cachedBlobUrl}
                 alt="Movie Card"
                 layoutId={`card-image-${id}`}
               />
             )}
-          </InnerBox>
-        </StyledCardContainerBox>
+          </StyledInnerBox>
+        </StyledCardBox>
       </Grid2>
-      <Grid2 size={{ xs: 12, lg: 6 }}></Grid2>
+      <Grid2 size={{ xs: 12, lg: 6 }}>
+        <MoviesDetailDesc {...selectedMovie} />
+      </Grid2>
     </Grid2>
   );
 };
 
 // styles
-const StyledCardContainerBox = styled(m(Box))(() => ({
+const StyledCardBox = styled(m(Box))(() => ({
   width: "100%",
   maxWidth: 500,
   height: "100%",
@@ -79,7 +84,7 @@ const StyledCardContainerBox = styled(m(Box))(() => ({
   flexShrink: 0,
 }));
 
-const InnerBox = styled(m(Box))(() => ({
+const StyledInnerBox = styled(m(Box))(() => ({
   width: "100%",
   height: "100%",
   "&>img": {
@@ -87,17 +92,5 @@ const InnerBox = styled(m(Box))(() => ({
     height: "100%",
   },
 }));
-
-const Placeholder = styled(Box)(() => ({
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "#f0f0f0",
-  color: "#999",
-}));
-
-const StyledGrid2 = styled(m(Grid2))(() => ({}));
 
 export default MovieDetailPage;
