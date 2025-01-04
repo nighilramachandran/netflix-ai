@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   ApiMovieResponse,
   ApiMovieTrailerResponse,
+  CastItem,
   MovieCasting,
   Movies,
   MovieTrailer,
@@ -13,7 +14,10 @@ import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { FetchAndCacheImage } from "../../utils/helpers/FetchAndCacheImage";
-import { posterImageCache } from "../../utils/helpers/CacheImage";
+import {
+  castImageCache,
+  posterImageCache,
+} from "../../utils/helpers/CacheImage";
 import { DipatchCache } from "../../utils/helpers/DispatchCache";
 
 interface InitialState {
@@ -182,6 +186,25 @@ export const FetchMovieCastingAsync =
       const { data } = await api.get<MovieCasting>(url);
       if (data) {
         dispatch(setMovieCasting(data));
+        // Dynamically determine properties excluding "id"
+        const props = Object.keys(data).filter(
+          (key) =>
+            key !== "id" && Array.isArray(data[key as keyof MovieCasting])
+        ) as (keyof MovieCasting)[];
+
+        await Promise.all(
+          props.map(async (prop) => {
+            const castItems = data[prop];
+            if (castItems && Array.isArray(castItems)) {
+              await DipatchCache<CastItem>(
+                castItems,
+                "id",
+                "profile_path",
+                castImageCache
+              );
+            }
+          })
+        );
         dispatch(setStatus("data"));
       } else {
         dispatch(setStatus("error"));
