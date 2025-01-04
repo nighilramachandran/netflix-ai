@@ -48,27 +48,22 @@ const MovieDetailPage: React.FC = () => {
   }, [selectedMovie, id]);
 
   return (
-    <StyledGrid2 layoutId={`grid-container-${id}`}>
-      <StyledGrid2 layoutId={`grid-item-left-${id}`} size={{ xs: 12, lg: 6 }}>
-        {id && blobUrl && <CardContainer id={id} blobUrlProp={blobUrl} />}
-      </StyledGrid2>
-      <StyledGrid2 layoutId={`grid-item-right-${id}`} size={{ xs: 12, lg: 6 }}>
-        <Typography></Typography>
-      </StyledGrid2>
-    </StyledGrid2>
-  );
-};
-
-// components
-const CardContainer: React.FC<ImageContainerProps> = ({ id, blobUrlProp }) => {
-  return (
-    <StyledCardContainerBox layoutId={`card-image-${id}`}>
-      {imageCache.has(parseInt(id)) ? (
-        <m.img src={blobUrlProp} alt="Movie Card" />
-      ) : (
-        <Placeholder>Image not available</Placeholder>
-      )}
-    </StyledCardContainerBox>
+    <Grid2 container>
+      <Grid2 size={{ xs: 12, lg: 6 }}>
+        <StyledCardContainerBox layoutId={`card-container-${id}`}>
+          <InnerBox layoutId={`card-inner-${id}`}>
+            {id && blobUrl && (
+              <m.img
+                src={blobUrl}
+                alt="Movie Card"
+                layoutId={`card-image-${id}`}
+              />
+            )}
+          </InnerBox>
+        </StyledCardContainerBox>
+      </Grid2>
+      <Grid2 size={{ xs: 12, lg: 6 }}></Grid2>
+    </Grid2>
   );
 };
 
@@ -78,11 +73,15 @@ const StyledCardContainerBox = styled(m(Box))(() => ({
   maxWidth: 500,
   height: "100%",
   minHeight: 500,
-  maxHeight: 750,
+  maxHeight: 650,
   borderRadius: "8px",
   overflow: "hidden",
   flexShrink: 0,
-  background: "red",
+}));
+
+const InnerBox = styled(m(Box))(() => ({
+  width: "100%",
+  height: "100%",
   "&>img": {
     width: "100%",
     height: "100%",

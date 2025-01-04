@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, styled } from "@mui/material";
-import { m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/Routes";
 
@@ -20,25 +20,28 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(
     };
 
     return (
-      <StyledCardBox
-        onClick={() => handleNavigate(id)}
-        layoutId={`card-container-${id}`}
-      >
-        <AnimatedInnerBox
-          whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
+      <AnimatePresence>
+        <StyledCardContainerBox
+          onClick={() => handleNavigate(id)}
+          layoutId={`card-container-${id}`}
         >
-          <m.img
-            src={cachedImage}
-            alt="Movie Card"
-            layoutId={`card-image-${id}`}
-          />
-        </AnimatedInnerBox>
-      </StyledCardBox>
+          <AnimatedInnerBox
+            whileHover={{ scale: 1.1, transition: { duration: 0.3 } }}
+            layoutId={`card-inner-${id}`}
+          >
+            <m.img
+              src={cachedImage}
+              alt="Movie Card"
+              layoutId={`card-image-${id}`}
+            />
+          </AnimatedInnerBox>
+        </StyledCardContainerBox>
+      </AnimatePresence>
     );
   }
 );
 
-const StyledCardBox = styled(m(Box))(() => ({
+const StyledCardContainerBox = styled(m(Box))(() => ({
   width: 160,
   height: 240,
   borderRadius: "8px",
