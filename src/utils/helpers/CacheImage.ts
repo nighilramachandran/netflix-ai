@@ -1,1 +1,1 @@
-export const imageCache = new Map<number, string>();
+export const posterImageCache = new Map<number, string>();

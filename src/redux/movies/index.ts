@@ -13,7 +13,7 @@ import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { FetchAndCacheImage } from "../../utils/helpers/FetchAndCacheImage";
-import { imageCache } from "../../utils/helpers/CacheImage";
+import { posterImageCache } from "../../utils/helpers/CacheImage";
 
 interface InitialState {
   status: RequestStatus;
@@ -86,7 +86,7 @@ const {
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
 const isImageCached = (id: number): boolean => {
-  return imageCache.has(id);
+  return posterImageCache.has(id);
 };
 
 const dispatchDistributor = async (
@@ -99,7 +99,7 @@ const dispatchDistributor = async (
       data.results.map(async (res) => {
         if (!isImageCached(res.id)) {
           try {
-            await FetchAndCacheImage(res.id, res.poster_path);
+            await FetchAndCacheImage(res.id, res.poster_path, posterImageCache);
           } catch (error) {
             console.error(
               `Failed to cache image for movie ID ${res.id}:`,

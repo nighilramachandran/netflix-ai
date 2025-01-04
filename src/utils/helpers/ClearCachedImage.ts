@@ -1,10 +1,10 @@
-import { imageCache } from "./CacheImage";
+import { posterImageCache } from "./CacheImage";
 // TODO
 // use this function
 export const ClearCachedImage = (movieId: number) => {
-  const blobUrl = imageCache.get(movieId);
+  const blobUrl = posterImageCache.get(movieId);
   if (blobUrl) {
     URL.revokeObjectURL(blobUrl);
-    imageCache.delete(movieId);
+    posterImageCache.delete(movieId);
   }
 };

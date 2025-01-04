@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
 import { m } from "framer-motion";
-import { imageCache } from "../../utils/helpers/CacheImage";
+import { posterImageCache } from "../../utils/helpers/CacheImage";
 
 interface MovieListProps {
   list: Movies[];
@@ -15,8 +15,8 @@ const MoviesList: React.FC<MovieListProps> = ({ list }) => {
       {list.map((el) => {
         return (
           <m.div key={el.id}>
-            {imageCache.has(el.id) && (
-              <MovieCard id={el.id} cachedImage={imageCache.get(el.id)} />
+            {posterImageCache.has(el.id) && (
+              <MovieCard id={el.id} cachedImage={posterImageCache.get(el.id)} />
             )}
           </m.div>
         );

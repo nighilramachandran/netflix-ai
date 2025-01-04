@@ -8,7 +8,7 @@ import {
   FetchMovieCastingAsync,
   FetchSelectedMovieAsync,
 } from "../redux/movies";
-import { imageCache } from "../utils/helpers/CacheImage";
+import { posterImageCache } from "../utils/helpers/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
@@ -28,17 +28,22 @@ const MovieDetailPage: React.FC = () => {
     if (id) {
       dispatch(FetchSelectedMovieAsync(id));
       dispatch(FetchMovieCastingAsync(id));
-      setCachedBlobUrl(imageCache.get(parseInt(id)));
+      setCachedBlobUrl(posterImageCache.get(parseInt(id)));
     }
   }, [id, dispatch]);
 
   useEffect(() => {
     const fetchImage = async () => {
-      if (selectedMovie?.poster_path && id && !imageCache.has(parseInt(id))) {
+      if (
+        selectedMovie?.poster_path &&
+        id &&
+        !posterImageCache.has(parseInt(id))
+      ) {
         try {
           const blobUrl = await FetchAndCacheImage(
             parseInt(id),
-            selectedMovie?.poster_path!
+            selectedMovie?.poster_path!,
+            posterImageCache
           );
           setCachedBlobUrl(blobUrl);
         } catch (error) {
