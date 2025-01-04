@@ -22,6 +22,9 @@ export const typographyOverride: Components<Theme> = {
         fontSize: 22,
         fontWeight: 600,
       },
+      subtitle1: {
+        fontSize: 16,
+      },
     },
     variants: [],
   },

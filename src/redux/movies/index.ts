@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   ApiMovieResponse,
   ApiMovieTrailerResponse,
+  MovieCasting,
   Movies,
   MovieTrailer,
   RequestStatus,
@@ -22,6 +23,7 @@ interface InitialState {
   upCommingMovies: Movies[];
   movieTrailer: MovieTrailer[];
   selectedMovie: SelectedMovieList;
+  movieCasting: MovieCasting;
 }
 
 let initialState: InitialState = {
@@ -32,6 +34,7 @@ let initialState: InitialState = {
   upCommingMovies: [],
   movieTrailer: [],
   selectedMovie: {},
+  movieCasting: {},
 };
 
 const MovieSlice = createSlice({
@@ -63,6 +66,9 @@ const MovieSlice = createSlice({
     ) => {
       state.selectedMovie = payload;
     },
+    setMovieCasting: (state, { payload }: PayloadAction<MovieCasting>) => {
+      state.movieCasting = payload;
+    },
   },
 });
 
@@ -74,6 +80,7 @@ const {
   setUpComingMovies,
   setMovieTrailer,
   setSelectedMovie,
+  setMovieCasting,
 } = MovieSlice.actions;
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
@@ -170,6 +177,24 @@ export const FetchSelectedMovieAsync =
       const { data } = await api.get<SelectedMovieList>(url);
       if (data) {
         dispatch(setSelectedMovie(data));
+        dispatch(setStatus("data"));
+      } else {
+        dispatch(setStatus("error"));
+      }
+    } catch {
+      dispatch(setStatus("error"));
+    }
+  };
+
+export const FetchMovieCastingAsync =
+  (movieId: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const url = `${movieId}/credits?language=en-US`;
+    try {
+      const { data } = await api.get<MovieCasting>(url);
+      if (data) {
+        dispatch(setMovieCasting(data));
         dispatch(setStatus("data"));
       } else {
         dispatch(setStatus("error"));

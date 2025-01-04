@@ -117,3 +117,23 @@ interface Belongstocollection {
   poster_path: string;
   backdrop_path: string;
 }
+
+export interface MovieCasting {
+  id?: number;
+  cast?: CastItem[];
+  crew?: CastItem[];
+}
+export interface CastItem {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}

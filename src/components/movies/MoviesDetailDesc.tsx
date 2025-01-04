@@ -1,7 +1,7 @@
 import React from "react";
 import MotionViewport from "../animate/MotionViewPort";
 import { m } from "framer-motion";
-import { Chip, Stack, SvgIcon, Typography } from "@mui/material";
+import { Chip, Stack, Typography } from "@mui/material";
 import { varFade } from "../animate/variant";
 import WatchNowButton from "../button/WatchNow";
 import { SelectedMovieList } from "../../interfaces";

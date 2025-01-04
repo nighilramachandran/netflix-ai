@@ -20,6 +20,7 @@
     "firebase": "^11.1.0",
     "formik": "^2.4.6",
     "framer-motion": "^11.15.0",
+    "lodash": "^4.17.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
@@ -51,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.14"
   }
 }
