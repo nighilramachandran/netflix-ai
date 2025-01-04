@@ -1,5 +1,4 @@
 import { IMG_URL, PROXY_URL } from "../constants/Global";
-import { posterImageCache } from "./CacheImage";
 
 export const FetchAndCacheImage = async (
   movieId: number,

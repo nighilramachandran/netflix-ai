@@ -33,12 +33,11 @@ const MovieDetailPage: React.FC = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
+    const truthy =
+      selectedMovie?.poster_path && id && !posterImageCache.has(parseInt(id));
+
     const fetchImage = async () => {
-      if (
-        selectedMovie?.poster_path &&
-        id &&
-        !posterImageCache.has(parseInt(id))
-      ) {
+      if (truthy) {
         try {
           const blobUrl = await FetchAndCacheImage(
             parseInt(id),

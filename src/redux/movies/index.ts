@@ -14,6 +14,7 @@ import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { FetchAndCacheImage } from "../../utils/helpers/FetchAndCacheImage";
 import { posterImageCache } from "../../utils/helpers/CacheImage";
+import { DipatchCache } from "../../utils/helpers/DispatchCache";
 
 interface InitialState {
   status: RequestStatus;
@@ -85,31 +86,17 @@ const {
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
-const isImageCached = (id: number): boolean => {
-  return posterImageCache.has(id);
-};
-
 const dispatchDistributor = async (
   dispatch: any,
   endPoint: string,
   data: ApiMovieResponse<Movies>
 ) => {
-  if (data?.results && data.results.length > 0) {
-    await Promise.all(
-      data.results.map(async (res) => {
-        if (!isImageCached(res.id)) {
-          try {
-            await FetchAndCacheImage(res.id, res.poster_path, posterImageCache);
-          } catch (error) {
-            console.error(
-              `Failed to cache image for movie ID ${res.id}:`,
-              error
-            );
-          }
-        }
-      })
-    );
-  }
+  await DipatchCache<Movies>(
+    data?.results,
+    "id",
+    "poster_path",
+    posterImageCache
+  );
 
   switch (endPoint) {
     case NOW_PLAYING.endPoint:
