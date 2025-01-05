@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CastItem, MovieCasting } from "../../interfaces";
 import _ from "lodash";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { IMG_URL } from "../../utils/constants/Global";
+import { castImageCache } from "../../utils/helpers/CacheImage";
 
 interface CastingProps {
   name: string;
@@ -25,6 +26,12 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
     { name: "Top Actors", members: top5Casting },
     { name: "Top Crew", members: top5Crew },
   ];
+
+  useEffect(() => {
+    console.log("castImageCache", castImageCache);
+
+    return () => {};
+  }, []);
 
   return (
     <Stack>

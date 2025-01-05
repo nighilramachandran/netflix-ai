@@ -16,7 +16,7 @@ export const DipatchCache = async <T>(
         const id = item[idKey] as unknown as number;
         const imagePath = item[imagePathKey] as unknown as string;
 
-        if (!isImageCached(id, cacheMap)) {
+        if (!isImageCached(id, cacheMap) && imagePath) {
           try {
             await FetchAndCacheImage(id, imagePath, cacheMap);
           } catch (error) {

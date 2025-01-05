@@ -13,7 +13,6 @@ import {
 import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
-import { FetchAndCacheImage } from "../../utils/helpers/FetchAndCacheImage";
 import {
   castImageCache,
   posterImageCache,
@@ -186,7 +185,7 @@ export const FetchMovieCastingAsync =
       const { data } = await api.get<MovieCasting>(url);
       if (data) {
         dispatch(setMovieCasting(data));
-        // Dynamically determine properties excluding "id"
+
         const props = Object.keys(data).filter(
           (key) =>
             key !== "id" && Array.isArray(data[key as keyof MovieCasting])
