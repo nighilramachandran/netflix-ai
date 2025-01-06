@@ -4,6 +4,7 @@ import {
   ApiMovieTrailerResponse,
   CastItem,
   MovieCasting,
+  MovieCategoryListItem,
   Movies,
   MovieTrailer,
   RequestStatus,
@@ -129,17 +130,31 @@ const dispatchDistributor = async (
 export const FetchMovieCategoriesAsync =
   (endPoint: string, page: string): AppThunk =>
   async (dispatch) => {
-    dispatch(setStatus("loading"));
     const url = `${endPoint}?language=en-US&page=${page}`;
     try {
       const { data } = await api.get<ApiMovieResponse<Movies>>(url);
       if (data) {
-        dispatchDistributor(dispatch, endPoint, data);
-        dispatch(setStatus("data"));
-      } else {
-        dispatch(setStatus("error"));
+        await dispatchDistributor(dispatch, endPoint, data);
       }
-    } catch {
+    } catch (error) {
+      console.error("Error fetching movie categories:", error);
+    }
+  };
+
+export const FetchAllMovieCategoriesAsync =
+  (categories: MovieCategoryListItem[]): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    try {
+      await Promise.all(
+        categories.map((category) => {
+          const { endPoint, page } = category;
+          return dispatch(FetchMovieCategoriesAsync(endPoint, page));
+        })
+      );
+      dispatch(setStatus("data"));
+    } catch (error) {
+      console.error("Error fetching all movie categories:", error);
       dispatch(setStatus("error"));
     }
   };
@@ -147,7 +162,6 @@ export const FetchMovieCategoriesAsync =
 export const FetchMovieTrailersAsync =
   (movieId: number): AppThunk =>
   async (dispatch) => {
-    dispatch(setStatus("loading"));
     const url = `${movieId}/videos?language=en-US`;
     try {
       const { data } = await api.get<ApiMovieTrailerResponse<MovieTrailer>>(
@@ -158,37 +172,29 @@ export const FetchMovieTrailersAsync =
           (trailer) => trailer.type === "Trailer"
         );
         dispatch(setMovieTrailer(trailers));
-        dispatch(setStatus("data"));
-      } else {
-        dispatch(setStatus("error"));
       }
-    } catch {
-      dispatch(setStatus("error"));
+    } catch (error) {
+      console.error("Error fetching movie Trailers:", error);
     }
   };
 
 export const FetchSelectedMovieAsync =
   (movieId: string): AppThunk =>
   async (dispatch) => {
-    dispatch(setStatus("loading"));
     const url = `${movieId}?language=en-US`;
     try {
       const { data } = await api.get<SelectedMovieList>(url);
       if (data) {
         dispatch(setSelectedMovie(data));
-        dispatch(setStatus("data"));
-      } else {
-        dispatch(setStatus("error"));
       }
-    } catch {
-      dispatch(setStatus("error"));
+    } catch (error) {
+      console.error("Error fetching selected movie:", error);
     }
   };
 
 export const FetchMovieCastingAsync =
   (movieId: string): AppThunk =>
   async (dispatch) => {
-    dispatch(setStatus("loading"));
     const url = `${movieId}/credits?language=en-US`;
     try {
       const { data } = await api.get<MovieCasting>(url);
@@ -213,12 +219,9 @@ export const FetchMovieCastingAsync =
             }
           })
         );
-        dispatch(setStatus("data"));
-      } else {
-        dispatch(setStatus("error"));
       }
-    } catch {
-      dispatch(setStatus("error"));
+    } catch (error) {
+      console.error("Error fetching movie casting:", error);
     }
   };
 
