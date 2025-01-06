@@ -13,6 +13,10 @@ interface CastingProps {
   members: CastItem[];
 }
 
+interface CastingDetailProps extends MovieCasting {
+  cachedBlobs: Map<number, string>;
+}
+
 const top = 5;
 
 const getTopItems = (
@@ -34,19 +38,13 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
     { name: "Top Crew", members: getTopItems(crew, top) },
   ];
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return (
-    <Stack component={MotionViewport} spacing={2}>
+    <Stack spacing={2}>
       {casting.length > 0 &&
         casting?.map((el) => {
           return (
             <Box key={el.name} textAlign={"center"}>
-              <m.div variants={varFade().inUp}>
-                <Typography margin={4}>{el.name}</Typography>
-              </m.div>
+              <Typography margin={4}>{el.name}</Typography>
               <Stack
                 flexDirection={"row"}
                 flexWrap="wrap"
@@ -55,14 +53,12 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
               >
                 {el?.members.map((mem, index) => {
                   return (
-                    <m.div variants={varFade().inUp} key={`${mem.id}_${index}`}>
-                      <Card
-                        path={mem.profile_path}
-                        o_name={mem.original_name}
-                        character={mem.character}
-                        dept={mem.known_for_department}
-                      />
-                    </m.div>
+                    <Card
+                      path={mem.profile_path}
+                      o_name={mem.original_name}
+                      character={mem.character}
+                      dept={mem.known_for_department}
+                    />
                   );
                 })}
               </Stack>

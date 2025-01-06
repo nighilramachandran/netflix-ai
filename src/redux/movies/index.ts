@@ -191,24 +191,24 @@ export const FetchMovieCastingAsync =
       if (data) {
         dispatch(setMovieCasting(data));
 
-        const props = Object.keys(data).filter(
-          (key) =>
-            key !== "id" && Array.isArray(data[key as keyof MovieCasting])
-        ) as (keyof MovieCasting)[];
+        // const props = Object.keys(data).filter(
+        //   (key) =>
+        //     key !== "id" && Array.isArray(data[key as keyof MovieCasting])
+        // ) as (keyof MovieCasting)[];
 
-        await Promise.all(
-          props.map(async (prop) => {
-            const castItems = data[prop];
-            if (castItems && Array.isArray(castItems)) {
-              await handleCacheDispatch<CastItem>(
-                castItems,
-                "id",
-                "profile_path",
-                castImageCache
-              );
-            }
-          })
-        );
+        // await Promise.all(
+        //   props.map(async (prop) => {
+        //     const castItems = data[prop];
+        //     if (castItems && Array.isArray(castItems)) {
+        //       await handleCacheDispatch<CastItem>(
+        //         castItems,
+        //         "id",
+        //         "profile_path",
+        //         castImageCache
+        //       );
+        //     }
+        //   })
+        // );
       }
     } catch (error) {
       console.error("Error fetching movie casting:", error);

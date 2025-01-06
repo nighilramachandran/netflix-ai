@@ -8,7 +8,7 @@ import {
   FetchMovieCastingAsync,
   FetchSelectedMovieAsync,
 } from "../redux/movies";
-import { posterImageCache } from "../utils/helpers/CacheImage";
+import { castImageCache, posterImageCache } from "../utils/helpers/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
@@ -22,7 +22,7 @@ const gridItemStyles: CSSProperties = {
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
 
-  const [cachedBlobUrl, setCachedBlobUrl] = useState<string>();
+  const [cachedPosterBlobUrl, setCachedPosterBlobUrl] = useState<string>();
 
   const dispatch = useAppDispatch();
 
@@ -34,7 +34,7 @@ const MovieDetailPage: React.FC = () => {
     if (id) {
       dispatch(FetchSelectedMovieAsync(id));
       dispatch(FetchMovieCastingAsync(id));
-      setCachedBlobUrl(posterImageCache.get(parseInt(id)));
+      setCachedPosterBlobUrl(posterImageCache.get(parseInt(id)));
     }
   }, [id, dispatch]);
 
@@ -50,7 +50,7 @@ const MovieDetailPage: React.FC = () => {
             selectedMovie?.poster_path!,
             posterImageCache
           );
-          setCachedBlobUrl(blobUrl);
+          setCachedPosterBlobUrl(blobUrl);
         } catch (error) {
           console.error("Error caching image:", error);
         }
@@ -66,9 +66,9 @@ const MovieDetailPage: React.FC = () => {
         <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
           <StyledCardBox layoutId={`card-container-${id}`}>
             <StyledInnerBox layoutId={`card-inner-${id}`}>
-              {id && cachedBlobUrl && (
+              {id && cachedPosterBlobUrl && (
                 <m.img
-                  src={cachedBlobUrl}
+                  src={cachedPosterBlobUrl}
                   alt="Movie Card"
                   layoutId={`card-image-${id}`}
                 />

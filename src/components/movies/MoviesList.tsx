@@ -15,15 +15,14 @@ const MoviesList: React.FC<MovieListProps> = ({ list }) => {
       <AnimatePresence>
         {list.map((el) => {
           return (
-            <>
+            <div key={el.id}>
               {posterImageCache.has(el.id) && (
                 <MovieCard
-                  key={el.id}
                   id={el.id}
                   cachedImage={posterImageCache.get(el.id)}
                 />
               )}
-            </>
+            </div>
           );
         })}
       </AnimatePresence>
