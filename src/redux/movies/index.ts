@@ -127,29 +127,19 @@ const dispatchDistributor = async (
   }
 };
 
-export const FetchMovieCategoriesAsync =
-  (endPoint: string, page: string): AppThunk =>
-  async (dispatch) => {
-    const url = `${endPoint}?language=en-US&page=${page}`;
-    try {
-      const { data } = await api.get<ApiMovieResponse<Movies>>(url);
-      if (data) {
-        await dispatchDistributor(dispatch, endPoint, data);
-      }
-    } catch (error) {
-      console.error("Error fetching movie categories:", error);
-    }
-  };
-
 export const FetchAllMovieCategoriesAsync =
   (categories: MovieCategoryListItem[]): AppThunk =>
   async (dispatch) => {
     dispatch(setStatus("loading"));
     try {
       await Promise.all(
-        categories.map((category) => {
+        categories.map(async (category) => {
           const { endPoint, page } = category;
-          return dispatch(FetchMovieCategoriesAsync(endPoint, page));
+          const url = `${endPoint}?language=en-US&page=${page}`;
+          const { data } = await api.get<ApiMovieResponse<Movies>>(url);
+          if (data) {
+            await dispatchDistributor(dispatch, endPoint, data);
+          }
         })
       );
       dispatch(setStatus("data"));

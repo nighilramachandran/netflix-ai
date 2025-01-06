@@ -1,13 +1,9 @@
 import { Box, styled } from "@mui/material";
 import React, { useEffect } from "react";
-import {
-  FetchMovieCategoriesAsync,
-  FetchMovieTrailersAsync,
-} from "../../redux/movies";
+import { FetchMovieTrailersAsync } from "../../redux/movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
 import { HEADER_SPACINGS } from "../../utils/constants/Config";
-import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { Overlay } from "../../widgets/styles/Overlay";
 import MovieTitle from "../../components/movies/MovieTitle";
 
@@ -23,12 +19,6 @@ const MoviePlayer: React.FC = () => {
   const isTitleAndOverview = original_title && overview;
 
   const movieTrailerKey = movieTrailer[0]?.key;
-
-  const { NOW_PLAYING } = MOVIE_CATERGORY;
-
-  useEffect(() => {
-    dispatch(FetchMovieCategoriesAsync(NOW_PLAYING.endPoint, NOW_PLAYING.page));
-  }, [dispatch, NOW_PLAYING.endPoint, NOW_PLAYING.page]);
 
   useEffect(() => {
     if (movieId) {

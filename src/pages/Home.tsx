@@ -24,11 +24,9 @@ const Home: React.FC = () => {
       dispatch(FetchAllMovieCategoriesAsync(moviecategoryToFetch));
   }, [dispatch, moviecategoryToFetch, status]);
 
-  console.log("posterImageCache", posterImageCache);
-
   return (
     <LoadingBox status={status}>
-      {/* <MoviePlayer /> */}
+      <MoviePlayer />
       <MovieCategoryList />
     </LoadingBox>
   );
