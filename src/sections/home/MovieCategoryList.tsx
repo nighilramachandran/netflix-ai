@@ -38,7 +38,8 @@ const MovieCategoryList: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(FetchAllMovieCategoriesAsync(moviecategoryToFetch));
+    if (status !== "data")
+      dispatch(FetchAllMovieCategoriesAsync(moviecategoryToFetch));
   }, [dispatch, moviecategoryToFetch]);
 
   return (
