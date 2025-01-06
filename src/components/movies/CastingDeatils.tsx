@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { IMG_URL } from "../../utils/constants/Global";
-import { castImageCache } from "../../utils/helpers/CacheImage";
+// import { castImageCache } from "../../utils/helpers/CacheImage";
 
 interface CastingProps {
   name: string;
@@ -28,7 +28,7 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
   ];
 
   useEffect(() => {
-    console.log("castImageCache", castImageCache);
+    // console.log("castImageCache", castImageCache);
 
     return () => {};
   }, []);

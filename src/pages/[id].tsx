@@ -74,9 +74,9 @@ const MovieDetailPage: React.FC = () => {
           <MoviesDetailDesc {...selectedMovie} />
         </Grid2>
       </Grid2>
-      {Object.hasOwn(movieCasting, "crew") && (
+      {/* {Object.hasOwn(movieCasting, "crew") && (
         <CastingDeatils {...movieCasting} />
-      )}
+      )} */}
     </>
   );
 };

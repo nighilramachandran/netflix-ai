@@ -89,12 +89,21 @@ const {
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
+const handleCacheDispatch = async <T>(
+  data: T[] = [],
+  idKey: keyof T,
+  imagePathKey: keyof T,
+  cacheMap: Map<number, string>
+) => {
+  await DipatchCache<T>(data, idKey, imagePathKey, cacheMap);
+};
+
 const dispatchDistributor = async (
   dispatch: any,
   endPoint: string,
   data: ApiMovieResponse<Movies>
 ) => {
-  await DipatchCache<Movies>(
+  await handleCacheDispatch<Movies>(
     data?.results,
     "id",
     "poster_path",
@@ -195,7 +204,7 @@ export const FetchMovieCastingAsync =
           props.map(async (prop) => {
             const castItems = data[prop];
             if (castItems && Array.isArray(castItems)) {
-              await DipatchCache<CastItem>(
+              await handleCacheDispatch<CastItem>(
                 castItems,
                 "id",
                 "profile_path",
