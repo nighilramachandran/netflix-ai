@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MoviePlayer from "../sections/home/MoviePlayer";
 import MovieCategoryList from "../sections/home/MovieCategoryList";
 

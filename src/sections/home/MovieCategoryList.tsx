@@ -18,7 +18,6 @@ const MovieCategoryList: React.FC = () => {
     topRatedMovies,
     upCommingMovies,
   } = useAppSelector((state) => state.Movies);
-  console.log("status", status);
 
   // "Now Playing" category already in store
   const moviecategoryToFetch = useMemo(
@@ -40,7 +39,7 @@ const MovieCategoryList: React.FC = () => {
   useEffect(() => {
     if (status !== "data")
       dispatch(FetchAllMovieCategoriesAsync(moviecategoryToFetch));
-  }, [dispatch, moviecategoryToFetch]);
+  }, [dispatch, moviecategoryToFetch, status]);
 
   return (
     <Stack spacing={3} marginTop={2}>
