@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { m } from "framer-motion";
 import { Box, styled } from "@mui/material";
@@ -12,6 +12,12 @@ import { posterImageCache } from "../utils/helpers/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
+
+const gridItemStyles: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 const MovieDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -57,7 +63,7 @@ const MovieDetailPage: React.FC = () => {
   return (
     <>
       <Grid2 container>
-        <Grid2 size={{ xs: 12, lg: 6 }}>
+        <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
           <StyledCardBox layoutId={`card-container-${id}`}>
             <StyledInnerBox layoutId={`card-inner-${id}`}>
               {id && cachedBlobUrl && (
@@ -70,13 +76,13 @@ const MovieDetailPage: React.FC = () => {
             </StyledInnerBox>
           </StyledCardBox>
         </Grid2>
-        <Grid2 size={{ xs: 12, lg: 6 }}>
+        <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
           <MoviesDetailDesc {...selectedMovie} />
         </Grid2>
       </Grid2>
-      {/* {Object.hasOwn(movieCasting, "crew") && (
+      {Object.hasOwn(movieCasting, "crew") && (
         <CastingDeatils {...movieCasting} />
-      )} */}
+      )}
     </>
   );
 };

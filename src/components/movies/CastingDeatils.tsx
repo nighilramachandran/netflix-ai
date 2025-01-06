@@ -4,42 +4,49 @@ import _ from "lodash";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { IMG_URL } from "../../utils/constants/Global";
-// import { castImageCache } from "../../utils/helpers/CacheImage";
+import { m } from "framer-motion";
+import MotionViewport from "../animate/MotionViewPort";
+import { varFade } from "../animate/variant";
 
 interface CastingProps {
   name: string;
   members: CastItem[];
 }
 
+const top = 5;
+
+const getTopItems = (
+  items: CastItem[] | undefined,
+  top: number
+): CastItem[] => {
+  if (!items) return [];
+  const orderedItems = _.orderBy(items, ["popularity"], ["desc"]);
+  const uniqueItems = _.uniqBy(orderedItems, "name");
+
+  return _.take(uniqueItems, top);
+};
+
 const CastingDeatils: React.FC<MovieCasting> = (props) => {
   const { cast, crew } = props;
 
-  const top = 5;
-
-  const top5Casting: CastItem[] =
-    cast && _.take(_.orderBy(cast, ["popularity"], ["desc"]), top);
-
-  const top5Crew: CastItem[] =
-    crew && _.take(_.orderBy(crew, ["popularity"], ["desc"]), top);
-
   const casting: CastingProps[] = [
-    { name: "Top Actors", members: top5Casting },
-    { name: "Top Crew", members: top5Crew },
+    { name: "Top Actors", members: getTopItems(cast, top) },
+    { name: "Top Crew", members: getTopItems(crew, top) },
   ];
 
   useEffect(() => {
-    // console.log("castImageCache", castImageCache);
-
     return () => {};
   }, []);
 
   return (
-    <Stack>
+    <Stack component={MotionViewport} spacing={2}>
       {casting.length > 0 &&
         casting?.map((el) => {
           return (
             <Box key={el.name} textAlign={"center"}>
-              <Typography margin={2}>{el.name}</Typography>
+              <m.div variants={varFade().inUp}>
+                <Typography margin={4}>{el.name}</Typography>
+              </m.div>
               <Stack
                 flexDirection={"row"}
                 flexWrap="wrap"
@@ -48,13 +55,14 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
               >
                 {el?.members.map((mem, index) => {
                   return (
-                    <Card
-                      key={`${mem.id}_${index}`}
-                      path={mem.profile_path}
-                      o_name={mem.original_name}
-                      character={mem.character}
-                      dept={mem.known_for_department}
-                    />
+                    <m.div variants={varFade().inUp} key={`${mem.id}_${index}`}>
+                      <Card
+                        path={mem.profile_path}
+                        o_name={mem.original_name}
+                        character={mem.character}
+                        dept={mem.known_for_department}
+                      />
+                    </m.div>
                   );
                 })}
               </Stack>
