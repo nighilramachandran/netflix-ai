@@ -12,6 +12,7 @@ import { castImageCache, posterImageCache } from "../utils/helpers/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
+import { ScrollToTop } from "../components/scroll/ScrollToTop";
 
 const gridItemStyles: CSSProperties = {
   display: "flex",
@@ -62,6 +63,7 @@ const MovieDetailPage: React.FC = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Grid2 container>
         <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
           <StyledCardBox layoutId={`card-container-${id}`}>
