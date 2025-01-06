@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CastItem, MovieCasting } from "../../interfaces";
 import _ from "lodash";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { IMG_URL } from "../../utils/constants/Global";
-import { m } from "framer-motion";
-import MotionViewport from "../animate/MotionViewPort";
-import { varFade } from "../animate/variant";
 
 interface CastingProps {
   name: string;
   members: CastItem[];
-}
-
-interface CastingDetailProps extends MovieCasting {
-  cachedBlobs: Map<number, string>;
 }
 
 const top = 5;
@@ -79,7 +72,7 @@ interface CardProps {
 // components
 const Card: React.FC<CardProps> = ({ path, o_name, character, dept }) => {
   return (
-    <Stack>
+    <Stack sx={{ alignItems: "center" }} spacing={1}>
       <StyledCardBox>
         <img
           src={IMG_URL + (path ?? "/bgOGxlpen6HoJUXPEkL1kZrCvdR.jpg")}

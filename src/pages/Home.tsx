@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import MoviePlayer from "../sections/home/MoviePlayer";
 import MovieCategoryList from "../sections/home/MovieCategoryList";
 import { LoadingBox } from "../components/loading-box";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { MOVIE_CATERGORY } from "../utils/constants/Movies";
-import { posterImageCache } from "../utils/helpers/CacheImage";
 import { FetchAllMovieCategoriesAsync } from "../redux/movies";
 
 const Home: React.FC = () => {
@@ -16,7 +15,7 @@ const Home: React.FC = () => {
 
   const moviecategoryToFetch = useMemo(
     () => [NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING],
-    []
+    [NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING]
   );
 
   useEffect(() => {

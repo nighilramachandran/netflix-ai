@@ -2,7 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { posterImageCache } from "../../utils/helpers/CacheImage";
 
 interface MovieListProps {
