@@ -44,6 +44,7 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
                 {el?.members.map((mem, index) => {
                   return (
                     <Card
+                      key={`${el.name}_${index}`}
                       path={mem.profile_path}
                       o_name={mem.original_name}
                       character={mem.character}

@@ -86,7 +86,6 @@ const MovieDetailPage: React.FC = () => {
       {Object.hasOwn(movieCasting, "crew") && (
         <CastingDeatils {...movieCasting} />
       )}
-      {/* <CustomModal></CustomModal> */}
     </>
   );
 };
