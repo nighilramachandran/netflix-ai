@@ -3,6 +3,8 @@ import { Box, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/Routes";
 import { m } from "framer-motion";
+import { useAppDispatch } from "../../redux/hooks";
+import { RemoveSelectedMovie } from "../../redux/movies";
 
 interface MovieCardProps {
   id: number;
@@ -14,9 +16,11 @@ const { HOME } = ROUTES;
 const MovieCard: React.FC<MovieCardProps> = React.memo(
   ({ id, cachedImage }) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleNavigate = async (id: number) => {
       navigate(`/${HOME}/${id}`);
+      dispatch(RemoveSelectedMovie());
     };
 
     return (

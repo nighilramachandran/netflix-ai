@@ -67,6 +67,9 @@ const MovieSlice = createSlice({
     ) => {
       state.selectedMovie = payload;
     },
+    removeSelectedMovie: (state) => {
+      state.selectedMovie = {};
+    },
     setMovieCasting: (state, { payload }: PayloadAction<MovieCasting>) => {
       state.movieCasting = payload;
     },
@@ -82,6 +85,7 @@ const {
   setMovieTrailer,
   setSelectedMovie,
   setMovieCasting,
+  removeSelectedMovie,
 } = MovieSlice.actions;
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
@@ -121,6 +125,10 @@ const dispatchDistributor = async (
       dispatch(setUpComingMovies(data?.results));
       break;
   }
+};
+
+export const RemoveSelectedMovie = (): AppThunk => async (dispatch) => {
+  dispatch(removeSelectedMovie());
 };
 
 export const FetchAllMovieCategoriesAsync =

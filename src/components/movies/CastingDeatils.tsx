@@ -12,10 +12,7 @@ interface CastingProps {
 
 const top = 5;
 
-const getTopItems = (
-  items: CastItem[] | undefined,
-  top: number
-): CastItem[] => {
+const getTopItems = (items: CastItem[], top: number): CastItem[] => {
   if (!items) return [];
   const orderedItems = _.orderBy(items, ["popularity"], ["desc"]);
   const uniqueItems = _.uniqBy(orderedItems, "name");
@@ -27,8 +24,8 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
   const { cast, crew } = props;
 
   const casting: CastingProps[] = [
-    { name: "Top Actors", members: getTopItems(cast, top) },
-    { name: "Top Crew", members: getTopItems(crew, top) },
+    { name: "Top Actors", members: getTopItems(cast!!, top) },
+    { name: "Top Crew", members: getTopItems(crew!!, top) },
   ];
 
   return (
