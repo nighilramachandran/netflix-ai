@@ -2,7 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
-import { m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { posterImageCache } from "../../utils/helpers/CacheImage";
 
 interface MovieListProps {
@@ -12,15 +12,21 @@ interface MovieListProps {
 const MoviesList: React.FC<MovieListProps> = ({ list }) => {
   return (
     <StyledStack>
-      {list.map((el) => {
-        return (
-          <m.div key={el.id}>
-            {posterImageCache.has(el.id) && (
-              <MovieCard id={el.id} cachedImage={posterImageCache.get(el.id)} />
-            )}
-          </m.div>
-        );
-      })}
+      <AnimatePresence>
+        {list.map((el) => {
+          return (
+            <>
+              {posterImageCache.has(el.id) && (
+                <MovieCard
+                  key={el.id}
+                  id={el.id}
+                  cachedImage={posterImageCache.get(el.id)}
+                />
+              )}
+            </>
+          );
+        })}
+      </AnimatePresence>
     </StyledStack>
   );
 };
