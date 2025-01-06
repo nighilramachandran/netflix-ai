@@ -2,6 +2,7 @@ import React from "react";
 import { Box, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/Routes";
+import { m } from "framer-motion";
 
 interface MovieCardProps {
   id: number;
