@@ -18,6 +18,8 @@ const inputBaseStyles: CSSProperties = {
   color: "#fff",
   padding: "5px",
   borderRadius: "4px",
+  minWidth: "190px",
+  margin: 0,
 };
 
 const AiSearch: React.FC = () => {
@@ -73,7 +75,9 @@ const AnimatedSearchBox = styled(m(Box))(() => ({
   padding: "10px",
   width: "100%",
   display: "flex",
+  flexWrap: "wrap",
   alignItems: "center",
+  justifyContent: "center",
   gap: "10px",
   position: "absolute",
   top: "50%",
