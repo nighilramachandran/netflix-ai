@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Button, InputBase, styled, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, InputBase, styled, Box, Backdrop } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { m, Variants } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const searchBoxVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
@@ -12,9 +13,19 @@ const searchBoxVariant: Variants = {
 const AiSearch: React.FC = () => {
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
+
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location]);
 
   return (
     <>
@@ -22,11 +33,15 @@ const AiSearch: React.FC = () => {
         AI Search
       </Button>
 
+      {open && (
+        <StyledBackdrop open={open} onClick={handleClose}></StyledBackdrop>
+      )}
       <AnimatedSearchBox
         transition={{ duration: 0.3, delay: 0.1 }}
         variants={searchBoxVariant}
         initial="hidden"
         animate={open ? "animate" : "exit"}
+        onClick={(event) => event.stopPropagation()}
       >
         <InputBase
           startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
@@ -57,10 +72,18 @@ const AnimatedSearchBox = styled(m(Box))(() => ({
   position: "absolute",
   top: "50%",
   left: "33%",
-  zIndex: 999,
+  zIndex: 1000,
   background: "#fff",
   borderRadius: "10px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+}));
+
+// Styled Backdrop
+const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
+  zIndex: 999,
+  color: "#fff",
+  backdropFilter: "blur(10px)",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
 }));
 
 export default AiSearch;

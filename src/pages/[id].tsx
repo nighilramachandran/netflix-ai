@@ -13,7 +13,6 @@ import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
 import { ScrollToTop } from "../components/scroll/ScrollToTop";
-import { CustomModal } from "../components/custom-modal";
 
 const gridItemStyles: CSSProperties = {
   display: "flex",
