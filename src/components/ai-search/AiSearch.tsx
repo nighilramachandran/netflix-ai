@@ -44,7 +44,10 @@ const AiSearch: React.FC = () => {
       </Button>
 
       {open && (
-        <StyledBackdrop open={open} onClick={handleClose}></StyledBackdrop>
+        <StyledBackdrop
+          open={open}
+          onClick={() => handleClose()}
+        ></StyledBackdrop>
       )}
 
       <AnimatedSearchBox
@@ -80,7 +83,6 @@ const AnimatedSearchBox = styled(m(Box))(() => ({
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
 }));
 
-// Styled Backdrop
 const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
   zIndex: 999,
   color: "#fff",
