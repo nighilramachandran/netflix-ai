@@ -31,9 +31,7 @@ export const paperOverride: Components<Theme> = {
   MuiDialogContent: {
     styleOverrides: {
       root: () => ({
-        "&>p": {
-          height: "100vh",
-        },
+        overflow: "hidden",
       }),
     },
   },
