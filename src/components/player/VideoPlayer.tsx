@@ -1,7 +1,7 @@
 import React from "react";
 
 interface VideoPlayerProps {
-  param: string | number;
+  param?: string | number;
 }
 
 const VedioPlayer: React.FC<VideoPlayerProps> = ({ param }) => {

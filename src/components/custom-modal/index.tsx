@@ -12,6 +12,7 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
 
   return (
     <Dialog
+      sx={{ color: "white" }}
       fullWidth
       {...rest}
       onClose={onClose}
@@ -24,9 +25,9 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
           onClick={onClose}
           sx={{
             position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
+            right: 1,
+            top: 3,
+            zIndex: 3,
           }}
         >
           <CloseIcon />

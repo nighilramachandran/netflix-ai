@@ -1,3 +1,4 @@
+import { Scale } from "@mui/icons-material";
 import { Components, Theme } from "@mui/material/styles";
 
 export const paperOverride: Components<Theme> = {
@@ -7,15 +8,33 @@ export const paperOverride: Components<Theme> = {
         backgroundImage: "none",
         padding: 25,
         background: "background.paper",
-
-        // [theme.breakpoints.down("md")]: {
-        //   padding: theme.spacing(1),
-        // },
-
         borderRadius: theme.shape.borderRadius * 4,
       }),
     },
 
     variants: [],
+  },
+
+  MuiDialog: {
+    styleOverrides: {
+      paper: {
+        width: "100vw",
+        height: "100vh",
+        margin: 0,
+        maxWidth: "none",
+        maxHeight: "none",
+        borderRadius: 0,
+      },
+    },
+  },
+
+  MuiDialogContent: {
+    styleOverrides: {
+      root: () => ({
+        "&>p": {
+          height: "100vh",
+        },
+      }),
+    },
   },
 };

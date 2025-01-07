@@ -20,6 +20,8 @@ const MoviePlayer: React.FC = () => {
 
   const movieTrailerKey = movieTrailer[0]?.key;
 
+  console.log("movieTrailerKey", movieTrailerKey);
+
   useEffect(() => {
     if (movieId) {
       dispatch(FetchMovieTrailersAsync(movieId));

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { CustomModal } from "../custom-modal";
+import VedioPlayer from "../player/VideoPlayer";
 
 const WatchNowButton: React.FC = () => {
   const [openDialoge, setPpenDialoge] = useState<boolean>(false);
@@ -11,8 +12,6 @@ const WatchNowButton: React.FC = () => {
   const HandleClose = () => {
     setPpenDialoge(false);
   };
-
-  console.log("openDialoge", openDialoge);
 
   return (
     <>
@@ -25,7 +24,9 @@ const WatchNowButton: React.FC = () => {
         Watch Now
       </Button>
       <CustomModal open={openDialoge} onClose={HandleClose}>
-        <Typography>asdf</Typography>
+        <Typography>
+          <VedioPlayer param={"TQwSz88ITAE"} />
+        </Typography>
       </CustomModal>
     </>
   );
