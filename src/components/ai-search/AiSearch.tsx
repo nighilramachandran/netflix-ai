@@ -3,11 +3,21 @@ import { Button, InputBase, styled, Box, Backdrop } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import { CSSProperties } from "@mui/material/styles/createTypography";
 
 const searchBoxVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
   animate: { opacity: 1, y: 0, scale: 1 },
   exit: { opacity: 0, y: -50, scale: 0.8, transition: { duration: 0.1 } },
+};
+
+const inputBaseStyles: CSSProperties = {
+  ml: 1,
+  flex: 1,
+  background: "rgb(0 0 0 / 0.76)",
+  color: "#fff",
+  padding: "5px",
+  borderRadius: "4px",
 };
 
 const AiSearch: React.FC = () => {
@@ -36,6 +46,7 @@ const AiSearch: React.FC = () => {
       {open && (
         <StyledBackdrop open={open} onClick={handleClose}></StyledBackdrop>
       )}
+
       <AnimatedSearchBox
         transition={{ duration: 0.3, delay: 0.1 }}
         variants={searchBoxVariant}
@@ -45,14 +56,7 @@ const AiSearch: React.FC = () => {
       >
         <InputBase
           startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
-          sx={{
-            ml: 1,
-            flex: 1,
-            background: "rgb(0 0 0 / 0.76)",
-            color: "#fff",
-            padding: "5px",
-            borderRadius: "4px",
-          }}
+          sx={{ ...inputBaseStyles }}
           placeholder="Search With AI"
           inputProps={{ "aria-label": "Search With AI" }}
         />
@@ -64,14 +68,12 @@ const AiSearch: React.FC = () => {
 
 const AnimatedSearchBox = styled(m(Box))(() => ({
   padding: "10px",
-  maxWidth: "500px",
   width: "100%",
   display: "flex",
   alignItems: "center",
   gap: "10px",
   position: "absolute",
   top: "50%",
-  left: "33%",
   zIndex: 1000,
   background: "#fff",
   borderRadius: "10px",

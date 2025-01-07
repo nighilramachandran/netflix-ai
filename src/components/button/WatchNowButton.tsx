@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { CustomModal } from "../custom-modal";
 import VedioPlayer from "../player/VideoPlayer";

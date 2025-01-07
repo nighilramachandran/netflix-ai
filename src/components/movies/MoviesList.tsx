@@ -33,6 +33,7 @@ const MoviesList: React.FC<MovieListProps> = ({ list }) => {
 const StyledStack = styled(Stack)(() => ({
   flexDirection: "row",
   overflowX: "scroll",
+  overflow: "hidden",
   gap: 20,
   "&::-webkit-scrollbar": {
     display: "none",
