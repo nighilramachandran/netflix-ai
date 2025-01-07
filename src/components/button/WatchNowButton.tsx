@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { CustomModal } from "../custom-modal";
 import VedioPlayer from "../player/VideoPlayer";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchMovieTrailersAsync } from "../../redux/movies";
 
-const WatchNowButton: React.FC = () => {
+interface WatchNowButtonProps {
+  movieId?: number;
+}
+
+const WatchNowButton: React.FC<WatchNowButtonProps> = ({ movieId }) => {
   const [openDialoge, setPpenDialoge] = useState<boolean>(false);
+
+  const { movieTrailer } = useAppSelector((state) => state.Movies);
+  const movieTrailerKey = movieTrailer[0]?.key;
+  const dispatch = useAppDispatch();
   const handleWatch = () => {
     setPpenDialoge((prev) => !prev);
   };
   const HandleClose = () => {
     setPpenDialoge(false);
   };
+
+  useEffect(() => {
+    if (movieId) dispatch(FetchMovieTrailersAsync(movieId));
+  }, [movieId]);
 
   return (
     <>
@@ -24,9 +38,7 @@ const WatchNowButton: React.FC = () => {
         Watch Now
       </Button>
       <CustomModal open={openDialoge} onClose={HandleClose}>
-        <Typography>
-          <VedioPlayer param={"TQwSz88ITAE"} />
-        </Typography>
+        {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
       </CustomModal>
     </>
   );

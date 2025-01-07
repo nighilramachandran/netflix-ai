@@ -3,7 +3,7 @@ import React from "react";
 import MotionViewport from "../animate/MotionViewPort";
 import { m } from "framer-motion";
 import { varFade } from "../animate/variant";
-import WatchNowButton from "../button/WatchNow";
+import WatchNowButton from "../button/WatchNowButton";
 
 interface MovieTitleProps {
   title: string;

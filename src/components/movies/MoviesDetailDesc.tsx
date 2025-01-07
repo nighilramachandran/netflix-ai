@@ -3,7 +3,7 @@ import MotionViewport from "../animate/MotionViewPort";
 import { m } from "framer-motion";
 import { Chip, Stack, Typography } from "@mui/material";
 import { varFade } from "../animate/variant";
-import WatchNowButton from "../button/WatchNow";
+import WatchNowButton from "../button/WatchNowButton";
 import { SelectedMovieList } from "../../interfaces";
 import { CSSProperties } from "@mui/material/styles/createTypography";
 import StarIcon from "@mui/icons-material/Star";
@@ -15,8 +15,15 @@ const typoStyles: CSSProperties = {
 };
 
 const MoviesDetailDesc: React.FC<SelectedMovieList> = (props) => {
-  const { title, vote_average, runtime, spoken_languages, overview, tagline } =
-    props;
+  const {
+    id,
+    title,
+    vote_average,
+    runtime,
+    spoken_languages,
+    overview,
+    tagline,
+  } = props;
   return (
     <Stack spacing={2} sx={{ padding: "25px" }} component={MotionViewport}>
       <m.div variants={varFade().inUp}>
@@ -77,7 +84,7 @@ const MoviesDetailDesc: React.FC<SelectedMovieList> = (props) => {
         </Stack>
       </m.div>
       <m.div variants={varFade().inUp}>
-        <WatchNowButton />
+        <WatchNowButton movieId={id} />
       </m.div>
     </Stack>
   );
