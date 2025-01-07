@@ -32,7 +32,6 @@ const WatchNowButton: React.FC<WatchNowButtonProps> = ({ movieId }) => {
       <Button
         variant="contained"
         startIcon={<PlayArrowIcon />}
-        sx={{ width: "150px" }}
         onClick={() => handleWatch()}
       >
         Watch Now

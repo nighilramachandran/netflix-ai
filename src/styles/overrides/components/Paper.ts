@@ -12,7 +12,14 @@ export const paperOverride: Components<Theme> = {
       }),
     },
 
-    variants: [],
+    variants: [
+      {
+        props: { variant: "outlined" },
+        style: () => ({
+          background: "#ffffff",
+        }),
+      },
+    ],
   },
 
   MuiDialog: {
