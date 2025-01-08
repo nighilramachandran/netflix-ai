@@ -12,7 +12,7 @@ let initialState: InitialState = {
 };
 
 const AISlice = createSlice({
-  name: "Auth",
+  name: "AI",
   initialState,
   reducers: {
     setStatus: (state, { payload }: PayloadAction<RequestStatus>) => {
