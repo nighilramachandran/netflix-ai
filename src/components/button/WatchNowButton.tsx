@@ -25,7 +25,7 @@ const WatchNowButton: React.FC<WatchNowButtonProps> = ({ movieId }) => {
 
   useEffect(() => {
     if (movieId) dispatch(FetchMovieTrailersAsync(movieId));
-  }, [movieId]);
+  }, [movieId, dispatch]);
 
   return (
     <>

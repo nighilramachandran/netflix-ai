@@ -9,10 +9,10 @@ import {
   FetchSelectedMovieAsync,
 } from "../redux/movies";
 import { posterImageCache } from "../utils/helpers/cache/CacheImage";
-import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
 import { ScrollToTop } from "../components/scroll/ScrollToTop";
+import { FetchAndCacheImage } from "../utils/helpers/cache/FetchAndCacheImage";
 
 const gridItemStyles: CSSProperties = {
   display: "flex",

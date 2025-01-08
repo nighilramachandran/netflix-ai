@@ -1,4 +1,3 @@
-import { Scale } from "@mui/icons-material";
 import { Components, Theme } from "@mui/material/styles";
 
 export const paperOverride: Components<Theme> = {

@@ -1,4 +1,4 @@
-import { IMG_URL } from "../constants/Global";
+import { IMG_URL } from "../../constants/Global";
 
 export const FetchAndCacheImage = async (
   movieId: number,

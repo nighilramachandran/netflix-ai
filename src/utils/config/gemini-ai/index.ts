@@ -17,7 +17,7 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-export const RunAI = async (prompt: string) => {
+export const runAI = async (prompt: string) => {
   const chatSession = model.startChat({
     generationConfig,
     history: [],

@@ -1,5 +1,7 @@
-import { posterImageCache } from "./cache/CacheImage";
 // TODO
+
+import { posterImageCache } from "./CacheImage";
+
 // use this function
 export const ClearCachedImage = (movieId: number) => {
   const blobUrl = posterImageCache.get(movieId);

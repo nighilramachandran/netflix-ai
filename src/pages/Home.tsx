@@ -5,6 +5,7 @@ import { LoadingBox } from "../components/loading-box";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { MOVIE_CATERGORY } from "../utils/constants/Movies";
 import { FetchAllMovieCategoriesAsync } from "../redux/movies";
+import { runAI } from "../utils/config/gemini-ai";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,18 @@ const Home: React.FC = () => {
     () => [NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING],
     [NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING]
   );
+
+  const fetchAI = async () => {
+    const data = await runAI(
+      "Act as a Movie Recommendation system and suggest some movies for the query : " +
+        `bahubhali` +
+        ". Only give me names of movies, comma separated like the example ahead. Example Result: Gadar, Sholay, Don, Golmaal"
+    );
+
+    console.log("ai data", data);
+  };
+
+  fetchAI();
 
   useEffect(() => {
     if (status !== "data")
