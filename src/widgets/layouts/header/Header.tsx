@@ -7,13 +7,21 @@ import {
 import NetflixLogo from "../../../components/Logo";
 import AiSearch from "../../../components/ai-search/AiSearch";
 import { runAI } from "../../../utils/helpers/gemini-ai";
+import { useAppDispatch } from "../../../redux/hooks";
+import { FetchPromptedMovieTrailersAsync } from "../../../redux/ai";
 
 const Header: React.FC = () => {
   const [promteMovieName, setPromtedMovieName] = useState<string>("");
 
+  const dispatch = useAppDispatch();
+
   const handleAiSearch = async () => {
-    const data = await runAI(promteMovieName);
-    console.log(data);
+    const result = await runAI(promteMovieName);
+    const data = result.split(",");
+
+    console.log("data searched", data);
+
+    dispatch(FetchPromptedMovieTrailersAsync(data));
   };
 
   return (

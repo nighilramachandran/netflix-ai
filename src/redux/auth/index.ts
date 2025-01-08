@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "../../interfaces";
 
-import { AppDispatch } from "../Store";
+import { AppDispatch, AppThunk } from "../Store";
 
 interface User {
   uid: string | null;
@@ -40,20 +40,22 @@ const AuthSlice = createSlice({
 
 const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
-export const AddUserFunc = (user: User) => (dispatch: AppDispatch) => {
-  dispatch(setStatus("loading"));
+export const AddUserFunc =
+  (user: User): AppThunk =>
+  (dispatch) => {
+    dispatch(setStatus("loading"));
 
-  const userData = {
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName,
+    const userData = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+    };
+    dispatch(addUser(userData));
+    dispatch(authenticate(true));
+    dispatch(setStatus("data"));
   };
-  dispatch(addUser(userData));
-  dispatch(authenticate(true));
-  dispatch(setStatus("data"));
-};
 
-export const RemoveUserFunc = () => (dispatch: AppDispatch) => {
+export const RemoveUserFunc = (): AppThunk => (dispatch) => {
   dispatch(removeUser());
   dispatch(authenticate(false));
 };
