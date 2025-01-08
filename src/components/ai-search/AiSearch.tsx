@@ -22,9 +22,13 @@ const inputBaseStyles: CSSProperties = {
   margin: 0,
 };
 
-const AiSearch: React.FC = () => {
-  const [open, setOpen] = useState(false);
+interface AiSearchProps {
+  setPromt: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: () => void;
+}
 
+const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
+  const [open, setOpen] = useState(false);
   const location = useLocation();
 
   const handleToggle = () => {
@@ -35,13 +39,23 @@ const AiSearch: React.FC = () => {
     setOpen(false);
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setPromt(e.target.value);
+  };
+
+  const handleSearchEvent = () => {
+    handleSearch && handleSearch();
+  };
+
   useEffect(() => {
     setOpen(false);
   }, [location]);
 
   return (
     <>
-      <Button variant="contained" onClick={handleToggle}>
+      <Button variant="contained" onClick={() => handleToggle()}>
         AI Search
       </Button>
 
@@ -57,15 +71,17 @@ const AiSearch: React.FC = () => {
         variants={searchBoxVariant}
         initial="hidden"
         animate={open ? "animate" : "exit"}
-        onClick={(event) => event.stopPropagation()}
       >
         <InputBase
           startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
           sx={{ ...inputBaseStyles }}
           placeholder="Search With AI"
           inputProps={{ "aria-label": "Search With AI" }}
+          onChange={(e) => handleInputChange(e)}
         />
-        <Button variant="contained">Search</Button>
+        <Button variant="contained" onClick={() => handleSearchEvent()}>
+          Search
+        </Button>
       </AnimatedSearchBox>
     </>
   );

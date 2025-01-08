@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { BG_URL } from "../../../utils/constants/Global";
+import { BG_URL } from "../../../utils/constants/EndPoints";
 import { AuthBackgroud } from "../../../styles/layouts/auth/auth";
 import { Box } from "@mui/material";
 

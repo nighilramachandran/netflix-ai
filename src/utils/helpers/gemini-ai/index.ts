@@ -18,11 +18,16 @@ const generationConfig = {
 };
 
 export const runAI = async (prompt: string) => {
+  const draftedPrompt =
+    `Act as a Movie Recommendation system and suggest some movies for the query : ` +
+    `${prompt}` +
+    `. Only give me names of movies, comma separated like the example ahead. Example Result: Gadar, Sholay, Don, Golmaal`;
+
   const chatSession = model.startChat({
     generationConfig,
     history: [],
   });
 
-  const result = await chatSession.sendMessage(prompt);
-  console.log(result.response.text());
+  const result = await chatSession.sendMessage(draftedPrompt);
+  return result.response.text();
 };

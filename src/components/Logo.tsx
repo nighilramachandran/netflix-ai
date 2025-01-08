@@ -1,5 +1,5 @@
 import React from "react";
-import { LOGO } from "../utils/constants/Global";
+import { LOGO } from "../utils/constants/EndPoints";
 
 const NetflixLogo: React.FC = () => {
   return (

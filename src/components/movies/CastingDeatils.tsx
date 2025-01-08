@@ -3,7 +3,7 @@ import { CastItem, MovieCasting } from "../../interfaces";
 import _ from "lodash";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { IMG_URL } from "../../utils/constants/Global";
+import { IMG_URL } from "../../utils/constants/EndPoints";
 
 interface CastingProps {
   name: string;
