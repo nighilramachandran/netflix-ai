@@ -139,7 +139,7 @@ export const FetchAllMovieCategoriesAsync =
       await Promise.all(
         categories.map(async (category) => {
           const { endPoint, page } = category;
-          const url = `${endPoint}?language=en-US&page=${page}`;
+          const url = `movie/${endPoint}?language=en-US&page=${page}`;
           const { data } = await api.get<ApiMovieResponse<Movies>>(url);
           if (data) {
             await dispatchDistributor(dispatch, endPoint, data);
@@ -156,7 +156,7 @@ export const FetchAllMovieCategoriesAsync =
 export const FetchMovieTrailersAsync =
   (movieId: number): AppThunk =>
   async (dispatch) => {
-    const url = `${movieId}/videos?language=en-US`;
+    const url = `movie/${movieId}/videos?language=en-US`;
     try {
       const { data } = await api.get<ApiMovieTrailerResponse<MovieTrailer>>(
         url
@@ -175,7 +175,7 @@ export const FetchMovieTrailersAsync =
 export const FetchSelectedMovieAsync =
   (movieId: string): AppThunk =>
   async (dispatch) => {
-    const url = `${movieId}?language=en-US`;
+    const url = `movie/${movieId}?language=en-US`;
     try {
       const { data } = await api.get<SelectedMovieList>(url);
       if (data) {
@@ -189,7 +189,7 @@ export const FetchSelectedMovieAsync =
 export const FetchMovieCastingAsync =
   (movieId: string): AppThunk =>
   async (dispatch) => {
-    const url = `${movieId}/credits?language=en-US`;
+    const url = `movie/${movieId}/credits?language=en-US`;
     try {
       const { data } = await api.get<MovieCasting>(url);
       if (data) {
