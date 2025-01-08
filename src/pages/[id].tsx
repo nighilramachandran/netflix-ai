@@ -8,7 +8,7 @@ import {
   FetchMovieCastingAsync,
   FetchSelectedMovieAsync,
 } from "../redux/movies";
-import { posterImageCache } from "../utils/helpers/CacheImage";
+import { posterImageCache } from "../utils/helpers/cache/CacheImage";
 import { FetchAndCacheImage } from "../utils/helpers/FetchAndCacheImage";
 import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";

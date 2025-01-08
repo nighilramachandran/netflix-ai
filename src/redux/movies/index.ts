@@ -13,7 +13,7 @@ import {
 import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
-import { posterImageCache } from "../../utils/helpers/CacheImage";
+import { posterImageCache } from "../../utils/helpers/cache/CacheImage";
 import { DipatchCache } from "../../utils/helpers/DispatchCache";
 
 interface InitialState {

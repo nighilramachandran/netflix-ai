@@ -3,7 +3,7 @@ import MovieCard from "./MovieCard";
 import { Movies } from "../../interfaces";
 import { Stack, styled } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
-import { posterImageCache } from "../../utils/helpers/CacheImage";
+import { posterImageCache } from "../../utils/helpers/cache/CacheImage";
 
 interface MovieListProps {
   list: Movies[];

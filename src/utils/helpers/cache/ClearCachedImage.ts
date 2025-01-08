@@ -1,4 +1,4 @@
-import { posterImageCache } from "./CacheImage";
+import { posterImageCache } from "./cache/CacheImage";
 // TODO
 // use this function
 export const ClearCachedImage = (movieId: number) => {
