@@ -4,10 +4,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import { m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { CSSProperties } from "@mui/material/styles/createTypography";
+import { useAppSelector } from "../../redux/hooks";
+import MoviesList from "../movies/MoviesList";
+import { PromtedMovieImageCache } from "../../utils/helpers/cache/CacheImage";
 
-const searchBoxVariant: Variants = {
+const searchMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
   animate: { opacity: 1, y: 50, scale: 1 },
+  exit: { opacity: 0, y: -50, scale: 0.8 },
+};
+const showPromptedMovieVariant: Variants = {
+  hidden: { opacity: 0, y: -50, scale: 0.8 },
+  animate: { opacity: 1, y: 80, scale: 1 },
   exit: { opacity: 0, y: -50, scale: 0.8 },
 };
 
@@ -30,6 +38,8 @@ interface AiSearchProps {
 const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+
+  const { status, promptedMovies } = useAppSelector((state) => state.AI);
 
   const handleToggle = () => {
     setOpen((prev) => !prev);
@@ -66,41 +76,76 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
         ></StyledBackdrop>
       )}
 
-      <AnimatedSearchBox
-        transition={{ duration: 0.3, delay: 0.1 }}
-        variants={searchBoxVariant}
-        initial="hidden"
-        animate={open ? "animate" : "exit"}
-      >
-        <InputBase
-          startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
-          sx={{ ...inputBaseStyles }}
-          placeholder="Search With AI"
-          inputProps={{ "aria-label": "Search With AI" }}
-          onChange={(e) => handleInputChange(e)}
-        />
-        <Button variant="contained" onClick={() => handleSearchEvent()}>
-          Search
-        </Button>
-      </AnimatedSearchBox>
+      <SearchMovie
+        open={open}
+        inputChange={handleInputChange}
+        handleSearch={handleSearchEvent}
+      />
+
+      {status === "data" && (
+        <AnimatedPaperBox
+          transition={{ duration: 0.3, delay: 0.1 }}
+          variants={showPromptedMovieVariant}
+          initial="hidden"
+          animate={open ? "animate" : "exit"}
+          sx={{ top: "80%" }}
+        >
+          <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
+        </AnimatedPaperBox>
+      )}
     </>
   );
 };
 
-const AnimatedSearchBox = styled(m(Box))(() => ({
+interface SearchMovieInputProps {
+  open: boolean;
+  inputChange: (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void;
+  handleSearch: () => void;
+}
+
+const SearchMovie: React.FC<SearchMovieInputProps> = ({
+  open,
+  inputChange,
+  handleSearch,
+}) => {
+  return (
+    <AnimatedPaperBox
+      transition={{ duration: 0.3, delay: 0.1 }}
+      variants={searchMovieVariant}
+      initial="hidden"
+      animate={open ? "animate" : "exit"}
+      sx={{
+        flexWrap: "wrap",
+        gap: "10px",
+      }}
+    >
+      <InputBase
+        startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
+        sx={{ ...inputBaseStyles }}
+        placeholder="Search With AI"
+        inputProps={{ "aria-label": "Search With AI" }}
+        onChange={inputChange}
+      />
+      <Button variant="contained" onClick={handleSearch}>
+        Search
+      </Button>
+    </AnimatedPaperBox>
+  );
+};
+
+const AnimatedPaperBox = styled(m(Box))(() => ({
   padding: "10px",
   width: "100%",
-  display: "flex",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "10px",
   position: "absolute",
-  top: "50%",
   zIndex: 1000,
   background: "#fff",
   borderRadius: "10px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({

@@ -4,6 +4,7 @@ import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { useAppSelector } from "../../redux/hooks";
 import { MovieCategories } from "../../interfaces";
 import MoviesList from "../../components/movies/MoviesList";
+import { posterImageCache } from "../../utils/helpers/cache/CacheImage";
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
 
@@ -31,7 +32,7 @@ const MovieCategoryList: React.FC = () => {
           return (
             <Stack spacing={2} key={`${category}-${index}`}>
               <Typography variant="h2">{category}</Typography>
-              <MoviesList list={movies} />
+              <MoviesList list={movies} cacheMap={posterImageCache} />
             </Stack>
           );
         })}

@@ -15,6 +15,7 @@ import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { posterImageCache } from "../../utils/helpers/cache/CacheImage";
 import { DipatchCache } from "../../utils/helpers/cache/DispatchCache";
+import { handleCacheDispatch } from "../../utils/helpers/cache/HandleCacheDispatch";
 
 interface InitialState {
   status: RequestStatus;
@@ -89,15 +90,6 @@ const {
 } = MovieSlice.actions;
 
 const { NOW_PLAYING, POPULAR, TOP_RATED, UP_COMING } = MOVIE_CATERGORY;
-
-const handleCacheDispatch = async <T>(
-  data: T[] = [],
-  idKey: keyof T,
-  imagePathKey: keyof T,
-  cacheMap: Map<number, string>
-) => {
-  await DipatchCache<T>(data, idKey, imagePathKey, cacheMap);
-};
 
 const dispatchDistributor = async (
   dispatch: any,
@@ -194,25 +186,6 @@ export const FetchMovieCastingAsync =
       const { data } = await api.get<MovieCasting>(url);
       if (data) {
         dispatch(setMovieCasting(data));
-
-        // const props = Object.keys(data).filter(
-        //   (key) =>
-        //     key !== "id" && Array.isArray(data[key as keyof MovieCasting])
-        // ) as (keyof MovieCasting)[];
-
-        // await Promise.all(
-        //   props.map(async (prop) => {
-        //     const castItems = data[prop];
-        //     if (castItems && Array.isArray(castItems)) {
-        //       await handleCacheDispatch<CastItem>(
-        //         castItems,
-        //         "id",
-        //         "profile_path",
-        //         castImageCache
-        //       );
-        //     }
-        //   })
-        // );
       }
     } catch (error) {
       console.error("Error fetching movie casting:", error);

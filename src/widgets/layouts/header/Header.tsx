@@ -19,8 +19,6 @@ const Header: React.FC = () => {
     const result = await runAI(promteMovieName);
     const data = result.split(",");
 
-    console.log("data searched", data);
-
     dispatch(FetchPromptedMovieTrailersAsync(data));
   };
 
