@@ -1,11 +1,13 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import userReducer from "./auth/index";
 import movieReducer from "./movies/index";
+import aiReducer from "./ai/index";
 
 const store = configureStore({
   reducer: {
     Auth: userReducer,
     Movies: movieReducer,
+    AI: aiReducer,
   },
 });
 
