@@ -11,12 +11,12 @@ import { PromtedMovieImageCache } from "../../utils/helpers/cache/CacheImage";
 const searchMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
   animate: { opacity: 1, y: 50, scale: 1 },
-  exit: { opacity: 0, y: -50, scale: 0.8 },
+  exit: { opacity: 0, y: -10, scale: 0.8 },
 };
 const showPromptedMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
   animate: { opacity: 1, y: 80, scale: 1 },
-  exit: { opacity: 0, y: -50, scale: 0.8 },
+  exit: { opacity: 0, y: -30, scale: 0.8, transition: { delay: 0.3 } },
 };
 
 const inputBaseStyles: CSSProperties = {
@@ -84,7 +84,7 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
 
       {status === "data" && (
         <AnimatedPaperBox
-          transition={{ duration: 0.3, delay: 0.1 }}
+          transition={{ duration: 0.5, ease: "backInOut" }}
           variants={showPromptedMovieVariant}
           initial="hidden"
           animate={open ? "animate" : "exit"}
