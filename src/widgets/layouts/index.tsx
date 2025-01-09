@@ -17,22 +17,22 @@ const Layout: React.FC = () => {
 
   const { ROOT, HOME } = ROUTES;
 
-  // useEffect(() => {
-  //   // Event Listern for login,sigup and signout
-  //   const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
-  //     if (user) {
-  //       const { uid, email, displayName } = user;
-  //       dispatch(AddUserFunc({ uid, email, displayName }));
-  //       if (location.pathname === ROOT) {
-  //         navigate(`${ROOT}${HOME}`);
-  //       }
-  //     } else {
-  //       dispatch(RemoveUserFunc());
-  //       navigate(ROOT);
-  //     }
-  //   });
-  //   return () => unsubscribe();
-  // }, [HOME, ROOT, dispatch, location.pathname, navigate]);
+  useEffect(() => {
+    // Event Listern for login,sigup and signout
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(AddUserFunc({ uid, email, displayName }));
+        if (location.pathname === ROOT) {
+          navigate(`${ROOT}${HOME}`);
+        }
+      } else {
+        dispatch(RemoveUserFunc());
+        navigate(ROOT);
+      }
+    });
+    return () => unsubscribe();
+  }, [HOME, ROOT, dispatch, location.pathname, navigate]);
   return (
     <>
       <Container maxWidth={false} disableGutters sx={{ padding: "0 35px" }}>
