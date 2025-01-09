@@ -1,10 +1,10 @@
 import React from "react";
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Stack, Toolbar } from "@mui/material";
 import {
   appBarStyles,
   headerStyles,
 } from "../../../styles/layouts/header/header";
-import NetflixLogo from "../../../components/Logo";
+import NetflixLogo from "../../../components/assets/Logo";
 import AiSearch from "../../../components/ai-search/AiSearch";
 import { useAppSelector } from "../../../redux/hooks";
 
@@ -15,7 +15,11 @@ const Header: React.FC = () => {
     <AppBar sx={{ ...appBarStyles }}>
       <Toolbar disableGutters sx={{ ...headerStyles }}>
         <NetflixLogo />
-        {isAuthenticated && <AiSearch />}
+        {isAuthenticated && (
+          <Stack>
+            <AiSearch />
+          </Stack>
+        )}
       </Toolbar>
     </AppBar>
   );
