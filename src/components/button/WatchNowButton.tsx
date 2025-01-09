@@ -11,16 +11,16 @@ interface WatchNowButtonProps {
 }
 
 const WatchNowButton: React.FC<WatchNowButtonProps> = ({ movieId }) => {
-  const [openDialoge, setPpenDialoge] = useState<boolean>(false);
+  const [openDialoge, setOpenDialoge] = useState<boolean>(false);
 
   const { movieTrailer } = useAppSelector((state) => state.Movies);
   const movieTrailerKey = movieTrailer[0]?.key;
   const dispatch = useAppDispatch();
   const handleWatch = () => {
-    setPpenDialoge((prev) => !prev);
+    setOpenDialoge((prev) => !prev);
   };
   const HandleClose = () => {
-    setPpenDialoge(false);
+    setOpenDialoge(false);
   };
 
   useEffect(() => {
