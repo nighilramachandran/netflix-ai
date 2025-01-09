@@ -60,6 +60,7 @@ export const FetchPromptedMovieTrailersAsync =
       dispatch(setStatus("data"));
       console.log("movieData", movieData);
     } catch (error) {
+      dispatch(setStatus("error"));
       console.error("Error fetching movie Trailers:", error);
     }
   };

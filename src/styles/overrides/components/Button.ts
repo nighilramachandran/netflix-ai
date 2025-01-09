@@ -9,4 +9,13 @@ export const buttonOverride: Components<Theme> = {
       }),
     },
   },
+  MuiButtonBase: {
+    styleOverrides: {
+      root: () => ({
+        "&.MuiLoadingButton-root": {
+          background: "red !important",
+        },
+      }),
+    },
+  },
 };

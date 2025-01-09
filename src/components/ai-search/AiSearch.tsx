@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputBase, styled, Box, Backdrop } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { m, Variants } from "framer-motion";
+import { AnimatePresence, m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { CSSProperties } from "@mui/material/styles/createTypography";
 import { useAppSelector } from "../../redux/hooks";
 import MoviesList from "../movies/MoviesList";
 import { PromtedMovieImageCache } from "../../utils/helpers/cache/CacheImage";
+import { LoadingBox } from "../loading-box";
+import { LoadingButton } from "@mui/lab";
+import { RequestStatus } from "../../interfaces";
 
 const searchMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
@@ -37,6 +40,7 @@ interface AiSearchProps {
 
 const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   const [open, setOpen] = useState(false);
+  const [isSearchinNow, setisSearchinNow] = useState<boolean>(false);
   const location = useLocation();
 
   const { status, promptedMovies } = useAppSelector((state) => state.AI);
@@ -56,12 +60,19 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   };
 
   const handleSearchEvent = () => {
+    setisSearchinNow(true);
     handleSearch && handleSearch();
   };
 
   useEffect(() => {
     setOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    if (status === "data") {
+      setisSearchinNow(false);
+    }
+  }, [status]);
 
   return (
     <>
@@ -80,18 +91,37 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
         open={open}
         inputChange={handleInputChange}
         handleSearch={handleSearchEvent}
+        status={status}
       />
 
       {status === "data" && (
-        <AnimatedPaperBox
-          transition={{ duration: 0.5, ease: "backInOut" }}
-          variants={showPromptedMovieVariant}
-          initial="hidden"
-          animate={open ? "animate" : "exit"}
-          sx={{ top: "80%" }}
-        >
-          <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
-        </AnimatedPaperBox>
+        <AnimatePresence>
+          <AnimatedPaperBox
+            transition={{ duration: 0.5, ease: "backInOut" }}
+            variants={showPromptedMovieVariant}
+            initial="hidden"
+            animate={open ? "animate" : "exit"}
+            sx={{ top: "80%" }}
+          >
+            <MoviesList
+              list={promptedMovies}
+              cacheMap={PromtedMovieImageCache}
+            />
+          </AnimatedPaperBox>
+        </AnimatePresence>
+      )}
+
+      {isSearchinNow && (
+        <LoadingBox
+          status={status}
+          sx={{
+            position: "absolute",
+            zIndex: 1000,
+            top: "280%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+          }}
+        ></LoadingBox>
       )}
     </>
   );
@@ -103,12 +133,14 @@ interface SearchMovieInputProps {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void;
   handleSearch: () => void;
+  status: RequestStatus;
 }
 
 const SearchMovie: React.FC<SearchMovieInputProps> = ({
   open,
   inputChange,
   handleSearch,
+  status,
 }) => {
   return (
     <AnimatedPaperBox
@@ -128,9 +160,14 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
         inputProps={{ "aria-label": "Search With AI" }}
         onChange={inputChange}
       />
-      <Button variant="contained" onClick={handleSearch}>
+
+      <LoadingButton
+        variant="contained"
+        loading={status === "loading"}
+        onClick={handleSearch}
+      >
         Search
-      </Button>
+      </LoadingButton>
     </AnimatedPaperBox>
   );
 };
@@ -139,7 +176,7 @@ const AnimatedPaperBox = styled(m(Box))(() => ({
   padding: "10px",
   width: "100%",
   position: "absolute",
-  zIndex: 1000,
+  zIndex: 999,
   background: "#fff",
   borderRadius: "10px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
@@ -149,7 +186,7 @@ const AnimatedPaperBox = styled(m(Box))(() => ({
 }));
 
 const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
-  zIndex: 999,
+  zIndex: 998,
   color: "#fff",
   backdropFilter: "blur(10px)",
   backgroundColor: "rgba(0, 0, 0, 0.5)",

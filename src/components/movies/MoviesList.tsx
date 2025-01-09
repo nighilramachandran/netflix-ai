@@ -13,9 +13,9 @@ const MoviesList: React.FC<MovieListProps> = ({ list, cacheMap }) => {
   return (
     <StyledStack>
       <AnimatePresence>
-        {list.map((el) => {
+        {list.map((el, index) => {
           return (
-            <div key={el.id}>
+            <div key={`${el.id}-${el.title}-${index}`}>
               {cacheMap.has(el.id) && (
                 <MovieCard id={el.id} cachedImage={cacheMap.get(el.id)} />
               )}
