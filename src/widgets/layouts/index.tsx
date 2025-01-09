@@ -10,15 +10,11 @@ import { ROUTES } from "../../utils/constants/Routes";
 
 const Layout: React.FC = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
-
   const dispatch = useAppDispatch();
-
   const { ROOT, HOME } = ROUTES;
 
   useEffect(() => {
-    // Event Listern for login,sigup and signout
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
@@ -33,6 +29,7 @@ const Layout: React.FC = () => {
     });
     return () => unsubscribe();
   }, [HOME, ROOT, dispatch, location.pathname, navigate]);
+
   return (
     <>
       <Container maxWidth={false} disableGutters sx={{ padding: "0 35px" }}>

@@ -1,7 +1,8 @@
 import React from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { CustomForm, CustomInputFormProps } from "../../components/form";
-import { firebaseAuth } from "../../utils/firebase/auth";
+import { LoginProps } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { LoginUserAsyncFunc } from "../../redux/auth";
 
 // inputs
 const inputs: CustomInputFormProps[] = [
@@ -27,33 +28,22 @@ const inputs: CustomInputFormProps[] = [
   },
 ];
 
-interface FormilValProp {
-  email: string;
-  password: string;
-}
-
-// functions
-
-const handleLogin = async (vals: FormilValProp) => {
-  const { email, password } = vals;
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
-    console.log("User Logged:", userCredential.user);
-  } catch (error) {
-    console.error("Error creating user:", error);
-  }
-};
-
 const Login: React.FC = () => {
+  const { status } = useAppSelector((state) => state.Auth);
+
+  console.log("status", status);
+
+  const dispatch = useAppDispatch();
+
+  const handleLogin = async (vals: LoginProps) => {
+    dispatch(LoginUserAsyncFunc(vals));
+  };
+
   return (
     <CustomForm
       inputs={inputs}
-      onSubmit={(vals: FormilValProp) => handleLogin(vals)}
+      onSubmit={(vals: LoginProps) => handleLogin(vals)}
+      status={status}
       submitLable={"Log In"}
     ></CustomForm>
   );

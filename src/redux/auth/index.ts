@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RequestStatus } from "../../interfaces";
+import { LoginProps, RequestStatus } from "../../interfaces";
 
-import { AppDispatch, AppThunk } from "../Store";
-import { signOut } from "firebase/auth";
+import { AppThunk } from "../Store";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  UserCredential,
+} from "firebase/auth";
 import { firebaseAuth } from "../../utils/firebase/auth";
 
 interface User {
@@ -42,11 +46,38 @@ const AuthSlice = createSlice({
 
 const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
+export const LoginUserAsyncFunc =
+  (credentials: LoginProps): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const { email, password } = credentials;
+    try {
+      try {
+        const userLoggedCredential: UserCredential =
+          await signInWithEmailAndPassword(firebaseAuth, email, password);
+        if (userLoggedCredential) {
+          const { uid, email, displayName } = userLoggedCredential.user;
+          const user = {
+            uid,
+            email,
+            displayName,
+          };
+          dispatch(AddUserFunc(user));
+          dispatch(setStatus("data"));
+        }
+      } catch (error) {
+        dispatch(setStatus("error"));
+        console.error("Error creating user:", error);
+      }
+    } catch (error) {
+      dispatch(setStatus("error"));
+      console.log(error);
+    }
+  };
+
 export const AddUserFunc =
   (user: User): AppThunk =>
   (dispatch) => {
-    dispatch(setStatus("loading"));
-
     const userData = {
       uid: user.uid,
       email: user.email,
