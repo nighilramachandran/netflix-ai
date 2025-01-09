@@ -2,7 +2,6 @@ import React, { ReactNode, useEffect, useMemo } from "react";
 import { FormikProps, useFormik } from "formik";
 
 import Grid2, { Grid2Props } from "@mui/material/Grid2";
-import Button from "@mui/material/Button";
 import { FormInput } from "./FormInput";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { CustomInputProps, RequestStatus } from "../../interfaces";
@@ -29,16 +28,13 @@ export type CustomInputFormProps = CustomInputProps & {
 interface props {
   inputs: CustomInputFormProps[];
   onSubmit: (data: any, formik: FormikProps<any>) => void;
-  onCancel?: VoidFunction;
   status?: RequestStatus;
   submitLable?: string;
-  initialInputValues?: any;
   resetFrom?: boolean;
   fromJustify?: "center" | "start" | "end" | "between";
   fromAlignItems?: "center" | "start" | "end" | "between";
   actionCol?: Grid2Props;
   setFormik?: (formik: FormikProps<any>) => void;
-  cancelText?: string;
 }
 
 export const CustomForm: React.FC<props> = (props) => {
@@ -47,12 +43,9 @@ export const CustomForm: React.FC<props> = (props) => {
     onSubmit,
     status,
     submitLable = "submit",
-    initialInputValues,
     resetFrom,
     fromJustify = "start",
     actionCol = { size: { xs: 12 } },
-    onCancel,
-    cancelText = "cancel",
     fromAlignItems = "center",
     setFormik,
     ...restProps
@@ -67,12 +60,6 @@ export const CustomForm: React.FC<props> = (props) => {
         initValues[input.name] = "";
       }
     });
-    if (initialInputValues) {
-      inputs.forEach((input) => {
-        if (!input.ignore && initialInputValues[input.name])
-          initValues[input.name] = initialInputValues[input.name];
-      });
-    }
 
     //for each input in form set : error value
     const validate: (data: any) => any = (data: any) => {
@@ -82,46 +69,36 @@ export const CustomForm: React.FC<props> = (props) => {
           input.label && typeof input.label
             ? input.label
             : input.placeholder || input.name;
-        switch (input.name) {
-          case "confirmPassword":
-            if (!data.confirmPassword) {
-              errors.confirmPassword = "confirm_password_is_required";
-            } else if (data.confirmPassword !== data.password) {
-              errors.confirmPassword = "confirm_password_does_not_match";
-            }
-            break;
-          default:
-            if (input.validate?.required) {
-              if (data[input.name] === "" || data[input.name] === false) {
-                errors[input.name] =
-                  input.validate.required_message ??
-                  `${fieldName} is required}`;
-              } else if (
-                input.validate.rule &&
-                !input?.validate?.rule?.test(data[input.name])
-              ) {
-                errors[input.name] =
-                  input.validate.rule_message ?? `${"invalid"} ${fieldName}`;
-              }
-            }
-            if (input.validate?.same) {
-              if (data[input.name] !== data[input.validate.same]) {
-                errors[input.name] = `${fieldName} ${"does not match"}`;
-              }
-            }
-            if (input.validate?.difference) {
-              if (data[input.name] === data[input.validate.difference]) {
-                const diffrenceIndex = inputs.findIndex(
-                  (item) => item.name === input.validate?.difference
-                );
-                if (diffrenceIndex !== -1)
-                  errors[input.name] = `${fieldName} ${"shouldnt_match_the"} ${
-                    inputs[diffrenceIndex].label
-                  }.`;
-              }
-            }
 
-            break;
+        if (input.name) {
+          if (input.validate?.required) {
+            if (data[input.name] === "" || data[input.name] === false) {
+              errors[input.name] =
+                input.validate.required_message ?? `${fieldName} is required`;
+            } else if (
+              input.validate.rule &&
+              !input?.validate?.rule?.test(data[input.name])
+            ) {
+              errors[input.name] =
+                input.validate.rule_message ?? `${"invalid"} ${fieldName}`;
+            }
+          }
+          if (input.validate?.same) {
+            if (data[input.name] !== data[input.validate.same]) {
+              errors[input.name] = `${fieldName} ${"does not match"}`;
+            }
+          }
+          if (input.validate?.difference) {
+            if (data[input.name] === data[input.validate.difference]) {
+              const diffrenceIndex = inputs.findIndex(
+                (item) => item.name === input.validate?.difference
+              );
+              if (diffrenceIndex !== -1)
+                errors[input.name] = `${fieldName} ${"shouldnt_match_the"} ${
+                  inputs[diffrenceIndex].label
+                }.`;
+            }
+          }
         }
       });
       return errors;
@@ -130,7 +107,7 @@ export const CustomForm: React.FC<props> = (props) => {
       initialValues: initValues,
       formValidate: validate,
     };
-  }, [inputs, initialInputValues]);
+  }, [inputs]);
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -176,14 +153,6 @@ export const CustomForm: React.FC<props> = (props) => {
             )
         )}
 
-        {/*  Cancel */}
-        {onCancel && (
-          <Grid2 component="div" item={true} {...actionCol}>
-            <Button variant="contained" onClick={onCancel}>
-              {cancelText}
-            </Button>
-          </Grid2>
-        )}
         {/*  submit */}
         <Grid2 component="div" item {...actionCol}>
           <LoadingButton

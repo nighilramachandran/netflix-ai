@@ -27,6 +27,8 @@ export const FormInput: React.FC<props> = ({
   getOptionLabel,
   ...restInputProps
 }) => {
+  console.log("restInputProps", restInputProps);
+
   //functions
   const [initType] = React.useState<string>(type);
   const [currentType, setCurrentType] = React.useState<string>(
@@ -62,7 +64,7 @@ export const FormInput: React.FC<props> = ({
     () => ({
       padding: type === "textarea" ? "0px" : "0 9px",
       borderRadius: "10px",
-      fontSize: "11px",
+      fontSize: "14px",
       height: "100%",
       boxShadow: "none",
     }),
@@ -101,7 +103,7 @@ export const FormInput: React.FC<props> = ({
 
   //error message component
   const getError = (name: string) => (
-    <Typography variant="body1" color="text.danger" textAlign={"start"}>
+    <Typography className="error" color="text.danger" textAlign={"start"}>
       {getFormErrorMessage(name) as string}
     </Typography>
   );
@@ -115,7 +117,6 @@ export const FormInput: React.FC<props> = ({
         onPaste={initType === "number" ? (e) => e.preventDefault() : undefined}
         onChange={handleLocalOnChange}
         {...restInputProps}
-        className="outlined-gradient"
         multiline={type === "textarea"}
         value={formik.values[name]}
         error={!!getFormErrorMessage(name)}

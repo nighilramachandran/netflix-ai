@@ -26,6 +26,13 @@ export const typographyOverride: Components<Theme> = {
         fontSize: 16,
       },
     },
-    variants: [],
+    variants: [
+      {
+        props: { className: "error" },
+        style: () => ({
+          fontSize: "12px",
+        }),
+      },
+    ],
   },
 };

@@ -9,6 +9,7 @@ const darkThemeOptions: ThemeOptions = {
     text: {
       primary: "#FFFFFF",
       secondary: "#bbb2b2",
+      danger: "#e50a15",
     },
     background: {
       default: "#101010",

@@ -7,9 +7,7 @@ export const inputOverride: Components<Theme> = {
         color: theme.palette.text.primary,
         borderRadius: "6px",
         height: 45,
-        // "&:hover": {
-
-        // },
+        // fontSize: "14px",
       }),
       multiline: ({ theme }) => ({
         backgroundColor: theme.palette.background.default,
