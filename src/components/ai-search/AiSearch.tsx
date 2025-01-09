@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, styled, Box, Backdrop } from "@mui/material";
+import { Button, styled, Backdrop } from "@mui/material";
 import { m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MoviesList from "../movies/MoviesList";
 import { PromtedMovieImageCache } from "../../utils/helpers/cache/CacheImage";
 import { LoadingBox } from "../loading-box";
-import { RemovePromptedMovieTrailers } from "../../redux/ai";
+import {
+  FetchPromptedMovieTrailersAsync,
+  RemovePromptedMovieTrailers,
+} from "../../redux/ai";
 import { AnimatedPaperBox } from "../../styles/mui-styled";
 import SearchMovie from "../movies/SearchMovie";
+import { runAI } from "../../utils/helpers/gemini-ai";
 
 const showPromptedMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
@@ -16,19 +20,18 @@ const showPromptedMovieVariant: Variants = {
   exit: { opacity: 0, y: -30, scale: 0.8, transition: { delay: 0.3 } },
 };
 
-interface AiSearchProps {
-  setPromt: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: () => void;
-}
-
-const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
+const AiSearch: React.FC = () => {
+  // states
   const [open, setOpen] = useState(false);
   const [isSearchinNow, setisSearchinNow] = useState<boolean>(false);
+  const [promteMovieName, setPromtedMovieName] = useState<string>("");
+
+  //
+  const { status, promptedMovies } = useAppSelector((state) => state.AI);
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  const { status, promptedMovies } = useAppSelector((state) => state.AI);
-
+  // functions
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -41,14 +44,18 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setPromt(e.target.value);
+    setPromtedMovieName(e.target.value);
   };
 
-  const handleSearchEvent = () => {
+  const handleAiSearch = async () => {
     setisSearchinNow(true);
-    handleSearch && handleSearch();
+    const result = await runAI(promteMovieName);
+    const data = result.split(",");
+
+    dispatch(FetchPromptedMovieTrailersAsync(data));
   };
 
+  // Side effects
   useEffect(() => {
     setOpen(false);
     dispatch(RemovePromptedMovieTrailers());
@@ -75,8 +82,9 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
       <SearchMovie
         open={open}
         inputChange={handleInputChange}
-        handleSearch={handleSearchEvent}
+        handleSearch={handleAiSearch}
         status={status}
+        // inputValue={inputValue}
       />
 
       <AnimatedPaperBox
