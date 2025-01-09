@@ -1,17 +1,13 @@
 import React from "react";
-import { signOut } from "firebase/auth";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "@mui/material";
-import { firebaseAuth } from "../../utils/firebase/auth";
+import { useAppDispatch } from "../../redux/hooks";
+import { LogoutUserAsyncFunc } from "../../redux/auth";
 
 const Logout: React.FC = () => {
-  // TODO snackbar here
+  const disptach = useAppDispatch();
   const handleLogout = async () => {
-    try {
-      await signOut(firebaseAuth);
-    } catch (error) {
-      console.log(error);
-    }
+    disptach(LogoutUserAsyncFunc());
   };
 
   return (

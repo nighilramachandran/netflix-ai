@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "../../interfaces";
 
 import { AppDispatch, AppThunk } from "../Store";
+import { signOut } from "firebase/auth";
+import { firebaseAuth } from "../../utils/firebase/auth";
 
 interface User {
   uid: string | null;
@@ -58,6 +60,17 @@ export const AddUserFunc =
 export const RemoveUserFunc = (): AppThunk => (dispatch) => {
   dispatch(removeUser());
   dispatch(authenticate(false));
+};
+
+export const LogoutUserAsyncFunc = (): AppThunk => async (dispatch) => {
+  dispatch(setStatus("loading"));
+  try {
+    await signOut(firebaseAuth);
+    dispatch(RemoveUserFunc());
+  } catch (error) {
+    dispatch(setStatus("error"));
+    console.log(error);
+  }
 };
 
 export default AuthSlice.reducer;
