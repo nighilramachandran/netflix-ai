@@ -39,6 +39,7 @@ const AiSearch: React.FC = () => {
   const handleClose = () => {
     dispatch(RemovePromptedMovieTrailers());
     setOpen(false);
+    setPromtedMovieName("");
   };
 
   const handleInputChange = (
@@ -47,7 +48,7 @@ const AiSearch: React.FC = () => {
     setPromtedMovieName(e.target.value);
   };
 
-  const handleAiSearch = async () => {
+  const handleAiSearchSubmit = async () => {
     setisSearchinNow(true);
     const result = await runAI(promteMovieName);
     const data = result.split(",");
@@ -59,6 +60,7 @@ const AiSearch: React.FC = () => {
   useEffect(() => {
     setOpen(false);
     dispatch(RemovePromptedMovieTrailers());
+    setPromtedMovieName("");
   }, [location, dispatch]);
 
   useEffect(() => {
@@ -82,9 +84,9 @@ const AiSearch: React.FC = () => {
       <SearchMovie
         open={open}
         inputChange={handleInputChange}
-        handleSearch={handleAiSearch}
+        handleSearch={handleAiSearchSubmit}
         status={status}
-        // inputValue={inputValue}
+        inputValue={promteMovieName}
       />
 
       <AnimatedPaperBox

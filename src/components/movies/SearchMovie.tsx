@@ -14,7 +14,7 @@ interface SearchMovieInputProps {
   ) => void;
   handleSearch: () => void;
   status: RequestStatus;
-  // inputValue: string;
+  inputValue: string;
 }
 
 const inputBaseStyles: CSSProperties = {
@@ -33,7 +33,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
   inputChange,
   handleSearch,
   status,
-  // inputValue,
+  inputValue,
 }) => {
   return (
     <AnimatedPaperBox
@@ -52,7 +52,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
         placeholder="Search With AI"
         inputProps={{ "aria-label": "Search With AI" }}
         onChange={inputChange}
-        // value={inputValue}
+        value={inputValue}
       />
 
       <LoadingButton
