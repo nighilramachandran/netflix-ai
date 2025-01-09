@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { RequestStatus } from "../../interfaces";
 import { AnimatedPaperBox } from "../../styles/mui-styled";
 import { CSSProperties } from "@mui/material/styles/createTypography";
@@ -35,6 +35,18 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
   status,
   inputValue,
 }) => {
+  const searchKeyRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleKeyPress = (
+    e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      if (searchKeyRef.current) {
+        searchKeyRef.current.click();
+      }
+    }
+  };
+
   return (
     <AnimatedPaperBox
       transition={{ duration: 0.3, delay: 0.1 }}
@@ -53,12 +65,14 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
         inputProps={{ "aria-label": "Search With AI" }}
         onChange={inputChange}
         value={inputValue}
+        onKeyDown={handleKeyPress}
       />
 
       <LoadingButton
         variant="contained"
         loading={status === "loading"}
         onClick={handleSearch}
+        ref={searchKeyRef}
       >
         Search
       </LoadingButton>
