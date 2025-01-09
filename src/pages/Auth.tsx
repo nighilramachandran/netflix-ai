@@ -7,7 +7,7 @@ import Login from "../sections/auth/Login";
 import Register from "../sections/auth/Register";
 
 const Auth: React.FC = () => {
-  const [login, setLogin] = useState<boolean>(false);
+  const [login, setLogin] = useState<boolean>(true);
 
   const handleToggle = () => {
     setLogin((prev) => !prev);
