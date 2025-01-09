@@ -73,6 +73,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
         loading={status === "loading"}
         onClick={handleSearch}
         ref={searchKeyRef}
+        sx={{ width: "150px", height: "45px" }}
       >
         Search
       </LoadingButton>

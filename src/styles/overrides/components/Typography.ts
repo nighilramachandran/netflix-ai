@@ -14,14 +14,33 @@ export const typographyOverride: Components<Theme> = {
       h3: {
         fontSize: 20,
       },
-      body1: {
-        fontSize: 35,
+      body1: ({ theme }) => ({
         fontWeight: 700,
-      },
-      body2: {
-        fontSize: 22,
-        fontWeight: 600,
-      },
+
+        [theme.breakpoints.down("md")]: {
+          fontSize: "16px",
+        },
+        [theme.breakpoints.up("md")]: {
+          fontSize: "25px",
+        },
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "35px",
+        },
+      }),
+      body2: ({ theme }) => ({
+        fontWeight: 700,
+
+        [theme.breakpoints.down("md")]: {
+          fontSize: "12px",
+        },
+        [theme.breakpoints.up("md")]: {
+          fontSize: "18px",
+        },
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "22px",
+        },
+      }),
+
       subtitle1: {
         fontSize: 16,
       },
