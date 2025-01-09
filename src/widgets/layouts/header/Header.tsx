@@ -7,11 +7,13 @@ import {
 import NetflixLogo from "../../../components/Logo";
 import AiSearch from "../../../components/ai-search/AiSearch";
 import { runAI } from "../../../utils/helpers/gemini-ai";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { FetchPromptedMovieTrailersAsync } from "../../../redux/ai";
 
 const Header: React.FC = () => {
   const [promteMovieName, setPromtedMovieName] = useState<string>("");
+
+  const { isAuthenticated } = useAppSelector((state) => state.Auth);
 
   const dispatch = useAppDispatch();
 
@@ -26,10 +28,12 @@ const Header: React.FC = () => {
     <AppBar sx={{ ...appBarStyles }}>
       <Toolbar disableGutters sx={{ ...headerStyles }}>
         <NetflixLogo />
-        <AiSearch
-          setPromt={setPromtedMovieName}
-          handleSearch={handleAiSearch}
-        />
+        {isAuthenticated && (
+          <AiSearch
+            setPromt={setPromtedMovieName}
+            handleSearch={handleAiSearch}
+          />
+        )}
       </Toolbar>
     </AppBar>
   );
