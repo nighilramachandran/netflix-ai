@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputBase, styled, Box, Backdrop } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { AnimatePresence, m, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { CSSProperties } from "@mui/material/styles/createTypography";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MoviesList from "../movies/MoviesList";
 import { PromtedMovieImageCache } from "../../utils/helpers/cache/CacheImage";
 import { LoadingBox } from "../loading-box";
 import { LoadingButton } from "@mui/lab";
 import { RequestStatus } from "../../interfaces";
+import { RemovePromptedMovieTrailers } from "../../redux/ai";
 
 const searchMovieVariant: Variants = {
   hidden: { opacity: 0, y: -50, scale: 0.8 },
@@ -42,6 +43,7 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   const [open, setOpen] = useState(false);
   const [isSearchinNow, setisSearchinNow] = useState<boolean>(false);
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   const { status, promptedMovies } = useAppSelector((state) => state.AI);
 
@@ -50,6 +52,7 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
   };
 
   const handleClose = () => {
+    dispatch(RemovePromptedMovieTrailers());
     setOpen(false);
   };
 
@@ -66,7 +69,8 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
 
   useEffect(() => {
     setOpen(false);
-  }, [location]);
+    dispatch(RemovePromptedMovieTrailers());
+  }, [location, dispatch]);
 
   useEffect(() => {
     if (status === "data") {
@@ -94,22 +98,15 @@ const AiSearch: React.FC<AiSearchProps> = ({ setPromt, handleSearch }) => {
         status={status}
       />
 
-      {status === "data" && (
-        <AnimatePresence>
-          <AnimatedPaperBox
-            transition={{ duration: 0.5, ease: "backInOut" }}
-            variants={showPromptedMovieVariant}
-            initial="hidden"
-            animate={open ? "animate" : "exit"}
-            sx={{ top: "80%" }}
-          >
-            <MoviesList
-              list={promptedMovies}
-              cacheMap={PromtedMovieImageCache}
-            />
-          </AnimatedPaperBox>
-        </AnimatePresence>
-      )}
+      <AnimatedPaperBox
+        transition={{ duration: 0.5, ease: "backInOut" }}
+        variants={showPromptedMovieVariant}
+        initial="hidden"
+        animate={promptedMovies.length > 0 ? "animate" : "exit"}
+        sx={{ top: "80%" }}
+      >
+        <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
+      </AnimatedPaperBox>
 
       {isSearchinNow && (
         <LoadingBox

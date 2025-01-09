@@ -26,10 +26,13 @@ const AISlice = createSlice({
     setPromptedMovies: (state, { payload }: PayloadAction<Movies[]>) => {
       state.promptedMovies = payload;
     },
+    removePromptedMovies: (state) => {
+      state.promptedMovies = [];
+    },
   },
 });
 
-const { setStatus, setPromptedMovies } = AISlice.actions;
+const { setStatus, setPromptedMovies, removePromptedMovies } = AISlice.actions;
 
 export const FetchPromptedMovieTrailersAsync =
   (movieNames: string[]): AppThunk =>
@@ -64,5 +67,11 @@ export const FetchPromptedMovieTrailersAsync =
       console.error("Error fetching movie Trailers:", error);
     }
   };
+
+export const RemovePromptedMovieTrailers = (): AppThunk => async (dispatch) => {
+  PromtedMovieImageCache.clear();
+  dispatch(removePromptedMovies());
+  dispatch(setStatus("nothing"));
+};
 
 export default AISlice.reducer;

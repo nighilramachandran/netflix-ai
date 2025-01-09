@@ -119,10 +119,6 @@ const dispatchDistributor = async (
   }
 };
 
-export const RemoveSelectedMovie = (): AppThunk => async (dispatch) => {
-  dispatch(removeSelectedMovie());
-};
-
 export const FetchAllMovieCategoriesAsync =
   (categories: MovieCategoryListItem[]): AppThunk =>
   async (dispatch) => {
@@ -177,6 +173,10 @@ export const FetchSelectedMovieAsync =
       console.error("Error fetching selected movie:", error);
     }
   };
+
+export const RemoveSelectedMovie = (): AppThunk => async (dispatch) => {
+  dispatch(removeSelectedMovie());
+};
 
 export const FetchMovieCastingAsync =
   (movieId: string): AppThunk =>

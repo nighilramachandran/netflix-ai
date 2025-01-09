@@ -36,8 +36,6 @@ const MovieDetailPage: React.FC = () => {
       dispatch(FetchSelectedMovieAsync(id));
       dispatch(FetchMovieCastingAsync(id));
       setCachedPosterBlobUrl(posterImageCache.get(parseInt(id)));
-
-      console.log("posterImageCache", posterImageCache);
     }
   }, [id, dispatch]);
 
