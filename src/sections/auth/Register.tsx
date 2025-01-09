@@ -17,8 +17,13 @@ const inputs: CustomInputFormProps[] = [
     type: "text",
     name: "email",
     label: "Email",
-    placeholder: "Email",
-    validate: { required: true },
+    placeholder: "username@example.com",
+    validate: {
+      required: true,
+      rule: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/,
+      rule_message: "Enter a valid email",
+    },
+
     colProps: { size: { xs: 12 } },
   },
   {

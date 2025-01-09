@@ -27,8 +27,6 @@ export const FormInput: React.FC<props> = ({
   getOptionLabel,
   ...restInputProps
 }) => {
-  console.log("restInputProps", restInputProps);
-
   //functions
   const [initType] = React.useState<string>(type);
   const [currentType, setCurrentType] = React.useState<string>(
