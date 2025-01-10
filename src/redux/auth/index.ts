@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoginProps, RequestStatus } from "../../interfaces";
+import { enqueueSnackbar } from "notistack";
 
 import { AppThunk } from "../Store";
 import {
@@ -52,26 +53,24 @@ export const LoginUserAsyncFunc =
     dispatch(setStatus("loading"));
     const { email, password } = credentials;
     try {
-      try {
-        const userLoggedCredential: UserCredential =
-          await signInWithEmailAndPassword(firebaseAuth, email, password);
-        if (userLoggedCredential) {
-          const { uid, email, displayName } = userLoggedCredential.user;
-          const user = {
-            uid,
-            email,
-            displayName,
-          };
-          dispatch(AddUserFunc(user));
-          dispatch(setStatus("data"));
-        }
-      } catch (error) {
-        dispatch(setStatus("error"));
-        console.error("Error creating user:", error);
+      const userLoggedCredential: UserCredential =
+        await signInWithEmailAndPassword(firebaseAuth, email, password);
+
+      if (userLoggedCredential) {
+        const { uid, email, displayName } = userLoggedCredential.user;
+        const user = {
+          uid,
+          email,
+          displayName,
+        };
+        dispatch(AddUserFunc(user));
+        dispatch(setStatus("data"));
       }
     } catch (error) {
       dispatch(setStatus("error"));
-      console.log(error);
+      enqueueSnackbar("Invalid Credential", {
+        variant: "error",
+      });
     }
   };
 
