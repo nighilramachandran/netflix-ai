@@ -5,6 +5,7 @@ import { CustomModal } from "../custom-modal";
 import VedioPlayer from "../player/VideoPlayer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMovieTrailersAsync } from "../../redux/movies";
+import { PlayerWrapper } from "../../sections/home/MoviePlayer";
 
 interface WatchNowButtonProps {
   movieId?: number;
@@ -37,7 +38,9 @@ const WatchNowButton: React.FC<WatchNowButtonProps> = ({ movieId }) => {
         Watch Now
       </Button>
       <CustomModal open={openDialoge} onClose={HandleClose}>
-        {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
+        <PlayerWrapper>
+          {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
+        </PlayerWrapper>
       </CustomModal>
     </>
   );
