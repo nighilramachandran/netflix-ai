@@ -18,7 +18,7 @@ const NetflixLogo: React.FC = () => {
   return (
     <img
       src={`/assets/logo/${downMd ? "Netflix_N.svg" : "Netflix.svg"}`}
-      style={{ height: "45px", cursor: "pointer" }}
+      style={{ height: "45px", cursor: "pointer", maxWidth: "150px" }}
       alt="netflix_logo"
       onClick={() => handleNavigateHome()}
     />
