@@ -8,7 +8,7 @@ export const appBarStyles: SxProps<Theme> = {
   position: "relative",
   bgcolor: "background.header",
   boxShadow: "none",
-  // padding: 0,
+  padding: 0,
 };
 
 // Toolbar

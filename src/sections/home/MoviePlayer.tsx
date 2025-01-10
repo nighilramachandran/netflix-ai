@@ -4,6 +4,7 @@ import { FetchMovieTrailersAsync } from "../../redux/movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
 import TrailerTitle from "../../components/movies/TrailerTitle";
+import useResponsive from "../../utils/hooks/useResponsive";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,11 +13,20 @@ const MoviePlayer: React.FC = () => {
     (state) => state.Movies
   );
 
+  const downMd = useResponsive("down", "sm");
+
   const { id: movieId, original_title, overview } = nowPlayingMovies[0] || {};
 
   const isTitleAndOverview = original_title && overview;
 
   const movieTrailerKey = movieTrailer[0]?.key;
+
+  const MoviePlayerWrapper = styled(Box)(() => ({
+    height: downMd ? "50vh" : "75vh",
+    width: "100%",
+    minHeight: "233px",
+    overflow: "hidden",
+  }));
 
   useEffect(() => {
     if (movieId) {
@@ -25,7 +35,6 @@ const MoviePlayer: React.FC = () => {
   }, [dispatch, movieId]);
   return (
     <MoviePlayerWrapper>
-      {/* <Overlay /> */}
       {isTitleAndOverview && (
         <TrailerTitleWrapper>
           <TrailerTitle title={original_title} overview={overview} />
@@ -50,25 +59,6 @@ export const PlayerWrapper = styled(Box)(() => ({
   height: "100%",
   width: "100%",
   scale: 1.5,
-}));
-
-const MoviePlayerWrapper = styled(Box)(() => ({
-  height: "75vh",
-  width: "100%",
-  minHeight: "542px",
-  overflow: "hidden",
-}));
-
-const Overlay = styled(Box)(() => ({
-  position: "absolute",
-  zIndex: 1,
-  width: "100%",
-  height: "inherit",
-  background: "rgba(0, 0, 0, 0.1)",
-  color: "white",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 }));
 
 export default MoviePlayer;
