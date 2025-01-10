@@ -1,8 +1,7 @@
 import React from "react";
-import { LOGO } from "../../utils/constants/EndPoints";
-import { Box } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants/Routes";
+import useResponsive from "../../utils/hooks/useResponsive";
 
 const NetflixLogo: React.FC = () => {
   const navigate = useNavigate();
@@ -15,16 +14,14 @@ const NetflixLogo: React.FC = () => {
       navigate(HOME);
     }
   };
-
+  const downMd = useResponsive("down", "md");
   return (
-    <>
-      <img
-        src={LOGO}
-        style={{ width: "150px", cursor: "pointer" }}
-        alt="netflix_logo"
-        onClick={() => handleNavigateHome()}
-      />
-    </>
+    <img
+      src={`/assets/logo/${downMd ? "Netflix_N.svg" : "Netflix.svg"}`}
+      style={{ height: "45px", cursor: "pointer" }}
+      alt="netflix_logo"
+      onClick={() => handleNavigateHome()}
+    />
   );
 };
 
