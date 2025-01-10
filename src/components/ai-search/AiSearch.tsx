@@ -52,7 +52,6 @@ const AiSearch: React.FC = () => {
     setisSearchinNow(true);
     const result = await runAI(promteMovieName);
     const data = result.split(",");
-
     dispatch(FetchPromptedMovieTrailersAsync(data));
   };
 

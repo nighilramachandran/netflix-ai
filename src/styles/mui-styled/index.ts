@@ -6,6 +6,7 @@ export const AnimatedPaperBox = styled(m(Box))(() => ({
   width: "100%",
   position: "absolute",
   zIndex: 999,
+  left: 0,
   background: "#fff",
   borderRadius: "10px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
