@@ -19,4 +19,5 @@ export const headerStyles: HeaderStylesProps = {
   },
   justifyContent: "space-between",
   position: "relative",
+  flexWrap: "wrap",
 };

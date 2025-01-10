@@ -13,6 +13,8 @@ import {
 import { AnimatedPaperBox } from "../../styles/mui-styled";
 import SearchMovie from "../movies/SearchMovie";
 import { runAI } from "../../utils/helpers/gemini-ai";
+import MemoryIcon from "@mui/icons-material/Memory";
+import useResponsive from "../../utils/hooks/useResponsive";
 
 const AiSearch: React.FC = () => {
   // states
@@ -24,6 +26,8 @@ const AiSearch: React.FC = () => {
   const { status, promptedMovies } = useAppSelector((state) => state.AI);
   const location = useLocation();
   const dispatch = useAppDispatch();
+
+  const downMd = useResponsive("down", "md");
 
   // functions
   const handleToggle = () => {
@@ -64,36 +68,35 @@ const AiSearch: React.FC = () => {
 
   return (
     <>
-      <Button variant="contained" onClick={() => handleToggle()}>
-        AI Search
-      </Button>
+      <StyledAnimatedButton
+        variant="contained"
+        onClick={() => handleToggle()}
+        sx={{ gap: 1 }}
+        layout
+      >
+        <MemoryIcon />
+        {!downMd ? "AI Search" : ""}
+      </StyledAnimatedButton>
       <AnimatePresence mode="wait">
-        {/* {open && ( */}
-        <>
-          <StyledBackdrop key="backdrop" open={open} onClick={handleClose} />
-          <SearchMovie
-            key="search-movie"
-            open={open}
-            inputChange={handleInputChange}
-            handleSearch={handleAiSearchSubmit}
-            status={status}
-            inputValue={promteMovieName}
-          />
-          <AnimatedPaperBox
-            key="movies-list"
-            transition={{ duration: 0.4, easings: ["easeIn", "easeOut"] }}
-            variants={showPromptedMovieVariant}
-            initial="hidden"
-            animate={promptedMovies.length > 0 ? "animate" : "exit"}
-            exit="exit"
-          >
-            <MoviesList
-              list={promptedMovies}
-              cacheMap={PromtedMovieImageCache}
-            />
-          </AnimatedPaperBox>
-        </>
-        {/* )} */}
+        <StyledBackdrop key="backdrop" open={open} onClick={handleClose} />
+        <SearchMovie
+          key="search-movie"
+          open={open}
+          inputChange={handleInputChange}
+          handleSearch={handleAiSearchSubmit}
+          status={status}
+          inputValue={promteMovieName}
+        />
+        <AnimatedPaperBox
+          key="movies-list"
+          transition={{ duration: 0.4, easings: ["easeIn", "easeOut"] }}
+          variants={showPromptedMovieVariant}
+          initial="hidden"
+          animate={promptedMovies.length > 0 ? "animate" : "exit"}
+          exit="exit"
+        >
+          <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
+        </AnimatedPaperBox>
       </AnimatePresence>
 
       {isSearchinNow && (
@@ -129,5 +132,6 @@ const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
   backdropFilter: "blur(10px)",
   backgroundColor: "rgba(0, 0, 0, 0.5)",
 }));
+const StyledAnimatedButton = styled(m(Button))(() => ({}));
 
 export default AiSearch;

@@ -17,17 +17,6 @@ interface SearchMovieInputProps {
   inputValue: string;
 }
 
-const inputBaseStyles: CSSProperties = {
-  ml: 1,
-  flex: 1,
-  background: "rgb(0 0 0 / 0.76)",
-  color: "#fff",
-  padding: "5px",
-  borderRadius: "4px",
-  minWidth: "190px",
-  margin: 0,
-};
-
 const SearchMovie: React.FC<SearchMovieInputProps> = ({
   open,
   inputChange,
@@ -89,6 +78,17 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
       </LoadingButton>
     </AnimatedPaperBox>
   );
+};
+
+const inputBaseStyles: CSSProperties = {
+  ml: 1,
+  flex: 1,
+  background: "rgb(0 0 0 / 0.76)",
+  color: "#fff",
+  padding: "5px",
+  borderRadius: "4px",
+  minWidth: "190px",
+  margin: 0,
 };
 
 const searchMovieVariant: Variants = {

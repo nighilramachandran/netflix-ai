@@ -17,7 +17,7 @@ const Header: React.FC = () => {
       <Toolbar disableGutters sx={{ ...headerStyles }}>
         <NetflixLogo />
         {isAuthenticated && (
-          <Stack flexDirection={"row"} gap={2}>
+          <Stack flexDirection={"row"} gap={2} sx={{ flexWrap: "wrap" }}>
             <AiSearch />
             <Logout />
           </Stack>
