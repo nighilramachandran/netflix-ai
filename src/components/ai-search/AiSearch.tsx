@@ -93,7 +93,7 @@ const AiSearch: React.FC = () => {
         variants={showPromptedMovieVariant}
         initial="hidden"
         animate={promptedMovies.length > 0 ? "animate" : "exit"}
-        sx={{ top: "80%" }}
+        sx={{ top: "82%" }}
       >
         <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
       </AnimatedPaperBox>
