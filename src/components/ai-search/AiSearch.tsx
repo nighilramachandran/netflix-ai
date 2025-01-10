@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, styled, Backdrop } from "@mui/material";
-import { m, Variants } from "framer-motion";
+import { AnimatePresence, m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import MoviesList from "../movies/MoviesList";
@@ -37,8 +37,8 @@ const AiSearch: React.FC = () => {
   };
 
   const handleClose = () => {
-    dispatch(RemovePromptedMovieTrailers());
     setOpen(false);
+    dispatch(RemovePromptedMovieTrailers());
     setPromtedMovieName("");
   };
 
@@ -73,30 +73,35 @@ const AiSearch: React.FC = () => {
       <Button variant="contained" onClick={() => handleToggle()}>
         AI Search
       </Button>
-      {open && (
-        <StyledBackdrop
-          open={open}
-          onClick={() => handleClose()}
-        ></StyledBackdrop>
-      )}
-
-      <SearchMovie
-        open={open}
-        inputChange={handleInputChange}
-        handleSearch={handleAiSearchSubmit}
-        status={status}
-        inputValue={promteMovieName}
-      />
-
-      <AnimatedPaperBox
-        transition={{ duration: 0.5, ease: "backInOut" }}
-        variants={showPromptedMovieVariant}
-        initial="hidden"
-        animate={promptedMovies.length > 0 ? "animate" : "exit"}
-        sx={{ top: "82%" }}
-      >
-        <MoviesList list={promptedMovies} cacheMap={PromtedMovieImageCache} />
-      </AnimatedPaperBox>
+      <AnimatePresence mode="wait">
+        {/* {open && ( */}
+        <>
+          <StyledBackdrop key="backdrop" open={open} onClick={handleClose} />
+          <SearchMovie
+            key="search-movie"
+            open={open}
+            inputChange={handleInputChange}
+            handleSearch={handleAiSearchSubmit}
+            status={status}
+            inputValue={promteMovieName}
+          />
+          <AnimatedPaperBox
+            key="movies-list"
+            transition={{ duration: 0.5, ease: "backInOut" }}
+            variants={showPromptedMovieVariant}
+            initial="hidden"
+            animate={promptedMovies.length > 0 ? "animate" : "exit"}
+            exit="exit"
+            sx={{ top: "82%" }}
+          >
+            <MoviesList
+              list={promptedMovies}
+              cacheMap={PromtedMovieImageCache}
+            />
+          </AnimatedPaperBox>
+        </>
+        {/* )} */}
+      </AnimatePresence>
 
       {isSearchinNow && (
         <LoadingBox

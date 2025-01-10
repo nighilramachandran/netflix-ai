@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Container } from "@mui/material";
 import Header from "./header/Header";
 import { useAppDispatch } from "../../redux/hooks";
 import { onAuthStateChanged } from "firebase/auth";
 import { AddUserFunc, RemoveUserFunc } from "../../redux/auth";
 import { firebaseAuth } from "../../utils/firebase/auth";
 import { ROUTES } from "../../utils/constants/Routes";
+import CustomeContainer from "./container/CustomeContainer";
+import { Box } from "@mui/material";
+import { BG_URL } from "../../utils/constants/EndPoints";
+import { AuthBackgroudImageStyles } from "../../styles/layouts/auth/auth";
 
-const Layout: React.FC = () => {
+const AppLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -31,13 +34,18 @@ const Layout: React.FC = () => {
   }, [HOME, ROOT, dispatch, location.pathname, navigate]);
 
   return (
-    <>
-      <Container maxWidth={false} disableGutters sx={{ padding: "0 35px" }}>
+    <Box>
+      <img
+        src={BG_URL}
+        alt="background-img"
+        style={{ ...AuthBackgroudImageStyles }}
+      />
+      <CustomeContainer>
         <Header />
-        <Outlet />
-      </Container>
-    </>
+      </CustomeContainer>
+      <Outlet />
+    </Box>
   );
 };
 
-export default Layout;
+export default AppLayout;

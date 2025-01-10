@@ -57,6 +57,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
         flexWrap: "wrap",
         gap: "10px",
       }}
+      id="Search-Box"
     >
       <InputBase
         startAdornment={<SearchIcon sx={{ marginLeft: "10px" }} />}
@@ -82,8 +83,8 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
 };
 
 const searchMovieVariant: Variants = {
-  hidden: { opacity: 0, y: -50, scale: 0.8 },
-  animate: { opacity: 1, y: 50, scale: 1 },
+  hidden: { opacity: 0, y: -200, scale: 0.8 },
+  animate: { opacity: 1, y: 200, scale: 1 },
   exit: { opacity: 0, y: -10, scale: 0.8 },
 };
 

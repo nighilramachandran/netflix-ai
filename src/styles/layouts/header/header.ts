@@ -8,6 +8,7 @@ export const appBarStyles: SxProps<Theme> = {
   position: "relative",
   bgcolor: "background.header",
   boxShadow: "none",
+  // padding: 0,
 };
 
 // Toolbar
@@ -17,4 +18,5 @@ export const headerStyles: HeaderStylesProps = {
     md: HEADER_SPACINGS.H_MAIN_DESKTOP,
   },
   justifyContent: "space-between",
+  position: "relative",
 };

@@ -10,9 +10,14 @@ interface MovieTitleProps {
   overview: string;
 }
 
-const MovieTitle: React.FC<MovieTitleProps> = ({ title, overview }) => {
+const TrailerTitle: React.FC<MovieTitleProps> = ({ title, overview }) => {
   return (
-    <Stack spacing={2} sx={{ padding: "25px" }} component={MotionViewport}>
+    <Stack
+      spacing={2}
+      sx={{ padding: "25px" }}
+      component={MotionViewport}
+      id="Trailer-Title"
+    >
       <m.div variants={varFade().inUp}>
         <Typography variant="body1">{title}</Typography>
       </m.div>
@@ -31,4 +36,4 @@ const MovieTitle: React.FC<MovieTitleProps> = ({ title, overview }) => {
   );
 };
 
-export default MovieTitle;
+export default TrailerTitle;

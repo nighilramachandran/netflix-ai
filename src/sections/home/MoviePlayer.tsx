@@ -3,9 +3,7 @@ import React, { useEffect } from "react";
 import { FetchMovieTrailersAsync } from "../../redux/movies";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import VedioPlayer from "../../components/player/VideoPlayer";
-import { HEADER_SPACINGS } from "../../utils/constants/Config";
-import { Overlay } from "../../widgets/styles/Overlay";
-import MovieTitle from "../../components/movies/MovieTitle";
+import TrailerTitle from "../../components/movies/TrailerTitle";
 
 const MoviePlayer: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,36 +25,50 @@ const MoviePlayer: React.FC = () => {
   }, [dispatch, movieId]);
   return (
     <MoviePlayerWrapper>
+      {/* <Overlay /> */}
       {isTitleAndOverview && (
-        <MovieTitle title={original_title} overview={overview} />
+        <TrailerTitleWrapper>
+          <TrailerTitle title={original_title} overview={overview} />
+        </TrailerTitleWrapper>
       )}
-      <StyledBox>
-        <Overlay>
-          {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
-        </Overlay>
-      </StyledBox>
+      <PlayerWrapper>
+        {movieTrailerKey && <VedioPlayer param={movieTrailerKey} />}
+      </PlayerWrapper>
     </MoviePlayerWrapper>
   );
 };
 
-const StyledBox = styled(Box)(() => ({
-  position: "absolute",
-  left: 0,
-  top: 0,
-  height: `calc(65vh + ${HEADER_SPACINGS.H_MAIN_DESKTOP}px + 65px)`,
-  minHeight: "656px",
+const TrailerTitleWrapper = styled(Box)(() => ({
+  height: "inherit",
   width: "100%",
-  overflow: "hidden",
-  zIndex: -1,
+  position: "absolute",
+  zIndex: 2,
+  display: "flex",
+  alignItems: "center",
+}));
+const PlayerWrapper = styled(Box)(() => ({
+  height: "100%",
+  width: "100%",
+  scale: 1.5,
 }));
 
 const MoviePlayerWrapper = styled(Box)(() => ({
-  height: "65vh",
+  height: "75vh",
   width: "100%",
-  top: 0,
-  left: 0,
   minHeight: "542px",
   overflow: "hidden",
+}));
+
+const Overlay = styled(Box)(() => ({
+  position: "absolute",
+  zIndex: 1,
+  width: "100%",
+  height: "inherit",
+  background: "rgba(0, 0, 0, 0.1)",
+  color: "white",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 export default MoviePlayer;

@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./widgets/layouts";
+import AppLayout from "./widgets/layouts";
 import { ROUTES } from "./utils/constants/Routes";
-import AuthLayout from "./widgets/layouts/auth";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import MovieDetailPage from "./pages/[id]";
@@ -14,10 +13,8 @@ const PrivateRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROOT} element={<Layout />}>
-          <Route element={<AuthLayout />}>
-            <Route index element={<Auth />}></Route>
-          </Route>
+        <Route path={ROOT} element={<AppLayout />}>
+          <Route index element={<Auth />}></Route>
           <Route path={HOME}>
             <Route index element={<Home />}></Route>
             <Route path=":id" element={<MovieDetailPage />}></Route>

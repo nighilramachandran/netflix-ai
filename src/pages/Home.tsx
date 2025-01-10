@@ -5,6 +5,7 @@ import { LoadingBox } from "../components/loading-box";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { MOVIE_CATERGORY } from "../utils/constants/Movies";
 import { FetchAllMovieCategoriesAsync } from "../redux/movies";
+import CustomeContainer from "../widgets/layouts/container/CustomeContainer";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,8 +26,12 @@ const Home: React.FC = () => {
 
   return (
     <LoadingBox status={status}>
-      <MoviePlayer />
-      <MovieCategoryList />
+      <CustomeContainer withPadding={false}>
+        <MoviePlayer />
+      </CustomeContainer>
+      <CustomeContainer>
+        <MovieCategoryList />
+      </CustomeContainer>
     </LoadingBox>
   );
 };

@@ -17,7 +17,6 @@ const VedioPlayer: React.FC<VideoPlayerProps> = ({ param }) => {
         border: "none",
         width: "100%",
         height: "100%",
-        transform: "scale(1.6)",
         transformOrigin: "center",
       }}
     ></iframe>

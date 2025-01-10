@@ -13,6 +13,7 @@ import MoviesDetailDesc from "../components/movies/MoviesDetailDesc";
 import CastingDeatils from "../components/movies/CastingDeatils";
 import { ScrollToTop } from "../components/scroll/ScrollToTop";
 import { FetchAndCacheImage } from "../utils/helpers/cache/FetchAndCacheImage";
+import CustomeContainer from "../widgets/layouts/container/CustomeContainer";
 
 const gridItemStyles: CSSProperties = {
   display: "flex",
@@ -62,30 +63,32 @@ const MovieDetailPage: React.FC = () => {
   }, [selectedMovie, id]);
 
   return (
-    <>
-      <ScrollToTop />
-      <Grid2 container>
-        <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
-          <StyledCardBox layoutId={`card-container-${id}`}>
-            <StyledInnerBox layoutId={`card-inner-${id}`}>
-              {id && cachedPosterBlobUrl && (
-                <m.img
-                  src={cachedPosterBlobUrl}
-                  alt="Movie Card"
-                  layoutId={`card-image-${id}`}
-                />
-              )}
-            </StyledInnerBox>
-          </StyledCardBox>
+    <CustomeContainer>
+      <>
+        <ScrollToTop />
+        <Grid2 container>
+          <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
+            <StyledCardBox layoutId={`card-container-${id}`}>
+              <StyledInnerBox layoutId={`card-inner-${id}`}>
+                {id && cachedPosterBlobUrl && (
+                  <m.img
+                    src={cachedPosterBlobUrl}
+                    alt="Movie Card"
+                    layoutId={`card-image-${id}`}
+                  />
+                )}
+              </StyledInnerBox>
+            </StyledCardBox>
+          </Grid2>
+          <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
+            <MoviesDetailDesc {...selectedMovie} />
+          </Grid2>
         </Grid2>
-        <Grid2 size={{ xs: 12, lg: 6 }} sx={{ ...gridItemStyles }}>
-          <MoviesDetailDesc {...selectedMovie} />
-        </Grid2>
-      </Grid2>
-      {Object.hasOwn(movieCasting, "crew") && (
-        <CastingDeatils {...movieCasting} />
-      )}
-    </>
+        {Object.hasOwn(movieCasting, "crew") && (
+          <CastingDeatils {...movieCasting} />
+        )}
+      </>
+    </CustomeContainer>
   );
 };
 
