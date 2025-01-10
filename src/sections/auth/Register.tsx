@@ -1,8 +1,8 @@
 import React from "react";
 import { CustomForm, CustomInputFormProps } from "../../components/form";
-import { useAppDispatch } from "../../redux/hooks";
-import { ResigterUserAsyncFunc } from "../../redux/auth";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { AuthProps } from "../../interfaces";
+import { AuthUserAsyncFunc } from "../../redux/auth";
 
 // inputs
 const inputs: CustomInputFormProps[] = [
@@ -38,16 +38,18 @@ const inputs: CustomInputFormProps[] = [
 ];
 
 const Register: React.FC = () => {
+  const { status } = useAppSelector((state) => state.Auth);
   const dispatch = useAppDispatch();
 
   const handleRegister = async (vals: AuthProps) => {
-    dispatch(ResigterUserAsyncFunc(vals));
+    dispatch(AuthUserAsyncFunc(vals, "register"));
   };
   return (
     <CustomForm
       inputs={inputs}
       onSubmit={(vals: AuthProps) => handleRegister(vals)}
       submitLable={"Sign Up"}
+      status={status}
     ></CustomForm>
   );
 };

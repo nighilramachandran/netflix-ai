@@ -2,7 +2,7 @@ import React from "react";
 import { CustomForm, CustomInputFormProps } from "../../components/form";
 import { AuthProps } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { LoginUserAsyncFunc } from "../../redux/auth";
+import { AuthUserAsyncFunc } from "../../redux/auth";
 
 // inputs
 const inputs: CustomInputFormProps[] = [
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const handleLogin = async (vals: AuthProps) => {
-    dispatch(LoginUserAsyncFunc(vals));
+    dispatch(AuthUserAsyncFunc(vals, "login"));
   };
 
   return (

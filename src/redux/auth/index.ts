@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthProps, RequestStatus } from "../../interfaces";
+import { AuthAction, AuthProps, RequestStatus } from "../../interfaces";
 import { enqueueSnackbar } from "notistack";
 
 import { AppThunk } from "../Store";
@@ -48,61 +48,59 @@ const AuthSlice = createSlice({
 
 const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
-export const LoginUserAsyncFunc =
-  (credentials: AuthProps): AppThunk =>
-  async (dispatch) => {
-    dispatch(setStatus("loading"));
-    const { email, password } = credentials;
-    try {
-      const userLoggedCredential: UserCredential =
-        await signInWithEmailAndPassword(firebaseAuth, email, password);
-
-      if (userLoggedCredential) {
-        const { uid, email, displayName } = userLoggedCredential.user;
-        const user = {
-          uid,
-          email,
-          displayName,
-        };
-        dispatch(AddUserFunc(user));
-        dispatch(setStatus("data"));
-      }
-    } catch (error) {
-      dispatch(setStatus("error"));
-      enqueueSnackbar("Invalid Credential", {
-        variant: "error",
-      });
-    }
+const getAuthActionFunction = (
+  action: AuthAction
+): ((
+  auth: typeof firebaseAuth,
+  email: string,
+  password: string
+) => Promise<UserCredential>) => {
+  const authActionMap: Record<
+    AuthAction,
+    (
+      auth: typeof firebaseAuth,
+      email: string,
+      password: string
+    ) => Promise<UserCredential>
+  > = {
+    login: signInWithEmailAndPassword,
+    register: createUserWithEmailAndPassword,
   };
 
-export const ResigterUserAsyncFunc =
-  (credentials: AuthProps): AppThunk =>
+  const authFunction = authActionMap[action];
+  if (!authFunction) {
+    throw new Error(`Unsupported action: ${action}`);
+  }
+
+  return authFunction;
+};
+
+export const AuthUserAsyncFunc =
+  (credentials: AuthProps, action: AuthAction): AppThunk =>
   async (dispatch) => {
     dispatch(setStatus("loading"));
     const { email, password } = credentials;
-    try {
-      const userRegisterCredential = await createUserWithEmailAndPassword(
-        firebaseAuth,
-        email,
-        password
-      );
 
-      if (userRegisterCredential) {
-        const { uid, email, displayName } = userRegisterCredential.user;
-        const user = {
-          uid,
-          email,
-          displayName,
-        };
+    try {
+      const authFunction = getAuthActionFunction(action);
+
+      const userCredential = await authFunction(firebaseAuth, email, password);
+
+      if (userCredential) {
+        const { uid, email, displayName } = userCredential.user;
+        const user = { uid, email, displayName };
 
         dispatch(AddUserFunc(user));
         dispatch(setStatus("data"));
       }
-    } catch (error) {
+    } catch (error: unknown) {
       dispatch(setStatus("error"));
-      enqueueSnackbar("Invalid Credential", {
-        variant: "error",
-      });
+
+      if (error instanceof Error) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      } else {
+        enqueueSnackbar("An unknown error occurred", { variant: "error" });
+      }
     }
   };
 
