@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginProps, RequestStatus } from "../../interfaces";
+import { AuthProps, RequestStatus } from "../../interfaces";
 import { enqueueSnackbar } from "notistack";
 
 import { AppThunk } from "../Store";
 import {
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   UserCredential,
@@ -48,7 +49,7 @@ const AuthSlice = createSlice({
 const { setStatus, addUser, authenticate, removeUser } = AuthSlice.actions;
 
 export const LoginUserAsyncFunc =
-  (credentials: LoginProps): AppThunk =>
+  (credentials: AuthProps): AppThunk =>
   async (dispatch) => {
     dispatch(setStatus("loading"));
     const { email, password } = credentials;
@@ -74,6 +75,37 @@ export const LoginUserAsyncFunc =
     }
   };
 
+export const ResigterUserAsyncFunc =
+  (credentials: AuthProps): AppThunk =>
+  async (dispatch) => {
+    dispatch(setStatus("loading"));
+    const { email, password } = credentials;
+    try {
+      const userRegisterCredential = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+
+      if (userRegisterCredential) {
+        const { uid, email, displayName } = userRegisterCredential.user;
+        const user = {
+          uid,
+          email,
+          displayName,
+        };
+
+        dispatch(AddUserFunc(user));
+        dispatch(setStatus("data"));
+      }
+    } catch (error) {
+      dispatch(setStatus("error"));
+      enqueueSnackbar("Invalid Credential", {
+        variant: "error",
+      });
+    }
+  };
+
 export const AddUserFunc =
   (user: User): AppThunk =>
   (dispatch) => {
@@ -84,7 +116,6 @@ export const AddUserFunc =
     };
     dispatch(addUser(userData));
     dispatch(authenticate(true));
-    dispatch(setStatus("data"));
   };
 
 export const RemoveUserFunc = (): AppThunk => (dispatch) => {

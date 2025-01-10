@@ -17,7 +17,7 @@ const Auth: React.FC = () => {
 
   return (
     <Grid2 container sx={{ ...GridContainerStyles }}>
-      <Grid2 size={{ xs: 12, md: 6 }}>
+      <Grid2 size={{ xs: 12, md: 4 }}>
         <AnimatedPaper layout>
           {login ? <Login /> : <Register />}
           <Typography

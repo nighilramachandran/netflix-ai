@@ -14,7 +14,6 @@ import { AppThunk } from "../Store";
 import { api } from "../../utils/api";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { posterImageCache } from "../../utils/helpers/cache/CacheImage";
-import { DipatchCache } from "../../utils/helpers/cache/DispatchCache";
 import { handleCacheDispatch } from "../../utils/helpers/cache/HandleCacheDispatch";
 
 interface InitialState {

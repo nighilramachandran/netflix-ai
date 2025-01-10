@@ -1,6 +1,6 @@
 import React from "react";
 import { CustomForm, CustomInputFormProps } from "../../components/form";
-import { LoginProps } from "../../interfaces";
+import { AuthProps } from "../../interfaces";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { LoginUserAsyncFunc } from "../../redux/auth";
 
@@ -31,18 +31,16 @@ const inputs: CustomInputFormProps[] = [
 const Login: React.FC = () => {
   const { status } = useAppSelector((state) => state.Auth);
 
-  console.log("status", status);
-
   const dispatch = useAppDispatch();
 
-  const handleLogin = async (vals: LoginProps) => {
+  const handleLogin = async (vals: AuthProps) => {
     dispatch(LoginUserAsyncFunc(vals));
   };
 
   return (
     <CustomForm
       inputs={inputs}
-      onSubmit={(vals: LoginProps) => handleLogin(vals)}
+      onSubmit={(vals: AuthProps) => handleLogin(vals)}
       status={status}
       submitLable={"Log In"}
     ></CustomForm>

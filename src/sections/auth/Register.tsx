@@ -1,7 +1,8 @@
 import React from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { CustomForm, CustomInputFormProps } from "../../components/form";
-import { firebaseAuth } from "../../utils/firebase/auth";
+import { useAppDispatch } from "../../redux/hooks";
+import { ResigterUserAsyncFunc } from "../../redux/auth";
+import { AuthProps } from "../../interfaces";
 
 // inputs
 const inputs: CustomInputFormProps[] = [
@@ -36,34 +37,16 @@ const inputs: CustomInputFormProps[] = [
   },
 ];
 
-interface FormikValProps {
-  displayName: string;
-  email: string;
-  password: string;
-}
-
-// functions
-
-const handleLogin = async (vals: FormikValProps) => {
-  const { email, password } = vals;
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
-    console.log("User created:", userCredential.user);
-  } catch (error) {
-    console.error("Error creating user:", error);
-  }
-};
-
 const Register: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const handleRegister = async (vals: AuthProps) => {
+    dispatch(ResigterUserAsyncFunc(vals));
+  };
   return (
     <CustomForm
       inputs={inputs}
-      onSubmit={(vals: FormikValProps) => handleLogin(vals)}
+      onSubmit={(vals: AuthProps) => handleRegister(vals)}
       submitLable={"Sign Up"}
     ></CustomForm>
   );
