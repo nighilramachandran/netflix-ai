@@ -12,21 +12,21 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <MotionLazyContainer>
-      <ThemeProviders>
-        <SnackbarProvider
-          maxSnack={2}
-          data-testid="toastid"
-          autoHideDuration={3000}
-          anchorOrigin={{ horizontal: "center", vertical: "top" }}
-        >
-          <CssBaseline enableColorScheme />
-          <PrivateRoutes />
-        </SnackbarProvider>
-      </ThemeProviders>
-    </MotionLazyContainer>
-  </Provider>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <MotionLazyContainer>
+        <ThemeProviders>
+          <SnackbarProvider
+            maxSnack={2}
+            data-testid="toastid"
+            autoHideDuration={3000}
+            anchorOrigin={{ horizontal: "center", vertical: "top" }}
+          >
+            <CssBaseline enableColorScheme />
+            <PrivateRoutes />
+          </SnackbarProvider>
+        </ThemeProviders>
+      </MotionLazyContainer>
+    </Provider>
+  </React.StrictMode>
 );

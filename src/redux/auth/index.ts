@@ -126,6 +126,7 @@ export const LogoutUserAsyncFunc = (): AppThunk => async (dispatch) => {
   try {
     await signOut(firebaseAuth);
     dispatch(RemoveUserFunc());
+    dispatch(setStatus("data"));
   } catch (error) {
     dispatch(setStatus("error"));
     console.log(error);
