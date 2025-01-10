@@ -28,6 +28,18 @@ const AiSearch: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const downMd = useResponsive("down", "md");
+  const downSM = useResponsive("between", 320, 490);
+
+  const showPromptedMovieVariant: Variants = {
+    hidden: { opacity: 0, y: -100, scale: 0.8 },
+    animate: { opacity: 1, y: !downSM ? 230 : 290, scale: 1 },
+    exit: {
+      opacity: 0,
+      y: !downSM ? -50 : -10,
+      scale: 0.8,
+      transition: { delay: 0.2, duration: 0.6 },
+    },
+  };
 
   // functions
   const handleToggle = () => {
@@ -77,7 +89,7 @@ const AiSearch: React.FC = () => {
         <MemoryIcon />
         {!downMd ? "AI Search" : ""}
       </StyledAnimatedButton>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         <StyledBackdrop key="backdrop" open={open} onClick={handleClose} />
         <SearchMovie
           key="search-movie"
@@ -113,17 +125,6 @@ const AiSearch: React.FC = () => {
       )}
     </>
   );
-};
-
-const showPromptedMovieVariant: Variants = {
-  hidden: { opacity: 0, y: -100, scale: 0.8 },
-  animate: { opacity: 1, y: 230, scale: 1 },
-  exit: {
-    opacity: 0,
-    y: -50,
-    scale: 0.8,
-    transition: { delay: 0.2, duration: 0.6 },
-  },
 };
 
 const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
