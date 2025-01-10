@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         {isAuthenticated && (
           <Stack flexDirection={"row"} gap={2}>
             <AiSearch />
-            {/* <Logout /> */}
+            <Logout />
           </Stack>
         )}
       </Toolbar>

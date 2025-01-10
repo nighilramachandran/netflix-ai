@@ -6,6 +6,7 @@ export const buttonOverride: Components<Theme> = {
       root: () => ({
         borderRadius: "5px",
         textTransform: "initial",
+        cursor: "pointer",
       }),
     },
   },
