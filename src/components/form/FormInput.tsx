@@ -101,7 +101,12 @@ export const FormInput: React.FC<props> = ({
 
   //error message component
   const getError = (name: string) => (
-    <Typography className="error" color="text.danger" textAlign={"start"}>
+    <Typography
+      sx={{ fontSize: "12px !important" }}
+      className="error"
+      color="text.danger"
+      textAlign={"start"}
+    >
       {getFormErrorMessage(name) as string}
     </Typography>
   );
