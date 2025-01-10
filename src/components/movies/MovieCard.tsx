@@ -43,7 +43,7 @@ const MovieCard: React.FC<MovieCardProps> = React.memo(
   }
 );
 
-const StyledCardContainerBox = styled(m(Box))(() => ({
+const StyledCardContainerBox = styled(m.create(Box))(() => ({
   width: 160,
   height: 240,
   borderRadius: "8px",
@@ -52,7 +52,7 @@ const StyledCardContainerBox = styled(m(Box))(() => ({
   cursor: "pointer",
 }));
 
-const AnimatedInnerBox = styled(m(Box))(() => ({
+const AnimatedInnerBox = styled(m.create(Box))(() => ({
   width: "100%",
   height: "100%",
   "&>img": {

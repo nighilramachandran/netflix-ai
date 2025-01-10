@@ -12,7 +12,7 @@ interface MovieListProps {
 const MoviesList: React.FC<MovieListProps> = ({ list, cacheMap }) => {
   return (
     <StyledStack>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {list.map((el, index) => {
           return (
             <div key={`${el.id}-${el.title}-${index}`}>

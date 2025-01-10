@@ -127,12 +127,12 @@ const AiSearch: React.FC = () => {
   );
 };
 
-const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
+const StyledBackdrop = styled(m.create(Backdrop))(({ theme }) => ({
   zIndex: 998,
   color: "#fff",
   backdropFilter: "blur(10px)",
   backgroundColor: "rgba(0, 0, 0, 0.5)",
 }));
-const StyledAnimatedButton = styled(m(Button))(() => ({}));
+const StyledAnimatedButton = styled(m.create(Button))(() => ({}));
 
 export default AiSearch;

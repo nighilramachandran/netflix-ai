@@ -28,6 +28,6 @@ const Logout: React.FC = () => {
   );
 };
 
-const StyledAnimatedButton = styled(m(Button))(() => ({}));
+const StyledAnimatedButton = styled(m.create(Button))(() => ({}));
 
 export default Logout;

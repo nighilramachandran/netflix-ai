@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { m } from "framer-motion";
 
-export const AnimatedPaperBox = styled(m(Box))(() => ({
+export const AnimatedPaperBox = styled(m.create(Box))(() => ({
   padding: "10px",
   width: "100%",
   position: "absolute",

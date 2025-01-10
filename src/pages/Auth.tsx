@@ -35,7 +35,7 @@ const Auth: React.FC = () => {
   );
 };
 
-const AnimatedPaper = styled(m(Paper))(() => ({}));
+const AnimatedPaper = styled(m.create(Paper))(() => ({}));
 
 const GridContainerStyles: CSSProperties = {
   display: "flex",

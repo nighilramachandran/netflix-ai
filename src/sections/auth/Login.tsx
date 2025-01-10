@@ -37,8 +37,6 @@ const Login: React.FC = () => {
     dispatch(AuthUserAsyncFunc(vals, "login"));
   };
 
-  console.log("status", status);
-
   return (
     <CustomForm
       inputs={inputs}

@@ -147,14 +147,14 @@ export const CustomForm: React.FC<props> = (props) => {
         {inputs.map(
           ({ colProps, name, hide, ...props }) =>
             !hide && (
-              <Grid2 component={"div"} item={true} {...colProps} key={name}>
+              <Grid2 {...colProps} key={name}>
                 <FormInput key={name} name={name} formik={formik} {...props} />
               </Grid2>
             )
         )}
 
         {/*  submit */}
-        <Grid2 component="div" item {...actionCol}>
+        <Grid2 {...actionCol}>
           <LoadingButton
             variant="contained"
             type="submit"

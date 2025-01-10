@@ -93,7 +93,7 @@ const MovieDetailPage: React.FC = () => {
 };
 
 // styles
-const StyledCardBox = styled(m(Box))(() => ({
+const StyledCardBox = styled(m.create(Box))(() => ({
   width: "100%",
   maxWidth: 400,
   height: "100%",
@@ -104,7 +104,7 @@ const StyledCardBox = styled(m(Box))(() => ({
   flexShrink: 0,
 }));
 
-const StyledInnerBox = styled(m(Box))(() => ({
+const StyledInnerBox = styled(m.create(Box))(() => ({
   width: "100%",
   height: "100%",
   "&>img": {
