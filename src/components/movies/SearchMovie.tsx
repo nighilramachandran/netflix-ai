@@ -49,7 +49,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
 
   return (
     <AnimatedPaperBox
-      transition={{ duration: 0.3, delay: 0.1 }}
+      transition={{ duration: 0.6, delay: 0.1, easings: ["easeIn", "easeOut"] }}
       variants={searchMovieVariant}
       initial="hidden"
       animate={open ? "animate" : "exit"}
@@ -83,9 +83,14 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
 };
 
 const searchMovieVariant: Variants = {
-  hidden: { opacity: 0, y: -200, scale: 0.8 },
-  animate: { opacity: 1, y: 200, scale: 1 },
-  exit: { opacity: 0, y: -10, scale: 0.8 },
+  hidden: { opacity: 0, y: -100, scale: 0.8 },
+  animate: { opacity: 1, y: 150, scale: 1 },
+  exit: {
+    opacity: 0,
+    y: -50,
+    scale: 0.8,
+    transition: { duration: 0.6 },
+  },
 };
 
 export default SearchMovie;

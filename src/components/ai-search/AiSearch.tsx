@@ -14,12 +14,6 @@ import { AnimatedPaperBox } from "../../styles/mui-styled";
 import SearchMovie from "../movies/SearchMovie";
 import { runAI } from "../../utils/helpers/gemini-ai";
 
-const showPromptedMovieVariant: Variants = {
-  hidden: { opacity: 0, y: -50, scale: 0.8 },
-  animate: { opacity: 1, y: 80, scale: 1 },
-  exit: { opacity: 0, y: -30, scale: 0.8, transition: { delay: 0.3 } },
-};
-
 const AiSearch: React.FC = () => {
   // states
   const [open, setOpen] = useState(false);
@@ -87,12 +81,11 @@ const AiSearch: React.FC = () => {
           />
           <AnimatedPaperBox
             key="movies-list"
-            transition={{ duration: 0.5, ease: "backInOut" }}
+            transition={{ duration: 0.4, easings: ["easeIn", "easeOut"] }}
             variants={showPromptedMovieVariant}
             initial="hidden"
             animate={promptedMovies.length > 0 ? "animate" : "exit"}
             exit="exit"
-            sx={{ top: "82%" }}
           >
             <MoviesList
               list={promptedMovies}
@@ -117,6 +110,17 @@ const AiSearch: React.FC = () => {
       )}
     </>
   );
+};
+
+const showPromptedMovieVariant: Variants = {
+  hidden: { opacity: 0, y: -100, scale: 0.8 },
+  animate: { opacity: 1, y: 230, scale: 1 },
+  exit: {
+    opacity: 0,
+    y: -50,
+    scale: 0.8,
+    transition: { delay: 0.2, duration: 0.6 },
+  },
 };
 
 const StyledBackdrop = styled(m(Backdrop))(({ theme }) => ({
