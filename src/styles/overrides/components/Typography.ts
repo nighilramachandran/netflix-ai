@@ -1,5 +1,5 @@
 import { Components, Theme } from "@mui/material/styles";
-// TODO typos for responsive
+
 export const typographyOverride: Components<Theme> = {
   MuiTypography: {
     styleOverrides: {
