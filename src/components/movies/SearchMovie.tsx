@@ -60,7 +60,7 @@ const SearchMovie: React.FC<SearchMovieInputProps> = ({
       variants={searchMovieVariant}
       initial="hidden"
       animate={open ? "animate" : "exit"}
-      onAnimationComplete={handleAnimationComplete}
+      onAnimationComplete={() => handleAnimationComplete()}
       sx={{
         flexWrap: "wrap",
         gap: "10px",
