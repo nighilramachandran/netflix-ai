@@ -5,10 +5,17 @@ const Footer: React.FC = () => {
   return (
     <Typography
       variant="h4"
-      sx={{ fontSize: "18px", textAlign: "center", m: 3 }}
+      id="Footer"
+      sx={{
+        fontSize: "18px",
+        textAlign: "center",
+        position: "absolute",
+        bottom: "0",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
     >
-      ☕ Coffee in one hand, JavaScript in the other, streaming dreams on 🖥️ –
-      Nighil Ramachandran.
+      ☕ Coffee & 🖥️ Coding - Nighil Ramachandran.
     </Typography>
   );
 };

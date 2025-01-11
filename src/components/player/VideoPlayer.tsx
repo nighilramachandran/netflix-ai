@@ -5,14 +5,14 @@ interface VideoPlayerProps {
   mute?: boolean;
 }
 
-const VedioPlayer: React.FC<VideoPlayerProps> = ({ param, mute = true }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ param, mute = true }) => {
   return (
     <iframe
       width="100%"
       height="100%"
-      src={`https://www.youtube.com/embed/${param}?&autoplay=1&loop=1&mute=${
+      src={`https://www.youtube.com/embed/${param}?autoplay=1&loop=1&mute=${
         mute ? 1 : 0
-      }&controls=0`}
+      }&controls=0&playsinline=1`}
       title="YouTube video player"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
@@ -26,4 +26,4 @@ const VedioPlayer: React.FC<VideoPlayerProps> = ({ param, mute = true }) => {
   );
 };
 
-export default VedioPlayer;
+export default VideoPlayer;
