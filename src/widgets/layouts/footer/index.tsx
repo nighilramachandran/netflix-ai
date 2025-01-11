@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         transform: "translate(-50%, -50%)",
       }}
     >
-      ☕ Coffee & 🖥️ Coding - Nighil Ramachandran.
+      ☕ Coffee & 🖥️ Coding - Nighil Ramachandran
     </Typography>
   );
 };
