@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Header from "./header/Header";
 import { useAppDispatch } from "../../redux/hooks";
@@ -13,7 +13,6 @@ import { AuthBackgroudImageStyles } from "../../styles/layouts/auth/auth";
 import Footer from "./footer";
 
 const AppLayout: React.FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -31,7 +30,6 @@ const AppLayout: React.FC = () => {
         dispatch(RemoveUserFunc());
         navigate(ROOT);
       }
-      setIsMounted(true);
     });
     return () => unsubscribe();
   }, [HOME, ROOT, dispatch, location.pathname, navigate]);
@@ -47,8 +45,7 @@ const AppLayout: React.FC = () => {
         <Header />
       </CustomeContainer>
       <Outlet />
-
-      {isMounted && <Footer />}
+      <Footer />
     </Box>
   );
 };
