@@ -18,6 +18,7 @@ export const CustomModal: React.FC<CustomModalProps> = (props) => {
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      id="Dailog"
     >
       {onClose ? (
         <IconButton

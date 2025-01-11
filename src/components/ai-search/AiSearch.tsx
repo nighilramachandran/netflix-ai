@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, styled, Backdrop } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import { AnimatePresence, m, Variants } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -10,7 +10,7 @@ import {
   FetchPromptedMovieTrailersAsync,
   RemovePromptedMovieTrailers,
 } from "../../redux/ai";
-import { AnimatedPaperBox } from "../../styles/mui-styled";
+import { AnimatedPaperBox, StyledBackdrop } from "../../styles/mui-styled";
 import SearchMovie from "../movies/SearchMovie";
 import { runAI } from "../../utils/helpers/gemini-ai";
 import MemoryIcon from "@mui/icons-material/Memory";
@@ -127,12 +127,6 @@ const AiSearch: React.FC = () => {
   );
 };
 
-const StyledBackdrop = styled(m.create(Backdrop))(({ theme }) => ({
-  zIndex: 998,
-  color: "#fff",
-  backdropFilter: "blur(10px)",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
-}));
 const StyledAnimatedButton = styled(m.create(Button))(() => ({}));
 
 export default AiSearch;

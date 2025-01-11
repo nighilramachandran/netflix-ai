@@ -23,14 +23,17 @@ export const paperOverride: Components<Theme> = {
 
   MuiDialog: {
     styleOverrides: {
-      paper: {
+      paper: ({ theme }) => ({
         width: "100vw",
-        height: "100vh",
+        [theme.breakpoints.down("md")]: {
+          height: "70vh",
+        },
+        height: "95vh",
         margin: 0,
         maxWidth: "none",
         maxHeight: "none",
         borderRadius: 0,
-      },
+      }),
     },
   },
 

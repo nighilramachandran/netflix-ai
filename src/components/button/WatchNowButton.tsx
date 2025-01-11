@@ -6,6 +6,8 @@ import VedioPlayer from "../player/VideoPlayer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMovieTrailersAsync } from "../../redux/movies";
 import { PlayerWrapper } from "../../sections/home/MoviePlayer";
+import { StyledBackdrop } from "../../styles/mui-styled";
+import zIndex from "@mui/material/styles/zIndex";
 
 interface WatchNowButtonProps {
   movieId?: number;

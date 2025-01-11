@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Backdrop, Box, styled } from "@mui/material";
 import { m } from "framer-motion";
 
 export const AnimatedPaperBox = styled(m.create(Box))(() => ({
@@ -14,4 +14,11 @@ export const AnimatedPaperBox = styled(m.create(Box))(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+}));
+
+export const StyledBackdrop = styled(m.create(Backdrop))(() => ({
+  zIndex: 998,
+  color: "#fff",
+  backdropFilter: "blur(10px)",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
 }));

@@ -55,6 +55,7 @@ const TrailerTitleWrapper = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
 }));
+
 export const PlayerWrapper = styled(Box)(() => ({
   height: "100%",
   width: "100%",
