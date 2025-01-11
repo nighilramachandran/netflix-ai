@@ -7,7 +7,7 @@ import {
 import AiSearch from "../../../components/ai-search/AiSearch";
 import { useAppSelector } from "../../../redux/hooks";
 import Logout from "../../../components/button/Logout";
-import NetflixLogo from "../../../components/logo/NetflixLogo";
+import NetflixLogo from "../../../components/Logo/NetflixLogo";
 
 const Header: React.FC = () => {
   const { isAuthenticated } = useAppSelector((state) => state.Auth);
