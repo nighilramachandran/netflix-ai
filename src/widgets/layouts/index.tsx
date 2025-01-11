@@ -10,6 +10,7 @@ import CustomeContainer from "./container/CustomeContainer";
 import { Box } from "@mui/material";
 import { BG_URL } from "../../utils/constants/EndPoints";
 import { AuthBackgroudImageStyles } from "../../styles/layouts/auth/auth";
+import Footer from "./footer";
 
 const AppLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -44,6 +45,9 @@ const AppLayout: React.FC = () => {
         <Header />
       </CustomeContainer>
       <Outlet />
+      <CustomeContainer>
+        <Footer />
+      </CustomeContainer>
     </Box>
   );
 };
