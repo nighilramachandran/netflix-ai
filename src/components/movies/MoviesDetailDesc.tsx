@@ -27,7 +27,12 @@ const MoviesDetailDesc: React.FC<SelectedMovieList> = (props) => {
   return (
     <Stack spacing={2} sx={{ padding: "25px" }} component={MotionViewport}>
       <m.div variants={varFade().inUp}>
-        <Typography variant="body1">{title}</Typography>
+        <WatchNowButton movieId={id} />
+      </m.div>
+      <m.div variants={varFade().inUp}>
+        <Typography variant="h3" sx={{ fontSize: "24px", fontWeight: 800 }}>
+          {title}
+        </Typography>
       </m.div>
 
       <m.div variants={varFade().inUp}>
@@ -82,9 +87,6 @@ const MoviesDetailDesc: React.FC<SelectedMovieList> = (props) => {
             );
           })}
         </Stack>
-      </m.div>
-      <m.div variants={varFade().inUp}>
-        <WatchNowButton movieId={id} />
       </m.div>
     </Stack>
   );
