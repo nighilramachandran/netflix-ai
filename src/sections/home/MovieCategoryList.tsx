@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { MOVIE_CATERGORY } from "../../utils/constants/Movies";
 import { useAppSelector } from "../../redux/hooks";
 import { MovieCategories } from "../../interfaces";
@@ -36,6 +36,10 @@ const MovieCategoryList: React.FC = () => {
             </Stack>
           );
         })}
+      {/* for bottom spacing */}
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
     </Stack>
   );
 };

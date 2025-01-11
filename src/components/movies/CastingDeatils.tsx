@@ -56,6 +56,11 @@ const CastingDeatils: React.FC<MovieCasting> = (props) => {
             </Box>
           );
         })}
+      {/* for bottom spacing */}
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
     </Stack>
   );
 };
