@@ -62,7 +62,7 @@ export const FormInput: React.FC<props> = ({
     () => ({
       padding: type === "textarea" ? "0px" : "0 9px",
       borderRadius: "10px",
-      fontSize: "14px",
+      fontSize: "18px",
       height: "100%",
       boxShadow: "none",
     }),

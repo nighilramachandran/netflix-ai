@@ -86,8 +86,8 @@ const AiSearch: React.FC = () => {
         sx={{ gap: 1 }}
         layout
       >
-        <MemoryIcon />
-        {!downMd ? "AI Search" : ""}
+        {!downMd && <MemoryIcon />}
+        AI Search
       </StyledAnimatedButton>
       <AnimatePresence>
         <StyledBackdrop key="backdrop" open={open} onClick={handleClose} />
